@@ -1,4 +1,17 @@
 site_name: moonShadow
-site_url: https://darkthanblack.github.io/Home/insp.html
+site_url: https://darkthanblack.github.io/
 
-# theme: readthedocs
+nav:
+    - 'Home': 'index.md'
+    - 'Books':
+        - '别让猴子跳回背上——为什么领导没时间，下属没事做？': 'books/book_monky.md'
+    - 'About': 'about.md'
+
+#    name: bootstrap4
+#    name: readthedocs
+#    name: bootstrap386
+
+theme:
+    name: material
+    favicon: assets/images/logo.png
+#    logo: assets/images/logo2.jpeg
