@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://darkthanblack.github.io/Home/insp.html/</loc>
+         <loc>https://darkthanblack.github.io/</loc>
          <lastmod>2021-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://darkthanblack.github.io/Home/insp.html/About/</loc>
+         <loc>https://darkthanblack.github.io/about/</loc>
+         <lastmod>2021-12-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://darkthanblack.github.io/books/book_monky/</loc>
          <lastmod>2021-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
