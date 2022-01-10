@@ -5,11 +5,11 @@
 ## My practice is?
 
 * branchs
-  * main: ``newest README.md`` +  ``all .md sources in ./docs/`` + ``mkdocs.yml``
-  * gh-pages: all webside sources, generate by MKDocs CI
-  * pictures: image hosts, generate by PicGo CI
+    * main: ``newest README.md`` +  ``all .md sources in ./docs/`` + ``mkdocs.yml``
+    * gh-pages: all webside sources, generate by MKDocs CI
+    * pictures: image hosts, generate by PicGo CI
 * ignore
-  * ``./site/``
+    * ``./site/``
 
 
 
@@ -42,10 +42,10 @@ $ mkdocs gh-deploy
 #### Image hosts
 
 * Current: Github
-  * CI branch: ``pictures``
-  * CI Tool: [PicGo](https://github.com/Molunerfinn/PicGo)
-    * [issue 781](https://github.com/Molunerfinn/PicGo/issues/781#issuecomment-1008603421)
-  * image path: ``./docs/assets/pictures/``
+    * CI branch: ``pictures``
+    * CI Tool: [PicGo](https://github.com/Molunerfinn/PicGo)
+        * [issue 781](https://github.com/Molunerfinn/PicGo/issues/781#issuecomment-1008603421)
+    * image path: ``./docs/assets/pictures/``
 
 
 
