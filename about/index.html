@@ -276,16 +276,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#mkdocs" class="md-nav__link">
-    MKDocs
+  <a href="#my-practice-is" class="md-nav__link">
+    My practice is?
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#image-host-test" class="md-nav__link">
-    Image Host Test
+  <a href="#what-tool-did-i-use" class="md-nav__link">
+    What tool did I use?
   </a>
+  
+    <nav class="md-nav" aria-label="What tool did I use?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mkdocs" class="md-nav__link">
+    MKDocs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#image-hosts" class="md-nav__link">
+    Image hosts
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -324,16 +344,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#mkdocs" class="md-nav__link">
-    MKDocs
+  <a href="#my-practice-is" class="md-nav__link">
+    My practice is?
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#image-host-test" class="md-nav__link">
-    Image Host Test
+  <a href="#what-tool-did-i-use" class="md-nav__link">
+    What tool did I use?
   </a>
+  
+    <nav class="md-nav" aria-label="What tool did I use?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mkdocs" class="md-nav__link">
+    MKDocs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#image-hosts" class="md-nav__link">
+    Image hosts
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -351,17 +391,27 @@
                 
 
 <h1 id="about">About</h1>
-<blockquote>
-<p>CP from README.md</p>
-</blockquote>
+<h2 id="my-practice-is">My practice is?</h2>
+<ul>
+<li>branchs</li>
+<li>main: <code>newest README.md</code> +  <code>all .md sources in ./docs/</code> + <code>mkdocs.yml</code></li>
+<li>gh-pages: all webside sources, generate by MKDocs CI</li>
+<li>pictures: image hosts, generate by PicGo CI</li>
+<li>ignore</li>
+<li><code>./site/</code></li>
+</ul>
+<h2 id="what-tool-did-i-use">What tool did I use?</h2>
 <h4 id="mkdocs">MKDocs</h4>
-<pre><code class="language-shell"># 创建
+<pre><code class="language-shell"># create
 $ mkdocs new my-project
-# http://127.0.0.1:8000/
+
+# Local host: http://127.0.0.1:8000/
 $ mkdocs serve
-# &gt; site/
+
+# File path: ./site/
 $ mkdocs build
-# &gt; gl-pages/
+
+# Github CI branch: gl-pages
 $ mkdocs gh-deploy
 </code></pre>
 <ul>
@@ -372,8 +422,28 @@ $ mkdocs gh-deploy
 <p><a href="https://www.mkdocs.org/user-guide/configuration/#introduction">Doc: Keywords</a></p>
 </li>
 </ul>
-<h4 id="image-host-test">Image Host Test</h4>
-<p><img alt="sina weibo" src="https://tva1.sinaimg.cn/large/008i3skNly1gy8f3g2v9fj301s01sdfm.jpg" /></p>
+<h4 id="image-hosts">Image hosts</h4>
+<ul>
+<li>Current: Github</li>
+<li>CI branch: <code>pictures</code></li>
+<li>CI Tool: <a href="https://github.com/Molunerfinn/PicGo">PicGo</a><ul>
+<li><a href="https://github.com/Molunerfinn/PicGo/issues/781#issuecomment-1008603421">issue 781</a></li>
+</ul>
+</li>
+<li>image path: <code>./docs/assets/pictures/</code></li>
+</ul>
+<blockquote>
+<p>Sina weibo</p>
+</blockquote>
+<p><code>https://tva1.sinaimg.cn/large/008i3skNly1gy8f3g2v9fj301s01sdfm.jpg</code></p>
+<p><img alt="sina weibo" src="https://tva1.sinaimg.cn/large/008i3skNly1gy8f3g2v9fj301s01sdfm.jpg" />
+<img src="https://tva1.sinaimg.cn/large/008i3skNly1gy8f3g2v9fj301s01sdfm.jpg" alt="Sina weibo" style="zoom:20%;" /></p>
+<blockquote>
+<p>Github</p>
+</blockquote>
+<p><code>https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/logo_64.png</code></p>
+<p><img alt="Github" src="https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/logo_64.png" />
+<img src="https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/logo_64.png" alt="Github" style="zoom:20%;" /></p>
 
               
             </article>
