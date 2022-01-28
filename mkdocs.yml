@@ -1,8 +1,15 @@
 site_name: moonShadow
 site_url: https://darkthanblack.github.io/
 
+docs_dir: 'docs'
+
 nav:
     - 'Home': 'index.md'
+    - 'objc.io':
+        - '#1 更轻量的 ViewControllers':
+            - '#1 介绍': 'objc.io/#1/introduce.md'
+            - '1.1 更轻量的 ViewControllers': 'objc.io/#1/issue-1-1.md'
+            - '1.2 整洁的 Table View 代码': 'objc.io/#1/issue-1-2.md'
     - 'Books':
         - '别让猴子跳回背上——为什么领导没时间，下属没事做？': 'books/book_monky.md'
     - 'About': 'about.md'
