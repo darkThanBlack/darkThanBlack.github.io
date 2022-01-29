@@ -8,7 +8,7 @@
 >
 > 本文是对ObjC期刊一系列高质量博文所作的个人学习笔记。
 >
-> 本文约 3,580 字，可能需要 10 分钟时间阅读。
+> 本文约 3,580 字，可能需要 15 分钟时间阅读。
 >
 > 本文所用到的[示例DEMO](https://github.com/darkThanBlack/LearnObjcIO/tree/master/issue1-%E6%9B%B4%E8%BD%BB%E9%87%8F%E7%9A%84ViewControllers/issue1-1)。
 >
@@ -40,7 +40,7 @@
 
 传 id >> 传 model，进下个页面通过单独的 getDetail 请求去拿数据，这个应该算基础原则了，提一个点：
 
-```swift
+```swift linenums="0"
 /// V1
 class Acontroller: UIViewController {
     var uid: Int64?

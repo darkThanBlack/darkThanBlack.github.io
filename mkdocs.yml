@@ -6,8 +6,8 @@ docs_dir: 'docs'
 nav:
     - 'Home': 'index.md'
     - 'objc.io':
+        - '介绍': 'objc.io/introduce.md'
         - '#1 更轻量的 ViewControllers':
-            - '#1 介绍': 'objc.io/#1/introduce.md'
             - '1.1 更轻量的 ViewControllers': 'objc.io/#1/issue-1-1.md'
             - '1.2 整洁的 Table View 代码': 'objc.io/#1/issue-1-2.md'
     - 'Books':
@@ -22,3 +22,10 @@ theme:
     name: material
     favicon: assets/images/logo.png
 #    logo: assets/images/logo2.jpeg
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences

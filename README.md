@@ -33,7 +33,7 @@ $ mkdocs build
 $ mkdocs gh-deploy
 ```
 
-* [Doc: Theme-Material](https://squidfunk.github.io/mkdocs-material/)
+* [Doc: Theme-Material](https://squidfunk.github.io/mkdocs-material/reference/)
 
 * [Doc: Keywords](https://www.mkdocs.org/user-guide/configuration/#introduction)
 

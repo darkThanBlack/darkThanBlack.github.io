@@ -6,7 +6,7 @@
 >
 >本文是对ObjC期刊一系列高质量博文所作的个人学习笔记。
 >
->本文约 1,900 字，可能需要 5 分钟阅读。
+>本文约 3,534 字，可能需要 15 分钟阅读。
 >
 >
 >
@@ -100,32 +100,122 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         return cell
     }
     // 一堆 else if ...
-    assert(false, message: "get error cell data type!") // Tag
+    assert(false, message: "get error cell data type!") // Tag1
     return UITableViewCell()
 }
 
 /// V2
 func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let sectionType = viewModel
-    let cellType = viewModel.datas[indexPath.row]
-	switch cellType {
+    // Tag2
+    guard viewModel.sections.count < indexPath.section else {
+        return UITableViewCell()
+    }
+    let sectionData = viewModel.sections[indexPath.section]
+    guard sectionData.cells.count < indexPath.row else {
+        return UITableViewCell()
+    }
+    let cellData = sectionData.cells[indexPath.row]
+    
+	switch sectionData.type {
     case A:
-        let cell: ACell = tableView.dequeueReusableCell(for: indexPath)
-        if let model = viewModel.getAModel(from: indexPath.row) {
-        	cell.config(with: model)
+        switch cellData.type {
+        case B:
+            let cell: BCell = tableView.dequeueReusableCell(for: indexPath)
+            // Tag3
+            if let model = viewModel.getBModel(from: indexPath) {
+                cell.config(with: model)
+            }
+            return cell
+        case C:
+            //etc.
         }
-        return cell
-    case B:
+    case D:
         //etc.
     }
 }
 ```
 
-V1有一个潜藏的风险是，代码无法直接让开发者感知到 ACell 和 ACellModel 的联系。常见的是直接对 viewModel 做修改或者重构，出现 ACellModel 被改掉，或者 datas 没有正确地加入 ACellModel 类型的元素，等等情况。这个错误很低级，也是改动者的全锅，但确实有可能会发生。简单的做法是在 ``Tag01`` 的地方拦一句断言。
+V1有一个潜藏的风险是，代码无法直接让开发者感知到 ACell 和 ACellModel 的联系。常见的是直接对 viewModel 做修改或者重构，出现 ACellModel 被改掉，或者 datas 没有正确地加入 ACellModel 类型的元素，等等情况。这个错误很低级，也是改动者的全锅，但确实有可能会发生。简单的做法是在 ``Tag1`` 的地方拦一句断言，但如果业务 A 是比较生僻的场景也会被漏掉。
 
+V2 是基于 V1，针对于需要改动 TableView 数据结构的情景。基于 iOS 15.0 系统，观察这个页面。
 
+<img src="https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/issue1-2-2.png" alt="issue1-2-2" style="zoom:20%;" />
 
+这里在切换开关时，下方的"选项"会相应地展示和消失。总会有这种类似的需求。为了实现分组 UI，要有 sections；因为选项可能携带了用户操作数据，往往不能简单地从 cells 里 ``add/remove``，还需要设计类似 ``visable`` 的 ``Bool`` 属性值来控制显隐；不同的 cellModel 千差万别，需要有 protocol 抽象；综合一下的代码可能长这样：
 
+```swift
+/// cell 抽象
+protocol ReportListCellable {
+ 	
+    var type: MyViewModel.CellTypes { get }
+        
+    var visable: Bool { get }
+    
+    var primaryKey: Int64 { get }
+    // etc.
+    var params: Any? { get }
+}
+/// section 抽象
+protocol ReportListSectionable {
+	
+    var type: MyViewModel.SectionTypes { get }
+	
+    var cells: [ReportListCellable] { get }
+    // etc.
+    var title: String? { get }
+    var params: Any? { get }
+}
+
+class MyViewModel {
+    
+    private var datas: [ReportListSectionable] = []
+    
+    var sections: [ReportListSectionable] {
+        return datas.filter { ... }
+    }
+    
+    //MARK: - CURD
+    
+    private func reloadData(with section: Int? = nil, row: Int? = nil) {
+        if ("局部刷新") {
+            self.delegate?.needReloadData(with: section, row: row)
+        }
+        //...
+    }
+    
+    func getAModel(from id: Int64) -> AModel {
+        if "越界判断",
+         let a = datas.first(where: { ... }) as? AModel {
+            return a
+        }
+        fatalError("...")
+    }
+    
+    func getBModel() -> BModel {
+        if let b = datas.first(where: { ... }) { return b }
+        fatalError("...")
+    }
+    
+    func updateCModel(with title: String?, detail: String?) {
+        if let section = datas.firstIndex(where: { ... }), 
+         let row = section.cells.firstIndex(where: { ... }),
+         let c = datas[section].cells[row] as? CModel {
+        	c.title = title
+        	c.detail = detail
+        	self.reloadData(with section, row: row)
+        }
+		assert(false, "...")
+    }
+
+}
+
+```
+
+``CURD`` 一大堆方法的主要目的还是为了严格控制与 ``index`` 下标相关的处理，并收拢对象操作的入口。为了避免难以找到 sections 实例到底在过程中的什么地方被修改了，viewModel 通过 sections 暴露给 vc.tableView 数据，只在内部操作 datas 对象，这样一来，``tableView.indexPath`` 的下标无法和 ``viewModel.datas`` 一一对应，迫使开发者只能通过 ``get/update`` 方法提供能力。
+
+这种情况下 vc 代码会极为简洁，当然，这样很难真的拦住，而且格式代码量会急速增大。在 vc 内使用类似``if let a = viewModel.sections[indexPath.section].cells[indexPath.row] as? AModel`` 的写法，然后直接修改对象 a 的属性并调用 ``tableView.reloadData()`` 是非常自然且省事的，缺点是这样针对对象的操作会散落在 vc 的各个角落，尤其时某些对象可能会被一直持有并传去其他页面修改时。
+
+利用 type, id 等标识的重要目的就是重构。如果之前的 tableView 没有考虑数据会变动的情况，后来者往往会利用单独的标识来提取出不同样式的 section 和 cell 以实现一些 UI 效果。改过几次 ``if indexPath.section == 1`` 之后，你就会自然想换成 ``switch str { case "ReportHeader":  //...  }`` 的形式。这种代码最常见于 ``viewForHeaderInSection`` 之类的回调，为了方便快速地添加一个简单头视图或者提示，但是一旦 datas 发生变化，这些代码就需要同步修改。
 
 
 
