@@ -312,12 +312,60 @@
       
       
         <label class="md-nav__link" for="__nav_3">
+          Blogs
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Blogs" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Blogs
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../blogs/01-faces/" class="md-nav__link">
+        01 记一次人脸识别业务落地
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
           Books
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Books" data-md-level="1">
-        <label class="md-nav__title" for="__nav_3">
+        <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
           Books
         </label>
@@ -400,6 +448,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#versions" class="md-nav__link">
+    Versions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#mkdocs" class="md-nav__link">
     MKDocs
   </a>
@@ -468,6 +523,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#versions" class="md-nav__link">
+    Versions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#mkdocs" class="md-nav__link">
     MKDocs
   </a>
@@ -503,17 +565,56 @@
 <h2 id="my-practice-is">My practice is?</h2>
 <ul>
 <li>branchs<ul>
-<li>main: <code>newest README.md</code> +  <code>all .md sources in ./docs/</code> + <code>mkdocs.yml</code></li>
-<li>gh-pages: all webside sources, generate by MKDocs CI</li>
-<li>pictures: image hosts, generate by PicGo CI</li>
+<li><code>main</code>: newest <code>README.md</code> +  all <code>.md</code> sources in <code>./docs/</code> + <code>mkdocs.yml</code></li>
+<li><code>gh-pages</code>: all webside sources, generate by MKDocs CI</li>
+<li><code>pictures</code>: image hosts, generate by PicGo CI</li>
 </ul>
 </li>
-<li>ignore<ul>
+<li>.gitignore<ul>
 <li><code>./site/</code></li>
 </ul>
 </li>
 </ul>
 <h2 id="what-tool-did-i-use">What tool did I use?</h2>
+<h4 id="versions">Versions</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python</td>
+<td>3.8.2</td>
+</tr>
+<tr>
+<td>Markdown</td>
+<td>3.3.6</td>
+</tr>
+<tr>
+<td>mkdocs</td>
+<td>1.2.3</td>
+</tr>
+<tr>
+<td>mkdocs-material</td>
+<td>8.1.8</td>
+</tr>
+<tr>
+<td>mkdocs-material-extensions</td>
+<td>1.0.3</td>
+</tr>
+<tr>
+<td>pymdown-extensions</td>
+<td>9.1</td>
+</tr>
+<tr>
+<td>PicGo</td>
+<td>2.3.1-beta.2</td>
+</tr>
+</tbody>
+</table>
 <h4 id="mkdocs">MKDocs</h4>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># create</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>$ mkdocs new my-project

@@ -8,14 +8,14 @@
       
       
       
-        <link rel="canonical" href="https://darkthanblack.github.io/objc.io/introduce/">
+        <link rel="canonical" href="https://darkthanblack.github.io/blogs/01-faces/">
       
       <link rel="icon" href="../../assets/images/logo.png">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.8">
     
     
       
-        <title>介绍 - moonShadow</title>
+        <title>01 记一次人脸识别业务落地 - moonShadow</title>
       
     
     
@@ -60,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#faces" class="md-skip">
           Skip to content
         </a>
       
@@ -93,7 +93,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              介绍
+              01 记一次人脸识别业务落地
             
           </span>
         </div>
@@ -192,14 +192,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
       
       
       
@@ -220,52 +218,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          介绍
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../objc.io/introduce/" class="md-nav__link">
         介绍
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    // 格式范例
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -303,7 +260,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../%231/issue-1-1/" class="md-nav__link">
+      <a href="../../objc.io/%231/issue-1-1/" class="md-nav__link">
         1.1 更轻量的 ViewControllers
       </a>
     </li>
@@ -317,7 +274,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../%231/issue-1-2/" class="md-nav__link">
+      <a href="../../objc.io/%231/issue-1-2/" class="md-nav__link">
         1.2 整洁的 Table View 代码
       </a>
     </li>
@@ -344,12 +301,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
       
       
       
@@ -370,11 +329,121 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../blogs/01-faces/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          01 记一次人脸识别业务落地
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         01 记一次人脸识别业务落地
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    踩坑
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    原文
+  </a>
+  
+    <nav class="md-nav" aria-label="原文">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    流程图
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    后端需要做什么？
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    移动端的识别如何进行？
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    移动端需要做什么？
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    重点在哪里？
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    问题点在哪里？
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    测试相关？
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    风险点？
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -476,9 +545,78 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    // 格式范例
+  <a href="#_1" class="md-nav__link">
+    踩坑
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    原文
+  </a>
+  
+    <nav class="md-nav" aria-label="原文">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    流程图
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    后端需要做什么？
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    移动端的识别如何进行？
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    移动端需要做什么？
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    重点在哪里？
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    问题点在哪里？
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    测试相关？
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    风险点？
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -495,42 +633,159 @@
               
                 
 
-<h1 id="_1">介绍</h1>
-<h2 id="_2">// 格式范例</h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// 文件格式规范</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="o">/</span><span class="n">objc</span><span class="p">.</span><span class="n">io</span><span class="w"></span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="o">/</span><span class="n">introduce</span><span class="p">.</span><span class="n">md</span><span class="w"></span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="o">/</span><span class="err">#</span><span class="mi">1</span><span class="w"></span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="o">/</span><span class="err">#</span><span class="mi">2</span><span class="w"></span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="o">/</span><span class="n">issue</span><span class="mi">-1</span><span class="mf">-1.</span><span class="n">md</span><span class="w"></span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">        </span><span class="o">/</span><span class="n">issue</span><span class="mi">-1</span><span class="mf">-2.</span><span class="n">md</span><span class="w"></span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="o">/</span><span class="err">#</span><span class="mi">3</span><span class="w"></span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">// 图片命名规范</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">// #2 的 issue3 的 第 4 张图片</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">issue</span><span class="mi">-2-3</span><span class="mf">-4.</span><span class="n">png</span><span class="w"></span>
-</code></pre></div>
-<h1 id="h1">标题使用 H1</h1>
-<p>// 空一行写头注，使用引用格式</p>
+<h1 id="faces">Faces</h1>
+<p>摘抄自本人内部主持的一次需求分析会议，隐去具体业务与敏感内容。流程设计依赖于具体需求。</p>
 <blockquote>
-<p>// 附上原文链接</p>
-<p>原文链接：<a href="https://objccn.io/">ObjC中国</a></p>
-<p>// 固定介绍</p>
-<p>本文是对ObjC期刊一系列高质量博文所作的个人学习笔记。</p>
-<p>// 阅读速度根据 Typora 内置速度（120/240/382）字/分钟计算，一般取 240 字/分钟，结果进位</p>
-<p>本文约 3,580 字，可能需要 15 分钟时间阅读。</p>
-<p>// DEMO，核心资源链接</p>
-<p>本文所用到的<a href="">示例DEMO</a>。</p>
-<p>// 编辑记录</p>
-<p>created: 2018-12-16</p>
-<p>update: 2018-12-17  增加链接</p>
-<p>update: 2022-01-28  迁移至 github.io，调整链接，增补内容</p>
+<p>Created: 2021/09/23</p>
+<p>Update: 2022/02/07 迁移至 github.io, 增加实际踩坑问题</p>
 </blockquote>
-<h2 id="h2">后续修订使用 H2, 修订日期 + 新标题</h2>
-<h4 id="h4">小标题使用 H4</h4>
-<p>// 参考链接写到脚注</p>
+<h2 id="_1">踩坑</h2>
+<ul>
+<li>已解决：<a href="https://github.com/pytorch/pytorch/issues/66993">PyTorch: Issue-66993</a></li>
+<li>Demo 中 .mm 调包调整，Lite 版有区别</li>
+<li>PyTorch-Lite 本质上要求 iOS 11.0+ ，即使自行编译 .a 也一样</li>
+</ul>
+<h2 id="_2">原文</h2>
+<blockquote>
+<p><strong>名词解释</strong></p>
+<p>列出词典以统一当前上下文语义。</p>
+<p>ML：Machine Learning，机器学习</p>
+<p>算法，ML 算法：一套特定的映射（A -&gt; B）规则</p>
+<p>特征，特征信息，特征向量：由算法生成的 Float[512]，对应一个特定的 student_id</p>
+<p>模型：一个特殊文件，描述了一套映射规则</p>
+<p>框架：一套第三方代码，用于操作相应的模型</p>
+<p>Tensorflow，TF，TFLite，Pytorch，PY，torch，coreML：一种框架</p>
+<p>MLKit：Google 的 SDK，包含了某些框架和模型</p>
+</blockquote>
+<h4 id="_3">流程图</h4>
+<p><img alt="流程图" src="https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/face_detect_01.svg" /></p>
+<h4 id="_4">后端需要做什么？</h4>
+<ul>
+<li>提供一个特征信息接口</li>
+<li>提供业务接口</li>
+<li>数据清洗</li>
+</ul>
+<h4 id="_5">移动端的识别如何进行？</h4>
+<blockquote>
+<p>主工程</p>
+</blockquote>
+<ul>
+<li>输入：视频流</li>
+<li>视频流相关处理（抽帧？生成图片？）</li>
+<li><del>ML 处理：姿态检测（Post Detection）</del></li>
+<li>ML 处理：人脸识别（Face Detection）<ul>
+<li>技术选型：MLKit</li>
+<li>判断当前输入是否存在人脸？<ul>
+<li>给出提示</li>
+</ul>
+</li>
+<li>输出人脸范围，<del>人脸特征点</del></li>
+</ul>
+</li>
+<li>
+<p>根据人脸范围，截取并格式化输入图片</p>
+<ul>
+<li><code>sampleBuffer = 3 * 112 * 112, Tensor = {1, 3, 112, 112}</code></li>
+</ul>
+</li>
+<li>
+<p>ML 处理：人脸检测</p>
+<ul>
+<li>技术选型：PyTorch</li>
+<li>输入：buffer，.pt 模型文件</li>
+<li>输出：特征向量 <code>listA = Float[512]</code></li>
+</ul>
+</li>
+<li>ML 算法：特征比对<ul>
+<li>技术选型：计算方法需和 PyTorch 使用的模型相对应</li>
+<li>遍历从后台获取的所有特征信息列表，按规定的计算方法逐个和 listA 比对</li>
+<li>每次比对会输出一个 0-1 的概率 p，p 越大则认为是同一个学生的概率越大</li>
+</ul>
+</li>
+<li>当 p 大于某个阈值时，直接给出检测结果</li>
+<li>同时获取用户对应照片，上传至后台存档</li>
+</ul>
+<h4 id="_6">移动端需要做什么？</h4>
+<blockquote>
+<p>Verify Demo</p>
+</blockquote>
+<ul>
+<li>首先，需要设计一个流程，以确保本地代码所有用到的参数和框架设置正确；只有确保接入正确后，才能反向来验证模型输出概率的准确性。</li>
+<li>因为主流程输入的是视频流而非照片，所以需要验证工程或输入照片的测试入口，不然没法测。</li>
+<li>具体来说，理论上如果所有输入的变量，参数，模型，框架和算法工程师本地的设置完全一致，那么输入某个已录入的照片 A，最后输出的 p 必为 1。<ul>
+<li>不同的人脸检测框架会输出不同的图片，需要直接用算法工程师生成的 112*112 图片进行测试；</li>
+<li>将图片转成 RGB 数组，该过程存在平台和框架差异，我 iOS 本地会先转成 RGBA 数组再转成 RGB 一维数组，python 输入的是一个三维数组，对下来部分值存在差别，误差大概在 1 左右；</li>
+<li>将 buffer 引入 PyTorch 处理，观察输出值；</li>
+<li>按算法工程师提供的方法计算，观察输出的概率 p；</li>
+<li>iOS 此流程目前已经走通，输出的 p &gt; 0.999999，认为原因是 buffer 输出的差异导致。</li>
+</ul>
+</li>
+<li>接下来再接入<ul>
+<li>视频流</li>
+<li>姿态检测</li>
+</ul>
+</li>
+<li>由于人脸识别算法修改为 MLKit，需要遍历存量图片以向算法工程师反馈整体准确率  @DIO</li>
+<li>下载/解析/存储特征信息列表</li>
+<li>识别成功后，业务流程处理<ul>
+<li>相机流</li>
+<li>业务接口与图片存档</li>
+</ul>
+</li>
+<li>业务 UI 处理</li>
+</ul>
+<h4 id="_7">重点在哪里？</h4>
+<ul>
+<li>速度与准确率的平衡<ul>
+<li>模型越大，精度越高，速度越慢。</li>
+<li>本地判断速度 &gt;&gt; 远端，而精度 &lt;&lt; 远端</li>
+</ul>
+</li>
+<li>性能<ul>
+<li>识别流程是随着视频流输入一直不断进行着的，所有环节都要考虑到性能问题</li>
+</ul>
+</li>
+<li>不断反馈<ul>
+<li>模型精度会根据实际情况调整，需要协助算法工程师进行快速验证</li>
+</ul>
+</li>
+</ul>
+<h4 id="_8">问题点在哪里？</h4>
+<ul>
+<li>特征信息列表<ul>
+<li>是否增量更新？</li>
+<li>解析和遍历速度能否优化？</li>
+<li>数据安全是否需要考虑？</li>
+</ul>
+</li>
+<li>p 的阈值需要敲定</li>
+<li>姿态检测的阈值需要调试</li>
+<li>图片存档相关处理<ul>
+<li>看 MLKit 需要 buffer 还是图片</li>
+</ul>
+</li>
+<li>包体大小</li>
+<li>iOS 相关<ul>
+<li>iOS 12.0 +</li>
+<li>arm64 模拟器包处理</li>
+</ul>
+</li>
+</ul>
+<h4 id="_9">测试相关？</h4>
+<ul>
+<li>监控</li>
+<li>如何介入？</li>
+<li>机型适配？<ul>
+<li>iOS：低性能手机；iOS 12.0 +</li>
+<li>Android：待补充</li>
+</ul>
+</li>
+</ul>
+<h4 id="_10">风险点？</h4>
+<ul>
+<li>实际使用时识别率可能过低；</li>
+<li>技术难点上处理时间过长。</li>
+</ul>
 
               
             </article>
@@ -544,7 +799,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../.." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home" rel="prev">
+        <a href="../../objc.io/%231/issue-1-2/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 1.2 整洁的 Table View 代码" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -553,20 +808,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Home
+              1.2 整洁的 Table View 代码
             </div>
           </div>
         </a>
       
       
         
-        <a href="../%231/issue-1-1/" class="md-footer__link md-footer__link--next" aria-label="Next: 1.1 更轻量的 ViewControllers" rel="next">
+        <a href="../../books/book_monky/" class="md-footer__link md-footer__link--next" aria-label="Next: 别让猴子跳回背上——为什么领导没时间，下属没事做？" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              1.1 更轻量的 ViewControllers
+              别让猴子跳回背上——为什么领导没时间，下属没事做？
             </div>
           </div>
           <div class="md-footer__button md-icon">
