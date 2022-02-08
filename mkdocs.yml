@@ -16,20 +16,29 @@ nav:
         - '别让猴子跳回背上——为什么领导没时间，下属没事做？': 'books/book_monky.md'
     - 'About': 'about.md'
 
+theme:
 #    name: bootstrap4
 #    name: readthedocs
 #    name: bootstrap386
-
-theme:
     name: material
     favicon: assets/images/logo.png
-#    logo: assets/images/logo2.jpeg
+#    logo: assets/images/logo.png
+
+# 自定义 css
+extra_css:
+    - 'assets/css/custom.css'
+
+# 自定义 js
+extra_javascript:
+    - 'assets/js/jquery-3.6.0.min.js'
+    - 'assets/js/custom.js'
 
 markdown_extensions:
-  - pymdownx.highlight:
-      anchor_linenums: true
-  - pymdownx.inlinehilite
-  - pymdownx.snippets
-  - pymdownx.superfences
-  - pymdownx.tilde
-  
+    - markdown.extensions.attr_list
+    - pymdownx.highlight:
+        anchor_linenums: true
+    - pymdownx.inlinehilite
+    - pymdownx.snippets
+    - pymdownx.superfences
+    - pymdownx.tilde
+

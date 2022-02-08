@@ -39,7 +39,7 @@
 
 #### 流程图
 
-![流程图](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/face_detect_01.svg)
+![流程图](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/face_detect_01.svg){ .img-pushable }
 
 
 
