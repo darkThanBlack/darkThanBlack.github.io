@@ -13,7 +13,9 @@ nav:
     - 'Blogs':
         - '01 记一次人脸识别业务落地': 'blogs/01-faces.md'
     - 'Books':
-        - '别让猴子跳回背上——为什么领导没时间，下属没事做？': 'books/book_monky.md'
+        - '别让猴子跳回背上——为什么领导没时间，下属没事做？': 'books/monky.md'
+    - 'Living':
+        - '生活小妙招': 'living/tips.md'
     - 'About': 'about.md'
 
 theme:
