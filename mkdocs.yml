@@ -12,10 +12,12 @@ nav:
             - '1.2 整洁的 Table View 代码': 'objc.io/#1/issue-1-2.md'
     - 'Blogs':
         - '01 记一次人脸识别业务落地': 'blogs/01-faces.md'
+        - '00 起飞清单': 'blogs/00-checklist.md'
     - 'Books':
         - '别让猴子跳回背上——为什么领导没时间，下属没事做？': 'books/monky.md'
     - 'Living':
         - '生活小妙招': 'living/tips.md'
+        - '消费主义': 'living/spend-money.md'
     - 'About': 'about.md'
 
 theme:
