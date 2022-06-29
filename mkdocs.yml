@@ -19,6 +19,8 @@ nav:
     - 'Living':
         - '生活小妙招': 'living/tips.md'
         - '消费主义': 'living/spend-money.md'
+    - 'Keyboard Policy':
+        - '键政': 'keyboard-policy/keyboard-policy.md'
     - 'About': 'about.md'
 
 theme:
