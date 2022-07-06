@@ -373,6 +373,33 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    语言特性
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    选型
+  </a>
+  
+    <nav class="md-nav" aria-label="选型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#xcframework" class="md-nav__link">
+    *.xcFramework
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -533,6 +560,54 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Keyboard Policy
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Keyboard Policy" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Keyboard Policy
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../keyboard-policy/keyboard-policy/" class="md-nav__link">
+        键政
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../about/" class="md-nav__link">
         About
@@ -574,6 +649,33 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    语言特性
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    选型
+  </a>
+  
+    <nav class="md-nav" aria-label="选型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#xcframework" class="md-nav__link">
+    *.xcFramework
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -604,7 +706,17 @@
 <p>静态化后的代码无法被修改，所以需要区分出被修改的代码，和不被修改的代码。</p>
 <p>在对代码进行区分过后，必然形成相对独立的多份代码，有人将这些代码称为模块，将区分的手段称为模块化。</p>
 <p>静态化的代码越多，编译速度越快；静态化的代码越少，编译速度越慢。好的方案需要使可静态化的代码尽可能多。</p>
-<p>代码之间的联系越多，修改时涉及到的代码也就越多，可静态化的代码就越少，速度就越慢。好的方案需要使模块代码之间的关联尽可能少。</p>
+<p>代码之间的联系越多，修改时涉及到的代码也就越多，可静态化的代码就越少，编译速度越慢。好的方案需要使模块代码之间的关联尽可能少。</p>
+<p>静态化手段本身具有成本。好的方案需要尽可能降低使用成本。</p>
+<h2 id="_2">语言特性</h2>
+<p>先考虑手动制作一个最通用的静态库。lipo 的合并命令使用非常简单，导致网上充斥着大量的垃圾教程。</p>
+<p>纯 ObjC / 纯 Swift / ObjC - Swift 混编 / <em>.a - </em>.framework 重新封装 / *.bundle 处理 都必须考虑到。如果新业务涉及到的时候需要重新制作静态库，那就是你的问题。</p>
+<p>要注意混编相关的多种场景：静态库本身是纯 ObjC / 纯 Swift，但会被另一种代码调用；静态库内部的代码混编了 ObjC 和 Swift。</p>
+<p><em>.bundle 可能需要单独处理，做完后一定要测一下。需要提供快速验证静态库调用本身 </em>.bundle 是否成功的手段。现在还可能有 *.docC。</p>
+<h2 id="_3">选型</h2>
+<p>我现在敢说 Swift 最大的痛点就是静态库支持。基于较低版本 Swift 制作的静态库无法在任何更高版本的 Swift 环境中运行。</p>
+<h4 id="xcframework">*.xcFramework</h4>
+<p>缺失关键特性。不可接受。不可用。</p>
 
               
             </article>
