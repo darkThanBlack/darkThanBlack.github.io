@@ -108,10 +108,9 @@
     * 配置：
 * [Typora](https://macwk.com/soft/typora)
     * [PicGo](https://picgo.github.io/PicGo-Doc/zh/guide/#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85)
-        * 配置：
+        * 配置：``~/Library/Application Support/picgo/data.json``
 * [iTerm2](https://iterm2.com/downloads.html)
-    * 配置：
+    * 配置：指定目录
 * [Charles](https://www.charlesproxy.com/download/)
     * 配置：
 * VSCode
-
