@@ -66,3 +66,50 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 日志
+
+
+
+#### Xcode  14.0.1 (14A400) 
+
+
+
+* SwiftAlgorithms
+    * v3.6.0 -> 4.1.0
+    * 问题：
+    ![img](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/image-20220929175129043.png)
+    * 解决：https://github.com/apple/swift-algorithms/issues/189
+
+* RealmSwift, Others
+    * 10.25.1 -> 10.30.0
+    * 问题：
+    * ``pod 'RealmSwift'`` 且 同时 ``pod 'WechatOpenSDK'``，并设置 Realm 的 ``MACH_O_TYPE`` 为 ``staticlib`` 时，报``Undefind Symbol``错误
+    * 解决1：``staticlib`` -> ``mh_dylib``； issue 待咨询
+* 
+
+
+
+
+
+
+
+
+
+
+

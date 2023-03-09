@@ -19,6 +19,7 @@ nav:
     - 'Living':
         - '生活小妙招': 'living/tips.md'
         - '消费主义': 'living/spend-money.md'
+        - '飞行清单 - 短途越野': 'check-list-run.md'
     - 'Keyboard Policy':
         - '键政': 'keyboard-policy/keyboard-policy.md'
     - 'About': 'about.md'
