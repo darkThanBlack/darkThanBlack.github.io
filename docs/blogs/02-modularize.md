@@ -72,7 +72,16 @@
 
 
 
+## 实践 03.19
 
+* ``CFBundleSupportedPlatforms: iPhoneOS``
+* ``xxx.frameworks/Headers/xxx-Swift.h`` merge
+  * ``#if 0``
+  * ``\#elif defined(__x86_64__) && __x86_64__``
+  * ``\#elif defined(__arm64__) && __arm64__``
+  * ``\#elif defined(__ARM_ARCH_7A__) && __ARM_ARCH_7A__``
+  * 难点：
+    ![img](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios_16_20230330182417.png)
 
 
 
@@ -86,34 +95,93 @@
 
 
 
-#### Xcode  14.0.1 (14A400) 
+#### Xcode  14.x
+
+* 本质：![image-20230329142235601](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16_20230329142235601.png)
+
+  ```markdown
+  Failed to build module 'SnapKit'; this SDK is not supported by the compiler (the SDK is built with 'Apple Swift version 5.6 (swiftlang-5.6.0.323.62 clang-1316.0.20.8)', while this compiler is 'Apple Swift version 5.8 (swiftlang-5.8.0.124.1 clang-1403.0.22.11.100)'). Please select a toolchain which matches the SDK.
+  ```
+  
+  
+
+* pod 通用覆写代码：
+
+  ```ruby
+  post_install do |installer|
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        # do sth.
+      end
+    end
+  end
+  ```
 
 
 
+* development team required
+  * 问题：
+    ![img](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16_20230329110852.png)
+
+    ```markdown
+    Signing for "mock" requires a development team. Select a development team in the Signing & Capabilities editor.
+    ```
+  
+  * 解决：https://www.jianshu.com/p/21cf97fb7fc7
+  
+    ```ruby
+    config.build_settings['EXPANDED_CODE_SIGN_IDENTITY'] = ""
+    config.build_settings['CODE_SIGNING_REQUIRED'] = "NO"
+    config.build_settings['CODE_SIGNING_ALLOWED'] = "NO"
+    ```
+  
+    
+  
 * SwiftAlgorithms
     * v3.6.0 -> 4.1.0
+    
     * 问题：
-    ![img](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/image-20220929175129043.png)
-    * 解决：https://github.com/apple/swift-algorithms/issues/189
+      ![img](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/image-20220929175129043.png)
 
+    * 解决：https://github.com/apple/swift-algorithms/issues/189
+    
+      ```ruby
+      config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'NO'
+      ```
+    
+      
+    
 * RealmSwift, Others
     * 10.25.1 -> 10.30.0
-    * 问题：
-    * ``pod 'RealmSwift'`` 且 同时 ``pod 'WechatOpenSDK'``，并设置 Realm 的 ``MACH_O_TYPE`` 为 ``staticlib`` 时，报``Undefind Symbol``错误
-    * 解决1：``staticlib`` -> ``mh_dylib``； issue 待咨询
     
-* Plist
+    * 问题：
+    
+      ``pod 'RealmSwift'`` 且 同时 ``pod 'WechatOpenSDK'``，并设置 Realm 的 ``MACH_O_TYPE`` 为 ``staticlib`` 时，报``Undefind Symbol``错误
+    
+    * 解决1：``staticlib`` -> ``mh_dylib``； issue 待咨询
+
+
+
+* plist
 
     * 问题：
 
         ![img](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16_20230328180702.png)
-    
+
         ```markdown
         Showing Recent Messages
         Cannot code sign because the target does not have an Info.plist file and one is not being generated automatically. Apply an Info.plist file to the target using the INFOPLIST_FILE build setting or generate one automatically by setting the GENERATE_INFOPLIST_FILE build setting to YES (recommended).
         ```
-    
-    * 解决：
+
+    * 解决1: https://juejin.cn/post/7197361396219772983  其实不是，但需要了解。
+
+        ```ruby
+        config.build_settings['GENERATE_INFOPLIST_FILE'] = "NO"
+        ```
+
+    * 解决2: 这里是因为 ``.xcodeproj`` 通过 ``xcodegen`` 生成，这个模块又没有放入 ``.plist`` 文件。
+
+
 
 
 
