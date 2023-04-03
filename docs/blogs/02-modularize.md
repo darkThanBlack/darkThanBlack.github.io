@@ -123,7 +123,7 @@
   * 问题：
     ![img](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16_20230329110852.png)
 
-    ```markdown
+    ```swift
     Signing for "mock" requires a development team. Select a development team in the Signing & Capabilities editor.
     ```
   
@@ -138,7 +138,7 @@
     
   
 * SwiftAlgorithms
-    * v3.6.0 -> 4.1.0
+    * Charts v3.6.0 -> 4.1.0
     
     * 问题：
       ![img](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/image-20220929175129043.png)
@@ -168,7 +168,7 @@
 
         ![img](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16_20230328180702.png)
 
-        ```markdown
+        ```swift
         Showing Recent Messages
         Cannot code sign because the target does not have an Info.plist file and one is not being generated automatically. Apply an Info.plist file to the target using the INFOPLIST_FILE build setting or generate one automatically by setting the GENERATE_INFOPLIST_FILE build setting to YES (recommended).
         ```
@@ -183,7 +183,19 @@
 
 
 
+* BUILD_LIBRARY_FOR_DISTRIBUTION
 
+  * 问题：
+
+    ![image-20230403143608378](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16_20230403143608378.png)
+
+    ```swift
+    Explicit '@objc' on subclass of 'MobilePlayerViewController' requires iOS 13.0.0
+    ```
+
+  * OC 调用 Swift：``@objc / @objcMembers``
+
+  * 
 
 
 
