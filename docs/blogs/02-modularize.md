@@ -83,7 +83,7 @@
   * 难点：
     ![img](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios_16_20230330182417.png)
 
-
+比如 ``Xcode 13.x`` 之前编译产物就不长这样，脚本需要适时调整。
 
 
 
@@ -97,7 +97,7 @@
 
 #### Xcode  14.x
 
-* 本质：![image-20230329142235601](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16_20230329142235601.png)
+* 本质原因：![image-20230329142235601](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16_20230329142235601.png)
 
   ```markdown
   Failed to build module 'SnapKit'; this SDK is not supported by the compiler (the SDK is built with 'Apple Swift version 5.6 (swiftlang-5.6.0.323.62 clang-1316.0.20.8)', while this compiler is 'Apple Swift version 5.8 (swiftlang-5.8.0.124.1 clang-1403.0.22.11.100)'). Please select a toolchain which matches the SDK.
@@ -149,57 +149,100 @@
       config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'NO'
       ```
     
-      
+
+
+
+* 问题：
+
+    ![img](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16_20230328180702.png)
+
+    ```swift
+    Showing Recent Messages
+    Cannot code sign because the target does not have an Info.plist file and one is not being generated automatically. Apply an Info.plist file to the target using the INFOPLIST_FILE build setting or generate one automatically by setting the GENERATE_INFOPLIST_FILE build setting to YES (recommended).
+    ```
     
-* RealmSwift, Others
-    * 10.25.1 -> 10.30.0
-    
-    * 问题：
-    
-      ``pod 'RealmSwift'`` 且 同时 ``pod 'WechatOpenSDK'``，并设置 Realm 的 ``MACH_O_TYPE`` 为 ``staticlib`` 时，报``Undefind Symbol``错误
-    
-    * 解决1：``staticlib`` -> ``mh_dylib``； issue 待咨询
-
-
-
-* plist
-
-    * 问题：
-
-        ![img](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16_20230328180702.png)
-
-        ```swift
-        Showing Recent Messages
-        Cannot code sign because the target does not have an Info.plist file and one is not being generated automatically. Apply an Info.plist file to the target using the INFOPLIST_FILE build setting or generate one automatically by setting the GENERATE_INFOPLIST_FILE build setting to YES (recommended).
-        ```
-
     * 解决1: https://juejin.cn/post/7197361396219772983  其实不是，但需要了解。
 
         ```ruby
         config.build_settings['GENERATE_INFOPLIST_FILE'] = "NO"
         ```
-
+    
     * 解决2: 这里是因为 ``.xcodeproj`` 通过 ``xcodegen`` 生成，这个模块又没有放入 ``.plist`` 文件。
 
 
 
-* BUILD_LIBRARY_FOR_DISTRIBUTION
+* 问题：
 
-  * 问题：
+  ![image-20230403143608378](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16_20230403143608378.png)
 
-    ![image-20230403143608378](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16_20230403143608378.png)
-
-    ```swift
-    Explicit '@objc' on subclass of 'MobilePlayerViewController' requires iOS 13.0.0
-    ```
-
-  * OC 调用 Swift：``@objc / @objcMembers``
-
-  * 
+  ```swift
+Explicit '@objc' on subclass of 'MobilePlayerViewController' requires iOS 13.0.0
+  ```
+  
+  * OC 调用 Swift 知识：``@objc / @objcMembers`` 关键字，其实不是，但需要了解。
+* 结论是需要处理 ``BUILD_LIBRARY_FOR_DISTRIBUTION``，[京东组件化](https://zhuanlan.zhihu.com/p/349967113) 里有提到。
 
 
 
+* 耗时过长，拆开来写：
+
+  ![image-20230404155213205](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16-20230404155213205.png)
+
+  ```
+  The compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions.
+  ```
 
 
 
+* 编译通过，模拟器运行时，出现：
+  ![image-20230405171937015](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16_-20230405171937015.png)
+
+  ```swift
+  Undefined symbols for architecture x86_64:
+    "_$s10RealmSwift0A14CollectionImplPAAE12makeIteratorAA11RLMIteratorVy7ElementQzGyF", referenced from:
+        _$s11Persistence12RealmManagerC7objects2of9predicateSayxGSgxm_q_tSo0B11SwiftObjectCRbzr0_lF in Persistence(RealmManager.o)
+        _$s11Persistence12RealmManagerC10allObjects2ofSayxGSgxm_tSo0B11SwiftObjectCRbzlF in Persistence(RealmManager.o)
+    "_$s10RealmSwift7ResultsVyxGAA0A14CollectionImplAAMc", referenced from:
+        _$s11Persistence12RealmManagerC7objects2of9predicateSayxGSgxm_q_tSo0B11SwiftObjectCRbzr0_lF in Persistence(RealmManager.o)
+        _$s11Persistence12RealmManagerC10allObjects2ofSayxGSgxm_tSo0B11SwiftObjectCRbzlF in Persistence(RealmManager.o)
+    "_OBJC_CLASS_$_SLImageClipController", referenced from:
+        objc-class-ref in HomeSchool(JPCropViewController.o)
+  ld: symbol(s) not found for architecture x86_64
+  clang: error: linker command failed with exit code 1 (use -v to see invocation)
+  ```
+  
+  * 解决：两种原因，``_OBJC_CLASS_$_SLImageClipController`` 是因为我二进制真的做错了，重做即可；``Realm`` 比较复杂：
+  * 首先：
+    * [检查](https://www.mongodb.com/docs/realm/sdk/swift/install/#prerequisites)
+    * 旧版的 [在 Objective-C 和 Swift 混合工程中使用 Realm](https://www.mongodb.com/docs/legacy/realm/objc/latest.html#using-the-realm-framework), 来自 [issue-7803](https://github.com/realm/realm-swift/issues/7803#issuecomment-1135568615) 的提示
+  * 搜索讨论串，怀疑：
+    *  [Intel / M1 Mac](https://www.mongodb.com/community/forums/t/installing-realmswift-on-an-intel-mac-installs-different-librealm-monorepo-a-binary-than-when-installed-on-an-m1-mac/191764/4)
+    * [版本问题](https://www.mongodb.com/community/forums/t/trouble-archiving-because-of-undefined-realm-realmswift-symbols/205450)
+  * 查 issues：
+    * 受 [issues-7114](https://github.com/realm/realm-swift/issues/7114#issuecomment-1328242905) 启发，尝试 ``ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES``
+  * 根据老代码，调整 ``mach-o type``
+  * 暂定结论是 ``Realm`` 需要 ``mh_dylib``， ``RealmSwift`` 保持 ``staticlib``
+
+
+
+* 编译通过，真机运行时，出现：
+  ```swift
+  dyld[7510]: Library not loaded: @rpath/App.framework/App
+    Referenced from: <A11A27F1-222B-3BA4-A371-268CE92F7FD3> /private/var/containers/Bundle/Application/B9B45F2E-20FC-49EB-B5BC-D0F08EF75FB2/XMApp.app/XMApp
+    Reason: tried: '/usr/lib/swift/App.framework/App' (errno=2, not in dyld cache), '/private/preboot/Cryptexes/OS/usr/lib/swift/App.framework/App' (errno=2), '/usr/lib/swift/App.framework/App' (errno=2, not in dyld cache), '/private/preboot/Cryptexes/OS/usr/lib/swift/App.framework/App' (errno=2), '/private/var/containers/Bundle/Application/B9B45F2E-20FC-49EB-B5BC-D0F08EF75FB2/XMApp.app/Frameworks/App.framework/App' (errno=2), '/private/var/containers/Bundle/Application/B9B45F2E-20FC-49EB-B5BC-D0F08EF75FB2/XMApp.app/Frameworks/App.framework/App' (errno=2), '/private/var/containers/Bundle/Application/B9B45F2E-20FC-49EB-B5BC-D0F08EF75FB2/XMApp.app/Frameworks/App.framework/App' (errno=2), '/usr/lib/swift/App.framework/App' (errno=2, not in dyld cache), '/private/preboot/Cryptexes/OS/usr/lib/swift/App.framework/App' (errno=2), '/usr/lib/swift/App.framework/App' (errno=2, not in dyld cache), '/private/preboot/Cryptexes/OS/usr/lib/swift/App.framework/App' (errno=2), '/private/var/containers/Bundle/Application/B9B45F2E-20FC-49EB-B5BC-D0F08EF75FB2/XMApp.app/Frameworks/App.framework/App' (errno=2), '/private/var/containers/Bundle/Application/B9B45F2E-20FC-49EB-B5BC-D0F08EF75FB2/XMApp.app/Frameworks/App.framework/App' (errno=2), '/private/var/containers/Bundle/Application/B9B45F2E-20FC-49EB-B5BC-D0F08EF75FB2/XMApp.app/Frameworks/App.framework/App' (errno=2), '/private/preboot/Cryptexes/OS@rpath/App.framework/App' (errno=2), '/usr/lib/swift/App.framework/App' (errno=2, not in dyld cache), '/private/preboot/Cryptexes/OS/usr/lib/swift/App.framework/App' (errno=2), '/usr/lib/swift/App.framework/App' (errno=2, not in dyld cache), '/private/preboot/Cryptexes/OS/usr/lib/swift/App.framework/App' (errno=2), '/private/var/containers/Bundle/Application/B9B45F2E-20FC-49EB-B5BC-D0F08EF75FB2/XMApp.app/Frameworks/App.framework/App' (errno=2), '/private/var/containers/Bundle/Application/B9B45F2E-20FC-49EB-B5BC-D0F08EF75FB2/XMApp.app/Frameworks/App.framework/App' (errno=2), '/private/var/containers/Bundle/Application/B9B45F2E-20FC-49EB-B5BC-D0F08EF75FB2/XMApp.app/Frameworks/App.framework/App' (errno=2), '/usr/lib/swift/App.framework/App' (errno=2, not in dyld cache), '/private/preboot/Cryptexes/OS/usr/lib/swift/App.framework/App' (errno=2), '/usr/lib/swift/App.framework/App' (errno=2, not in dyld cache), '/private/preboot/Cryptexes/OS/usr/lib/swift/App.framework/App' (errno=2), '/private/var/containers/Bundle/Application/B9B45F2E-20FC-49EB-B5BC-D0F08EF75FB2/XMApp.app/Frameworks/App.framework/App' (errno=2), '/private/var/containers/Bundle/Application/B9B45F2E-20FC-49EB-B5BC-D0F08EF75FB2/XMApp.app/Frameworks/App.framework/App' (errno=2), '/private/var/containers/Bundle/Application/B9B45F2E-20FC-49EB-B5BC-D0F08EF75FB2/XMApp.app/Frameworks/App.framework/App' (errno=2), '/System/Library/Frameworks/App.framework/App' (errno=2, not in dyld cache)
+  ```
+  
+  * 解决：[issue-92896](https://github.com/flutter/flutter/issues/92896#issuecomment-999441920)，注意同时保证 cocoapods 和 ruby-macho 版本。
+
+
+
+* 警告：
+
+  ```swift
+  Ignoring ffi-1.10.0 because its extensions are not built. Try: gem pristine ffi --version 1.10.0
+  Ignoring redcarpet-3.4.0 because its extensions are not built. Try: gem pristine redcarpet --version 3.4.0
+  Ignoring sqlite3-1.3.13 because its extensions are not built. Try: gem pristine sqlite3 --version 1.3.13
+  ```
+  
+  * 解决：执行相应命令
 
