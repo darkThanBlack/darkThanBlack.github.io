@@ -246,3 +246,4 @@ Explicit '@objc' on subclass of 'MobilePlayerViewController' requires iOS 13.0.0
   
   * 解决：执行相应命令
 
+* 静态库不制作 framework，直接导入？
