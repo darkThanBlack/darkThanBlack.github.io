@@ -62,9 +62,11 @@
 
 #### *.xcFramework
 
-缺失关键特性。不可接受。不可用。
+[介绍](https://github.com/bielikb/xcframeworks)
 
+关键在 ``Troubleshooting`` 一节，尤其是 ``@objc' class method in extension of subclass of `Class X` requires iOS 13.0.0``，原则上我们是需要在不对现有代码和三方库修改的基础上进行打包。
 
+所以，这个方案目前缺失关键特性，不可接受，不可用。
 
 
 
@@ -176,7 +178,7 @@
   ![image-20230403143608378](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16_20230403143608378.png)
 
   ```swift
-Explicit '@objc' on subclass of 'MobilePlayerViewController' requires iOS 13.0.0
+  Explicit '@objc' on subclass of 'MobilePlayerViewController' requires iOS 13.0.0
   ```
   
   * OC 调用 Swift 知识：``@objc / @objcMembers`` 关键字，其实不是，但需要了解。
@@ -246,4 +248,44 @@ Explicit '@objc' on subclass of 'MobilePlayerViewController' requires iOS 13.0.0
   
   * 解决：执行相应命令
 
-* 静态库不制作 framework，直接导入？
+* 静态库不制作 framework，直接导入
+
+
+
+* 问题
+
+  ![image-20230413185356587](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16-20230413185356587.png)
+
+```swift
+Synchronous URL loading of xxx should not occur on this application's main thread as it may lead to UI unresponsiveness. Please switch to an asynchronous networking API such as URLSession.
+```
+
+
+
+
+
+## Flutter
+
+* 本质：
+  * ``~/Documents/XiaoMai/b/flutterPack/.ios/`` 工程执行 ``pod install`` 时极有可能报错，但 ``Flutter`` 无法 cover 这部分问题，需要自己手动去执行并检查，同时注意 ``podHelper.rb`` 源码
+
+
+
+* 问题：
+
+  ``Flutter.h not found``
+
+* 观察  ``~/Documents/XiaoMai/b/flutterPack/.ios/Flutter`` [1]，发现 ``engine`` 有问题
+
+* 前者应来自于 ``~/fvm/versions/2.0.6/bin/cache/artifacts/engine`` [2] 下的 ``ios`` 文件夹
+
+* 从旧资料/电脑上可以发现正常情况下 [1] 处存在 ``Flutter.framework``，[参考1](https://stackoverflow.com/questions/64973346/error-flutter-flutter-h-file-not-found-when-flutter-run-on-ios?noredirect=1&lq=1)，[参考2](https://stackoverflow.com/questions/50671286/flutter-h-not-found-error)，实际一般无效
+
+* 手动复制 ``Flutter.framework`` 置入不可行，因为会被 ``pod install`` 动作覆盖
+
+* [参考3](https://blog.csdn.net/qq_32792839/article/details/111247075) 提到 ``*.framework`` 已经变成 ``*.xcframework``
+
+* [参考4](https://juejin.cn/post/7202541740933759031) 提到 ``*.podspec`` 内 ``.vendored_frameworks`` 发生变化，但 ``.dependency`` 对我的场景未必管用
+
+* 暂先直接改回 [2] 处 ``*.podspec`` 的 ``.vendored_frameworks`` 属性，``pod install`` 后发现 ``*.xcframework`` 拷贝成功
+
