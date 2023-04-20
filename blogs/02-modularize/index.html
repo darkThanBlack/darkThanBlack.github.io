@@ -10,8 +10,14 @@
       
         <link rel="canonical" href="https://darkthanblack.github.io/blogs/02-modularize/">
       
+      
+        <link rel="prev" href="../03-enterprise/">
+      
+      
+        <link rel="next" href="../01-faces/">
+      
       <link rel="icon" href="../../assets/images/logo.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.8">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.6">
     
     
       
@@ -19,29 +25,32 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.6e60f8b8.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ded33207.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+
+    
+    
+    
+      
         
-      
-    
-    
-    
-      
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
     
       <link rel="stylesheet" href="../../assets/css/custom.css">
     
-    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
+    
     
     
   </head>
@@ -52,7 +61,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
   
     
     
@@ -74,16 +83,18 @@
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="moonShadow" class="md-header__button md-logo" aria-label="moonShadow" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
@@ -105,7 +116,7 @@
     
     
       <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
       </label>
       <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
@@ -113,13 +124,13 @@
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
-        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
         </button>
       </nav>
       
@@ -130,7 +141,7 @@
           <div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list" role="presentation"></ol>
         </div>
       </div>
     </div>
@@ -165,7 +176,7 @@
     <a href="../.." title="moonShadow" class="md-nav__button md-logo" aria-label="moonShadow" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
 
     </a>
     moonShadow
@@ -199,17 +210,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
       
       
       
-      
-        <label class="md-nav__link" for="__nav_2">
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
           objc.io
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="objc.io" data-md-level="1">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
           objc.io
@@ -239,17 +251,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
       
       
       
-      
-        <label class="md-nav__link" for="__nav_2_2">
+        <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
           #1 更轻量的 ViewControllers
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="#1 更轻量的 ViewControllers" data-md-level="2">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_2_2">
           <span class="md-nav__icon md-icon"></span>
           #1 更轻量的 ViewControllers
@@ -310,17 +323,18 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
       
       
       
-      
-        <label class="md-nav__link" for="__nav_3">
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
           Blogs
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Blogs" data-md-level="1">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
           Blogs
@@ -331,12 +345,26 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="../03-enterprise/" class="md-nav__link">
+        03 企业证书续费
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
     <li class="md-nav__item md-nav__item--active">
       
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
         
@@ -401,6 +429,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#0319" class="md-nav__link">
+    实践 03.19
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
     日志
   </a>
@@ -409,14 +444,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#xcode-1401-14a400" class="md-nav__link">
-    Xcode  14.0.1 (14A400)
+  <a href="#xcode-14x" class="md-nav__link">
+    Xcode  14.x
   </a>
   
 </li>
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flutter" class="md-nav__link">
+    Flutter
+  </a>
   
 </li>
       
@@ -450,7 +492,7 @@
   
     <li class="md-nav__item">
       <a href="../00-checklist/" class="md-nav__link">
-        00 起飞清单
+        00 飞行清单
       </a>
     </li>
   
@@ -474,17 +516,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
       
       
       
-      
-        <label class="md-nav__link" for="__nav_4">
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
           Books
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Books" data-md-level="1">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
           Books
@@ -522,17 +565,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
       
       
       
-      
-        <label class="md-nav__link" for="__nav_5">
+        <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
           Living
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Living" data-md-level="1">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_5">
           <span class="md-nav__icon md-icon"></span>
           Living
@@ -598,17 +642,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
       
       
       
-      
-        <label class="md-nav__link" for="__nav_6">
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
           Keyboard Policy
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Keyboard Policy" data-md-level="1">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
           Keyboard Policy
@@ -711,6 +756,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#0319" class="md-nav__link">
+    实践 03.19
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
     日志
   </a>
@@ -719,14 +771,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#xcode-1401-14a400" class="md-nav__link">
-    Xcode  14.0.1 (14A400)
+  <a href="#xcode-14x" class="md-nav__link">
+    Xcode  14.x
   </a>
   
 </li>
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flutter" class="md-nav__link">
+    Flutter
+  </a>
   
 </li>
       
@@ -738,10 +797,12 @@
               </div>
             
           
-          <div class="md-content" data-md-component="content">
-            <article class="md-content__inner md-typeset">
-              
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
                 
+                  
+
 
 <h1 id="modularize">Modularize</h1>
 <p>简要记录模块化过程中个人思路和要点。</p>
@@ -770,74 +831,256 @@
 <h2 id="_3">选型</h2>
 <p>我现在敢说 Swift 最大的痛点就是静态库支持。基于较低版本 Swift 制作的静态库无法在任何更高版本的 Swift 环境中运行。</p>
 <h4 id="xcframework">*.xcFramework</h4>
-<p>缺失关键特性。不可接受。不可用。</p>
-<h2 id="_4">日志</h2>
-<h4 id="xcode-1401-14a400">Xcode  14.0.1 (14A400)</h4>
+<p><a href="https://github.com/bielikb/xcframeworks">介绍</a></p>
+<p>关键在 <code>Troubleshooting</code> 一节，尤其是 <code>@objc' class method in extension of subclass of `Class X` requires iOS 13.0.0</code>，原则上我们是需要在不对现有代码和三方库修改的基础上进行打包。</p>
+<p>所以，这个方案目前缺失关键特性，不可接受，不可用。</p>
+<h2 id="0319">实践 03.19</h2>
 <ul>
+<li><code>CFBundleSupportedPlatforms: iPhoneOS</code></li>
+<li><code>xxx.frameworks/Headers/xxx-Swift.h</code> merge</li>
+<li><code>#if 0</code></li>
+<li><code>\#elif defined(__x86_64__) &amp;&amp; __x86_64__</code></li>
+<li><code>\#elif defined(__arm64__) &amp;&amp; __arm64__</code></li>
+<li><code>\#elif defined(__ARM_ARCH_7A__) &amp;&amp; __ARM_ARCH_7A__</code></li>
+<li>难点：
+    <img alt="img" src="https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios_16_20230330182417.png" /></li>
+</ul>
+<p>比如 <code>Xcode 13.x</code> 之前编译产物就不长这样，脚本需要适时调整。</p>
+<h2 id="_4">日志</h2>
+<h4 id="xcode-14x">Xcode  14.x</h4>
+<ul>
+<li>本质原因：<img alt="image-20230329142235601" src="https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16_20230329142235601.png" /></li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Failed to build module &#39;SnapKit&#39;; this SDK is not supported by the compiler (the SDK is built with &#39;Apple Swift version 5.6 (swiftlang-5.6.0.323.62 clang-1316.0.20.8)&#39;, while this compiler is &#39;Apple Swift version 5.8 (swiftlang-5.8.0.124.1 clang-1403.0.22.11.100)&#39;). Please select a toolchain which matches the SDK.
+</code></pre></div>
+<ul>
+<li>pod 通用覆写代码：</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">post_install</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">installer</span><span class="o">|</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="n">installer</span><span class="o">.</span><span class="n">pods_project</span><span class="o">.</span><span class="n">targets</span><span class="o">.</span><span class="n">each</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">target</span><span class="o">|</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="n">target</span><span class="o">.</span><span class="n">build_configurations</span><span class="o">.</span><span class="n">each</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">config</span><span class="o">|</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">      </span><span class="c1"># do sth.</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="k">end</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="k">end</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="k">end</span>
+</code></pre></div>
+<ul>
+<li>development team required</li>
+<li>
+<p>问题：
+    <img alt="img" src="https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16_20230329110852.png" /></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">Signing</span> <span class="k">for</span> <span class="s">&quot;mock&quot;</span> <span class="n">requires</span> <span class="n">a</span> <span class="n">development</span> <span class="n">team</span><span class="p">.</span> <span class="n">Select</span> <span class="n">a</span> <span class="n">development</span> <span class="n">team</span> <span class="k">in</span> <span class="n">the</span> <span class="n">Signing</span> <span class="o">&amp;</span> <span class="n">Capabilities</span> <span class="n">editor</span><span class="p">.</span>
+</code></pre></div>
+</li>
+<li>
+<p>解决：https://www.jianshu.com/p/21cf97fb7fc7</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">config</span><span class="o">.</span><span class="n">build_settings</span><span class="o">[</span><span class="s1">&#39;EXPANDED_CODE_SIGN_IDENTITY&#39;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">config</span><span class="o">.</span><span class="n">build_settings</span><span class="o">[</span><span class="s1">&#39;CODE_SIGNING_REQUIRED&#39;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;NO&quot;</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">config</span><span class="o">.</span><span class="n">build_settings</span><span class="o">[</span><span class="s1">&#39;CODE_SIGNING_ALLOWED&#39;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;NO&quot;</span>
+</code></pre></div>
+</li>
 <li>
 <p>SwiftAlgorithms</p>
 <ul>
-<li>v3.6.0 -&gt; 4.1.0</li>
-<li>问题：
-<img alt="img" src="https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/image-20220929175129043.png" /></li>
-<li>解决：https://github.com/apple/swift-algorithms/issues/189</li>
+<li>
+<p>Charts v3.6.0 -&gt; 4.1.0</p>
+</li>
+<li>
+<p>问题：
+  <img alt="img" src="https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/image-20220929175129043.png" /></p>
+</li>
+<li>
+<p>解决：https://github.com/apple/swift-algorithms/issues/189</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">config</span><span class="o">.</span><span class="n">build_settings</span><span class="o">[</span><span class="s1">&#39;BUILD_LIBRARY_FOR_DISTRIBUTION&#39;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;NO&#39;</span>
+</code></pre></div>
+</li>
+<li>
+<p>问题：</p>
+<p><img alt="img" src="https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16_20230328180702.png" /></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">Showing</span> <span class="n">Recent</span> <span class="n">Messages</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">Cannot</span> <span class="n">code</span> <span class="n">sign</span> <span class="n">because</span> <span class="n">the</span> <span class="n">target</span> <span class="n">does</span> <span class="n">not</span> <span class="n">have</span> <span class="n">an</span> <span class="n">Info</span><span class="p">.</span><span class="n">plist</span> <span class="n">file</span> <span class="n">and</span> <span class="n">one</span> <span class="k">is</span> <span class="n">not</span> <span class="n">being</span> <span class="n">generated</span> <span class="n">automatically</span><span class="p">.</span> <span class="n">Apply</span> <span class="n">an</span> <span class="n">Info</span><span class="p">.</span><span class="n">plist</span> <span class="n">file</span> <span class="n">to</span> <span class="n">the</span> <span class="n">target</span> <span class="n">using</span> <span class="n">the</span> <span class="n">INFOPLIST_FILE</span> <span class="n">build</span> <span class="n">setting</span> <span class="n">or</span> <span class="n">generate</span> <span class="n">one</span> <span class="n">automatically</span> <span class="n">by</span> <span class="n">setting</span> <span class="n">the</span> <span class="n">GENERATE_INFOPLIST_FILE</span> <span class="n">build</span> <span class="n">setting</span> <span class="n">to</span> <span class="n">YES</span> <span class="p">(</span><span class="n">recommended</span><span class="p">).</span>
+</code></pre></div>
+<ul>
+<li>
+<p>解决1: https://juejin.cn/post/7197361396219772983  其实不是，但相关知识需要了解。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">config</span><span class="o">.</span><span class="n">build_settings</span><span class="o">[</span><span class="s1">&#39;GENERATE_INFOPLIST_FILE&#39;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;NO&quot;</span>
+</code></pre></div>
+</li>
+<li>
+<p>解决2: 这里是因为 <code>.xcodeproj</code> 通过 <code>xcodegen</code> 生成，这个模块又没有放入 <code>.plist</code> 文件。</p>
+</li>
 </ul>
 </li>
 <li>
-<p>RealmSwift, Others</p>
+<p>问题：</p>
+</li>
+</ul>
+<p><img alt="image-20230403143608378" src="https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16_20230403143608378.png" /></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">Explicit</span> <span class="err">&#39;</span><span class="kr">@objc</span><span class="err">&#39;</span> <span class="n">on</span> <span class="n">subclass</span> <span class="n">of</span> <span class="err">&#39;</span><span class="n">MobilePlayerViewController</span><span class="err">&#39;</span> <span class="n">requires</span> <span class="n">iOS</span> <span class="mf">13.0</span><span class="p">.</span><span class="mi">0</span>
+</code></pre></div>
 <ul>
-<li>10.25.1 -&gt; 10.30.0</li>
-<li>问题：</li>
-<li><code>pod 'RealmSwift'</code> 且 同时 <code>pod 'WechatOpenSDK'</code>，并设置 Realm 的 <code>MACH_O_TYPE</code> 为 <code>staticlib</code> 时，报<code>Undefind Symbol</code>错误</li>
-<li>解决1：<code>staticlib</code> -&gt; <code>mh_dylib</code>； issue 待咨询</li>
+<li>OC 调用 Swift 知识：<code>@objc / @objcMembers</code> 关键字，其实不是，但需要了解。</li>
+<li>
+<p>结论是需要处理 <code>BUILD_LIBRARY_FOR_DISTRIBUTION</code>，<a href="https://zhuanlan.zhihu.com/p/349967113">京东组件化</a> 里有提到。</p>
+</li>
+<li>
+<p>耗时过长，拆开来写：</p>
+</li>
+</ul>
+<p><img alt="image-20230404155213205" src="https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16-20230404155213205.png" /></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>The compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions.
+</code></pre></div>
+<ul>
+<li>编译通过，模拟器运行时，出现：
+  <img alt="image-20230405171937015" src="https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16_-20230405171937015.png" /></li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">Undefined</span> <span class="n">symbols</span> <span class="k">for</span> <span class="n">architecture</span> <span class="n">x86_64</span><span class="p">:</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>  <span class="s">&quot;_$s10RealmSwift0A14CollectionImplPAAE12makeIteratorAA11RLMIteratorVy7ElementQzGyF&quot;</span><span class="p">,</span> <span class="n">referenced</span> <span class="n">from</span><span class="p">:</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>      <span class="kc">_</span><span class="err">$</span><span class="n">s11Persistence12RealmManagerC7objects2of9predicateSayxGSgxm_q_tSo0B11SwiftObjectCRbzr0_lF</span> <span class="k">in</span> <span class="n">Persistence</span><span class="p">(</span><span class="n">RealmManager</span><span class="p">.</span><span class="n">o</span><span class="p">)</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>      <span class="kc">_</span><span class="err">$</span><span class="n">s11Persistence12RealmManagerC10allObjects2ofSayxGSgxm_tSo0B11SwiftObjectCRbzlF</span> <span class="k">in</span> <span class="n">Persistence</span><span class="p">(</span><span class="n">RealmManager</span><span class="p">.</span><span class="n">o</span><span class="p">)</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>  <span class="s">&quot;_$s10RealmSwift7ResultsVyxGAA0A14CollectionImplAAMc&quot;</span><span class="p">,</span> <span class="n">referenced</span> <span class="n">from</span><span class="p">:</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>      <span class="kc">_</span><span class="err">$</span><span class="n">s11Persistence12RealmManagerC7objects2of9predicateSayxGSgxm_q_tSo0B11SwiftObjectCRbzr0_lF</span> <span class="k">in</span> <span class="n">Persistence</span><span class="p">(</span><span class="n">RealmManager</span><span class="p">.</span><span class="n">o</span><span class="p">)</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>      <span class="kc">_</span><span class="err">$</span><span class="n">s11Persistence12RealmManagerC10allObjects2ofSayxGSgxm_tSo0B11SwiftObjectCRbzlF</span> <span class="k">in</span> <span class="n">Persistence</span><span class="p">(</span><span class="n">RealmManager</span><span class="p">.</span><span class="n">o</span><span class="p">)</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>  <span class="s">&quot;_OBJC_CLASS_$_SLImageClipController&quot;</span><span class="p">,</span> <span class="n">referenced</span> <span class="n">from</span><span class="p">:</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>      <span class="n">objc</span><span class="o">-</span><span class="kd">class</span><span class="o">-</span><span class="n">ref</span> <span class="k">in</span> <span class="n">HomeSchool</span><span class="p">(</span><span class="n">JPCropViewController</span><span class="p">.</span><span class="n">o</span><span class="p">)</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="n">ld</span><span class="p">:</span> <span class="n">symbol</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">not</span> <span class="n">found</span> <span class="k">for</span> <span class="n">architecture</span> <span class="n">x86_64</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="n">clang</span><span class="p">:</span> <span class="n">error</span><span class="p">:</span> <span class="n">linker</span> <span class="n">command</span> <span class="n">failed</span> <span class="n">with</span> <span class="n">exit</span> <span class="n">code</span> <span class="mi">1</span> <span class="p">(</span><span class="n">use</span> <span class="o">-</span><span class="n">v</span> <span class="n">to</span> <span class="n">see</span> <span class="n">invocation</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>解决：两种原因，<code>_OBJC_CLASS_$_SLImageClipController</code> 是因为我二进制真的做错了，重做即可；<code>Realm</code> 比较复杂：</li>
+<li>首先：<ul>
+<li><a href="https://www.mongodb.com/docs/realm/sdk/swift/install/#prerequisites">检查</a></li>
+<li>旧版的 <a href="https://www.mongodb.com/docs/legacy/realm/objc/latest.html#using-the-realm-framework">在 Objective-C 和 Swift 混合工程中使用 Realm</a>, 来自 <a href="https://github.com/realm/realm-swift/issues/7803#issuecomment-1135568615">issue-7803</a> 的提示</li>
 </ul>
 </li>
-<li></li>
+<li>搜索讨论串，怀疑：<ul>
+<li><a href="https://www.mongodb.com/community/forums/t/installing-realmswift-on-an-intel-mac-installs-different-librealm-monorepo-a-binary-than-when-installed-on-an-m1-mac/191764/4">Intel / M1 Mac</a></li>
+<li><a href="https://www.mongodb.com/community/forums/t/trouble-archiving-because-of-undefined-realm-realmswift-symbols/205450">版本问题</a></li>
+</ul>
+</li>
+<li>查 issues：<ul>
+<li>受 <a href="https://github.com/realm/realm-swift/issues/7114#issuecomment-1328242905">issues-7114</a> 启发，尝试 <code>ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES</code></li>
+</ul>
+</li>
+<li>根据老代码，调整 <code>mach-o type</code></li>
+<li>
+<p>暂定结论是 <code>Realm</code> 需要 <code>mh_dylib</code>， <code>RealmSwift</code> 保持 <code>staticlib</code></p>
+</li>
+<li>
+<p>编译通过，真机运行时，出现：
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">dyld</span><span class="p">[</span><span class="mi">7510</span><span class="p">]:</span> <span class="n">Library</span> <span class="n">not</span> <span class="n">loaded</span><span class="p">:</span> <span class="p">@</span><span class="n">rpath</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>  <span class="n">Referenced</span> <span class="n">from</span><span class="p">:</span> <span class="p">&lt;</span><span class="n">A11A27F1</span><span class="o">-</span><span class="mi">222</span><span class="n">B</span><span class="o">-</span><span class="mi">3</span><span class="n">BA4</span><span class="o">-</span><span class="n">A371</span><span class="o">-</span><span class="mi">268</span><span class="n">CE92F7FD3</span><span class="p">&gt;</span> <span class="o">/</span><span class="kd">private</span><span class="o">/</span><span class="kd">var</span><span class="o">/</span><span class="n">containers</span><span class="o">/</span><span class="n">Bundle</span><span class="o">/</span><span class="n">Application</span><span class="o">/</span><span class="n">B9B45F2E</span><span class="o">-</span><span class="mi">20</span><span class="n">FC</span><span class="o">-</span><span class="mi">49</span><span class="n">EB</span><span class="o">-</span><span class="n">B5BC</span><span class="o">-</span><span class="n">D0F08EF75FB2</span><span class="o">/</span><span class="n">XMApp</span><span class="p">.</span><span class="n">app</span><span class="o">/</span><span class="n">XMApp</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>  <span class="n">Reason</span><span class="p">:</span> <span class="n">tried</span><span class="p">:</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">swift</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">not</span> <span class="k">in</span> <span class="n">dyld</span> <span class="n">cache</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="kd">private</span><span class="o">/</span><span class="n">preboot</span><span class="o">/</span><span class="n">Cryptexes</span><span class="o">/</span><span class="n">OS</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">swift</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">swift</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">not</span> <span class="k">in</span> <span class="n">dyld</span> <span class="n">cache</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="kd">private</span><span class="o">/</span><span class="n">preboot</span><span class="o">/</span><span class="n">Cryptexes</span><span class="o">/</span><span class="n">OS</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">swift</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="kd">private</span><span class="o">/</span><span class="kd">var</span><span class="o">/</span><span class="n">containers</span><span class="o">/</span><span class="n">Bundle</span><span class="o">/</span><span class="n">Application</span><span class="o">/</span><span class="n">B9B45F2E</span><span class="o">-</span><span class="mi">20</span><span class="n">FC</span><span class="o">-</span><span class="mi">49</span><span class="n">EB</span><span class="o">-</span><span class="n">B5BC</span><span class="o">-</span><span class="n">D0F08EF75FB2</span><span class="o">/</span><span class="n">XMApp</span><span class="p">.</span><span class="n">app</span><span class="o">/</span><span class="n">Frameworks</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="kd">private</span><span class="o">/</span><span class="kd">var</span><span class="o">/</span><span class="n">containers</span><span class="o">/</span><span class="n">Bundle</span><span class="o">/</span><span class="n">Application</span><span class="o">/</span><span class="n">B9B45F2E</span><span class="o">-</span><span class="mi">20</span><span class="n">FC</span><span class="o">-</span><span class="mi">49</span><span class="n">EB</span><span class="o">-</span><span class="n">B5BC</span><span class="o">-</span><span class="n">D0F08EF75FB2</span><span class="o">/</span><span class="n">XMApp</span><span class="p">.</span><span class="n">app</span><span class="o">/</span><span class="n">Frameworks</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="kd">private</span><span class="o">/</span><span class="kd">var</span><span class="o">/</span><span class="n">containers</span><span class="o">/</span><span class="n">Bundle</span><span class="o">/</span><span class="n">Application</span><span class="o">/</span><span class="n">B9B45F2E</span><span class="o">-</span><span class="mi">20</span><span class="n">FC</span><span class="o">-</span><span class="mi">49</span><span class="n">EB</span><span class="o">-</span><span class="n">B5BC</span><span class="o">-</span><span class="n">D0F08EF75FB2</span><span class="o">/</span><span class="n">XMApp</span><span class="p">.</span><span class="n">app</span><span class="o">/</span><span class="n">Frameworks</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">swift</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">not</span> <span class="k">in</span> <span class="n">dyld</span> <span class="n">cache</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="kd">private</span><span class="o">/</span><span class="n">preboot</span><span class="o">/</span><span class="n">Cryptexes</span><span class="o">/</span><span class="n">OS</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">swift</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">swift</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">not</span> <span class="k">in</span> <span class="n">dyld</span> <span class="n">cache</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="kd">private</span><span class="o">/</span><span class="n">preboot</span><span class="o">/</span><span class="n">Cryptexes</span><span class="o">/</span><span class="n">OS</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">swift</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="kd">private</span><span class="o">/</span><span class="kd">var</span><span class="o">/</span><span class="n">containers</span><span class="o">/</span><span class="n">Bundle</span><span class="o">/</span><span class="n">Application</span><span class="o">/</span><span class="n">B9B45F2E</span><span class="o">-</span><span class="mi">20</span><span class="n">FC</span><span class="o">-</span><span class="mi">49</span><span class="n">EB</span><span class="o">-</span><span class="n">B5BC</span><span class="o">-</span><span class="n">D0F08EF75FB2</span><span class="o">/</span><span class="n">XMApp</span><span class="p">.</span><span class="n">app</span><span class="o">/</span><span class="n">Frameworks</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="kd">private</span><span class="o">/</span><span class="kd">var</span><span class="o">/</span><span class="n">containers</span><span class="o">/</span><span class="n">Bundle</span><span class="o">/</span><span class="n">Application</span><span class="o">/</span><span class="n">B9B45F2E</span><span class="o">-</span><span class="mi">20</span><span class="n">FC</span><span class="o">-</span><span class="mi">49</span><span class="n">EB</span><span class="o">-</span><span class="n">B5BC</span><span class="o">-</span><span class="n">D0F08EF75FB2</span><span class="o">/</span><span class="n">XMApp</span><span class="p">.</span><span class="n">app</span><span class="o">/</span><span class="n">Frameworks</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="kd">private</span><span class="o">/</span><span class="kd">var</span><span class="o">/</span><span class="n">containers</span><span class="o">/</span><span class="n">Bundle</span><span class="o">/</span><span class="n">Application</span><span class="o">/</span><span class="n">B9B45F2E</span><span class="o">-</span><span class="mi">20</span><span class="n">FC</span><span class="o">-</span><span class="mi">49</span><span class="n">EB</span><span class="o">-</span><span class="n">B5BC</span><span class="o">-</span><span class="n">D0F08EF75FB2</span><span class="o">/</span><span class="n">XMApp</span><span class="p">.</span><span class="n">app</span><span class="o">/</span><span class="n">Frameworks</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="kd">private</span><span class="o">/</span><span class="n">preboot</span><span class="o">/</span><span class="n">Cryptexes</span><span class="o">/</span><span class="n">OS</span><span class="p">@</span><span class="n">rpath</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">swift</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">not</span> <span class="k">in</span> <span class="n">dyld</span> <span class="n">cache</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="kd">private</span><span class="o">/</span><span class="n">preboot</span><span class="o">/</span><span class="n">Cryptexes</span><span class="o">/</span><span class="n">OS</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">swift</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">swift</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">not</span> <span class="k">in</span> <span class="n">dyld</span> <span class="n">cache</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="kd">private</span><span class="o">/</span><span class="n">preboot</span><span class="o">/</span><span class="n">Cryptexes</span><span class="o">/</span><span class="n">OS</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">swift</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="kd">private</span><span class="o">/</span><span class="kd">var</span><span class="o">/</span><span class="n">containers</span><span class="o">/</span><span class="n">Bundle</span><span class="o">/</span><span class="n">Application</span><span class="o">/</span><span class="n">B9B45F2E</span><span class="o">-</span><span class="mi">20</span><span class="n">FC</span><span class="o">-</span><span class="mi">49</span><span class="n">EB</span><span class="o">-</span><span class="n">B5BC</span><span class="o">-</span><span class="n">D0F08EF75FB2</span><span class="o">/</span><span class="n">XMApp</span><span class="p">.</span><span class="n">app</span><span class="o">/</span><span class="n">Frameworks</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="kd">private</span><span class="o">/</span><span class="kd">var</span><span class="o">/</span><span class="n">containers</span><span class="o">/</span><span class="n">Bundle</span><span class="o">/</span><span class="n">Application</span><span class="o">/</span><span class="n">B9B45F2E</span><span class="o">-</span><span class="mi">20</span><span class="n">FC</span><span class="o">-</span><span class="mi">49</span><span class="n">EB</span><span class="o">-</span><span class="n">B5BC</span><span class="o">-</span><span class="n">D0F08EF75FB2</span><span class="o">/</span><span class="n">XMApp</span><span class="p">.</span><span class="n">app</span><span class="o">/</span><span class="n">Frameworks</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="kd">private</span><span class="o">/</span><span class="kd">var</span><span class="o">/</span><span class="n">containers</span><span class="o">/</span><span class="n">Bundle</span><span class="o">/</span><span class="n">Application</span><span class="o">/</span><span class="n">B9B45F2E</span><span class="o">-</span><span class="mi">20</span><span class="n">FC</span><span class="o">-</span><span class="mi">49</span><span class="n">EB</span><span class="o">-</span><span class="n">B5BC</span><span class="o">-</span><span class="n">D0F08EF75FB2</span><span class="o">/</span><span class="n">XMApp</span><span class="p">.</span><span class="n">app</span><span class="o">/</span><span class="n">Frameworks</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">swift</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">not</span> <span class="k">in</span> <span class="n">dyld</span> <span class="n">cache</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="kd">private</span><span class="o">/</span><span class="n">preboot</span><span class="o">/</span><span class="n">Cryptexes</span><span class="o">/</span><span class="n">OS</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">swift</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">swift</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">not</span> <span class="k">in</span> <span class="n">dyld</span> <span class="n">cache</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="kd">private</span><span class="o">/</span><span class="n">preboot</span><span class="o">/</span><span class="n">Cryptexes</span><span class="o">/</span><span class="n">OS</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">swift</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="kd">private</span><span class="o">/</span><span class="kd">var</span><span class="o">/</span><span class="n">containers</span><span class="o">/</span><span class="n">Bundle</span><span class="o">/</span><span class="n">Application</span><span class="o">/</span><span class="n">B9B45F2E</span><span class="o">-</span><span class="mi">20</span><span class="n">FC</span><span class="o">-</span><span class="mi">49</span><span class="n">EB</span><span class="o">-</span><span class="n">B5BC</span><span class="o">-</span><span class="n">D0F08EF75FB2</span><span class="o">/</span><span class="n">XMApp</span><span class="p">.</span><span class="n">app</span><span class="o">/</span><span class="n">Frameworks</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="kd">private</span><span class="o">/</span><span class="kd">var</span><span class="o">/</span><span class="n">containers</span><span class="o">/</span><span class="n">Bundle</span><span class="o">/</span><span class="n">Application</span><span class="o">/</span><span class="n">B9B45F2E</span><span class="o">-</span><span class="mi">20</span><span class="n">FC</span><span class="o">-</span><span class="mi">49</span><span class="n">EB</span><span class="o">-</span><span class="n">B5BC</span><span class="o">-</span><span class="n">D0F08EF75FB2</span><span class="o">/</span><span class="n">XMApp</span><span class="p">.</span><span class="n">app</span><span class="o">/</span><span class="n">Frameworks</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="kd">private</span><span class="o">/</span><span class="kd">var</span><span class="o">/</span><span class="n">containers</span><span class="o">/</span><span class="n">Bundle</span><span class="o">/</span><span class="n">Application</span><span class="o">/</span><span class="n">B9B45F2E</span><span class="o">-</span><span class="mi">20</span><span class="n">FC</span><span class="o">-</span><span class="mi">49</span><span class="n">EB</span><span class="o">-</span><span class="n">B5BC</span><span class="o">-</span><span class="n">D0F08EF75FB2</span><span class="o">/</span><span class="n">XMApp</span><span class="p">.</span><span class="n">app</span><span class="o">/</span><span class="n">Frameworks</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">),</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">System</span><span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">Frameworks</span><span class="o">/</span><span class="n">App</span><span class="p">.</span><span class="n">framework</span><span class="o">/</span><span class="n">App</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">errno</span><span class="p">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">not</span> <span class="k">in</span> <span class="n">dyld</span> <span class="n">cache</span><span class="p">)</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>解决：<a href="https://github.com/flutter/flutter/issues/92896#issuecomment-999441920">issue-92896</a>，注意同时保证 cocoapods 和 ruby-macho 版本。</p>
+</li>
+<li>
+<p>警告：</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">Ignoring</span> <span class="n">ffi</span><span class="o">-</span><span class="mf">1.10</span><span class="p">.</span><span class="mi">0</span> <span class="n">because</span> <span class="n">its</span> <span class="n">extensions</span> <span class="n">are</span> <span class="n">not</span> <span class="n">built</span><span class="p">.</span> <span class="n">Try</span><span class="p">:</span> <span class="n">gem</span> <span class="n">pristine</span> <span class="n">ffi</span> <span class="o">--</span><span class="n">version</span> <span class="mf">1.10</span><span class="p">.</span><span class="mi">0</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="n">Ignoring</span> <span class="n">redcarpet</span><span class="o">-</span><span class="mf">3.4</span><span class="p">.</span><span class="mi">0</span> <span class="n">because</span> <span class="n">its</span> <span class="n">extensions</span> <span class="n">are</span> <span class="n">not</span> <span class="n">built</span><span class="p">.</span> <span class="n">Try</span><span class="p">:</span> <span class="n">gem</span> <span class="n">pristine</span> <span class="n">redcarpet</span> <span class="o">--</span><span class="n">version</span> <span class="mf">3.4</span><span class="p">.</span><span class="mi">0</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">Ignoring</span> <span class="n">sqlite3</span><span class="o">-</span><span class="mf">1.3</span><span class="p">.</span><span class="mi">13</span> <span class="n">because</span> <span class="n">its</span> <span class="n">extensions</span> <span class="n">are</span> <span class="n">not</span> <span class="n">built</span><span class="p">.</span> <span class="n">Try</span><span class="p">:</span> <span class="n">gem</span> <span class="n">pristine</span> <span class="n">sqlite3</span> <span class="o">--</span><span class="n">version</span> <span class="mf">1.3</span><span class="p">.</span><span class="mi">13</span>
+</code></pre></div>
+<ul>
+<li>
+<p>解决：执行相应命令</p>
+</li>
+<li>
+<p>静态库不制作 framework，直接导入</p>
+</li>
+<li>
+<p>问题</p>
+</li>
+</ul>
+<p><img alt="image-20230413185356587" src="https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16-20230413185356587.png" /></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">Synchronous</span> <span class="n">URL</span> <span class="n">loading</span> <span class="n">of</span> <span class="n">xxx</span> <span class="n">should</span> <span class="n">not</span> <span class="n">occur</span> <span class="n">on</span> <span class="n">this</span> <span class="n">application</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">main</span> <span class="n">thread</span> <span class="k">as</span> <span class="n">it</span> <span class="n">may</span> <span class="n">lead</span> <span class="n">to</span> <span class="n">UI</span> <span class="n">unresponsiveness</span><span class="p">.</span> <span class="n">Please</span> <span class="k">switch</span> <span class="n">to</span> <span class="n">an</span> <span class="n">asynchronous</span> <span class="n">networking</span> <span class="n">API</span> <span class="n">such</span> <span class="k">as</span> <span class="n">URLSession</span><span class="p">.</span>
+</code></pre></div>
+<ul>
+<li>
+<p>解决：略</p>
+</li>
+<li>
+<p>问题</p>
+</li>
+</ul>
+<p><img alt="截屏2023-04-20 15.09.09" src="https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16-20230420150909.png" /></p>
+<p>查看该脚本具体内容：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PODS_ROOT</span><span class="si">}</span><span class="s2">/Target Support Files/Pods-XMApp/Pods-XMApp-frameworks.sh&quot;</span>
+</code></pre></div>
+<p>查看 CI 日志输出：</p>
+<p><img alt="截屏2023-04-20 15.10.24" src="https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16-20230420151024.png" /></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">rsync</span> <span class="n">error</span><span class="p">:</span> <span class="n">some</span> <span class="n">files</span> <span class="n">could</span> <span class="n">not</span> <span class="n">be</span> <span class="n">transferred</span> <span class="p">(</span><span class="n">code</span> <span class="mi">23</span><span class="p">)</span>
+</code></pre></div>
+<p>对应 <a href="https://github.com/CocoaPods/CocoaPods/issues/11868">issue-11868</a>，<a href="https://github.com/CocoaPods/CocoaPods/pull/11828">pull-11828</a></p>
+<ul>
+<li>解决：升级 cocoapods <code>1.11.2</code> 至 <code>1.12.0</code></li>
+</ul>
+<h2 id="flutter">Flutter</h2>
+<ul>
+<li>本质：</li>
+<li>
+<p><code>~/Documents/XiaoMai/b/flutterPack/.ios/</code> 工程执行 <code>pod install</code> 时极有可能报错，但 <code>Flutter</code> 无法 cover 这部分问题，需要自己手动去执行并检查，同时注意 <code>podHelper.rb</code> 源码</p>
+</li>
+<li>
+<p>问题：</p>
+</li>
+</ul>
+<p><code>Flutter.h not found</code></p>
+<ul>
+<li>观察  <code>~/Documents/XiaoMai/b/flutterPack/.ios/Flutter</code> [1]，发现 <code>engine</code> 有问题</li>
+<li>前者应来自于 <code>~/fvm/versions/2.0.6/bin/cache/artifacts/engine</code> [2] 下的 <code>ios</code> 文件夹</li>
+<li>从旧资料/电脑上可以发现正常情况下 [1] 处存在 <code>Flutter.framework</code>，<a href="https://stackoverflow.com/questions/64973346/error-flutter-flutter-h-file-not-found-when-flutter-run-on-ios?noredirect=1&amp;lq=1">参考1</a>，<a href="https://stackoverflow.com/questions/50671286/flutter-h-not-found-error">参考2</a>，实际一般无效</li>
+<li>手动复制 <code>Flutter.framework</code> 置入不可行，因为会被 <code>pod install</code> 动作覆盖</li>
+<li><a href="https://blog.csdn.net/qq_32792839/article/details/111247075">参考3</a> 提到 <code>*.framework</code> 已经变成 <code>*.xcframework</code></li>
+<li><a href="https://juejin.cn/post/7202541740933759031">参考4</a> 提到 <code>*.podspec</code> 内 <code>.vendored_frameworks</code> 发生变化，但 <code>.dependency</code> 对我的场景未必管用</li>
+<li>
+<p>暂先直接改回 [2] 处 <code>*.podspec</code> 的 <code>.vendored_frameworks</code> 属性，<code>pod install</code> 后发现 <code>*.xcframework</code> 拷贝成功</p>
+</li>
+<li>
+<p>问题：</p>
+</li>
+</ul>
+<p><img alt="image-20230417125907563" src="https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16-20230417125907563.png" /></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># 自定义脚本</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="nb">set</span><span class="w"> </span>-e
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="nb">set</span><span class="w"> </span>-u
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="nb">source</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SRCROOT</span><span class="si">}</span><span class="s2">/../flutterPack/.ios/Flutter/flutter_export_environment.sh&quot;</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="s2">&quot;</span><span class="nv">$FLUTTER_ROOT</span><span class="s2">&quot;</span>/packages/flutter_tools/bin/xcode_backend.sh<span class="w"> </span>build
+</code></pre></div>
+<p>无任何具体报错信息。</p>
+<ul>
+<li>解决：参考 <code>flutterpack</code> 的 <code>README</code>；</li>
+<li>
+<p><code>TREE_SHAKE_ICONS</code>，<a href="https://zhuanlan.zhihu.com/p/272567200">参考1</a></p>
+</li>
+<li>
+<p>问题：</p>
+</li>
+</ul>
+<p><img alt="1681711867644" src="https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/iOS16-1681711867644.jpg" /></p>
+<ul>
+<li>解决：先编译了 <code>Enterprise_Release</code>，又编译了 <code>Release</code> 导致；Xcode Clean 即可</li>
 </ul>
 
-              
-            </article>
-          </div>
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
         </div>
         
       </main>
       
         <footer class="md-footer">
-  
-    <nav class="md-footer__inner md-grid" aria-label="Footer">
-      
-        
-        <a href="../../objc.io/%231/issue-1-2/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 1.2 整洁的 Table View 代码" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              1.2 整洁的 Table View 代码
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="../01-faces/" class="md-footer__link md-footer__link--next" aria-label="Next: 01 记一次人脸识别业务落地" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              01 记一次人脸识别业务落地
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -859,10 +1102,11 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.22074ed6.min.js"}</script>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.960e086b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.51198bba.min.js"></script>
       
         <script src="../../assets/js/jquery-3.6.0.min.js"></script>
       
