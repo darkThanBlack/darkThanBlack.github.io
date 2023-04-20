@@ -15,7 +15,7 @@
 
 
 
-#### MKDocs
+#### [MKDocs](https://www.mkdocs.org/)
 
 ```shell
 # create
@@ -32,6 +32,14 @@ $ mkdocs gh-deploy
 ```
 
 * [Doc: Theme-Material](https://squidfunk.github.io/mkdocs-material/reference/)
+
+  ```shell
+  # install
+  $ pip install mkdocs-material
+  
+  # third part plugins
+  $ pip install mkdocs_pymdownx_material_extras
+  ```
 
 * [Doc: Keywords](https://www.mkdocs.org/user-guide/configuration/#introduction)
 

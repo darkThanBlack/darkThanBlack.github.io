@@ -163,7 +163,7 @@
     Cannot code sign because the target does not have an Info.plist file and one is not being generated automatically. Apply an Info.plist file to the target using the INFOPLIST_FILE build setting or generate one automatically by setting the GENERATE_INFOPLIST_FILE build setting to YES (recommended).
     ```
     
-    * 解决1: https://juejin.cn/post/7197361396219772983  其实不是，但需要了解。
+    * 解决1: https://juejin.cn/post/7197361396219772983  其实不是，但相关知识需要了解。
 
         ```ruby
         config.build_settings['GENERATE_INFOPLIST_FILE'] = "NO"
@@ -256,11 +256,38 @@
 
   ![image-20230413185356587](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16-20230413185356587.png)
 
-```swift
-Synchronous URL loading of xxx should not occur on this application's main thread as it may lead to UI unresponsiveness. Please switch to an asynchronous networking API such as URLSession.
-```
+  ```swift
+  Synchronous URL loading of xxx should not occur on this application's main thread as it may lead to UI unresponsiveness. Please switch to an asynchronous networking API such as URLSession.
+  ```
+  
+  * 解决：略
 
 
+
+
+* 问题
+
+  ![截屏2023-04-20 15.09.09](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16-20230420150909.png)
+
+  查看该脚本具体内容：
+
+  ```shell
+  "${PODS_ROOT}/Target Support Files/Pods-XMApp/Pods-XMApp-frameworks.sh"
+  ```
+
+  查看 CI 日志输出：
+
+  ![截屏2023-04-20 15.10.24](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/ios16-20230420151024.png)
+
+  ```swift
+  rsync error: some files could not be transferred (code 23)
+  ```
+
+  对应 [issue-11868](https://github.com/CocoaPods/CocoaPods/issues/11868)，[pull-11828](https://github.com/CocoaPods/CocoaPods/pull/11828)
+
+  * 解决：升级 cocoapods ``1.11.2`` 至 ``1.12.0``
+
+  
 
 
 
@@ -308,7 +335,7 @@ Synchronous URL loading of xxx should not occur on this application's main threa
 
   ![1681711867644](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/iOS16-1681711867644.jpg)
 
-  * 解决：``Enterprise_Release / Release``各自编译导致；Xcode Clean 即可
+  * 解决：先编译了 ``Enterprise_Release``，又编译了 ``Release`` 导致；Xcode Clean 即可
 
 
 
