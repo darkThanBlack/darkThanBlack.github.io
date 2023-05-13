@@ -172,7 +172,11 @@ Intel / M1 区别？为什么 M1 上的模拟器依然需要 x86_64？
 
 
 
-### 编译选项：``Build Settings`` 与 $xcodebuild
+### 编译选项：
+
+#### [Build Settings](https://developer.apple.com/documentation/xcode/build-settings-reference)
+
+####  $xcodebuild
 
 不了解制作过程中涉及的每一个编译选项，就意味着要用自己的血泪去浸润它。
 
