@@ -379,7 +379,7 @@ dyld[7510]: Library not loaded: @rpath/App.framework/App
 
 解决：[issue-92896](https://github.com/flutter/flutter/issues/92896#issuecomment-999441920)
 
-也要注意 ``ruby-macho`` 
+升级 ``cocoapods`` 和 ``ruby-macho``至指定版本以上。
 
 
 
@@ -503,4 +503,11 @@ source "${SRCROOT}/../flutterPack/.ios/Flutter/flutter_export_environment.sh"
 
 ## Playground
 
+
+
 选型: 静态库不再重复制作 framework，直接导入
+
+
+
+https://blog.csdn.net/weixin_43843218/article/details/124846510
+
