@@ -15,14 +15,16 @@ nav:
         - '02 模块化': 'blogs/02-modularize.md'
         - '01 记一次人脸识别业务落地': 'blogs/01-faces.md'
         - '00 飞行清单': 'blogs/00-checklist.md'
+    - 'Playground':
+        - 'playground': 'playground.md'
     - 'Books':
         - '别让猴子跳回背上——为什么领导没时间，下属没事做？': 'books/monky.md'
     - 'Living':
         - '生活小妙招': 'living/tips.md'
         - '消费主义': 'living/spend-money.md'
         - '飞行清单 - 短途越野': 'check-list-run.md'
-    - 'Keyboard Policy':
-        - '键政': 'keyboard-policy/keyboard-policy.md'
+    # - 'Keyboard Policy':
+    #    - '键政': 'keyboard-policy/keyboard-policy.md'
     - 'About': 'about.md'
 
 theme:
