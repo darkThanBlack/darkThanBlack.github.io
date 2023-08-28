@@ -11,6 +11,7 @@ nav:
             - '1.1 更轻量的 ViewControllers': 'objc.io/#1/issue-1-1.md'
             - '1.2 整洁的 Table View 代码': 'objc.io/#1/issue-1-2.md'
     - 'Blogs':
+        - '04 最佳实践 - keyWindow': 'blogs/04-bp-keywindow.md'
         - '03 企业证书续费': 'blogs/03-enterprise.md'
         - '02 模块化': 'blogs/02-modularize.md'
         - '01 记一次人脸识别业务落地': 'blogs/01-faces.md'
