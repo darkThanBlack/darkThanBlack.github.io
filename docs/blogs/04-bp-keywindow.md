@@ -4,9 +4,15 @@
 
 
 
+#### 前提
+
+不考虑多平台，pad 分屏等情况。
+
+
+
 #### 上下文
 
-总有些东西会充斥在所有搜索引擎能搜到的平台上，并且所有人都宣称他是对的——别人是错的。自从 iOS 13 之后，``keyWindow`` 也加入到这一阵列里来，在 [StackOverflow](https://stackoverflow.com/questions/57134259) 上可以看到各路人马纷纷下场，包括 ``Mattt`` 之类的大神都吵得头破血流。总之，你需要先通读一遍这个链接里的高赞答案。
+总有些东西会充斥在所有搜索引擎能搜到的平台上，并且所有人都宣称他是对的——别人是错的。自从 iOS 13 之后，``keyWindow`` 也加入到这一阵列里来，在 [StackOverflow](https://stackoverflow.com/questions/57134259) 上可以看到各路人马纷纷下场，包括 ``Mattt`` 之类的大神都吵得头破血流。总之，你需要先通读一遍这个链接里的高赞答案，因为我不打算解释太多细节。
 
 
 
@@ -44,7 +50,7 @@
 
 #### Custom window for drift view
 
-很多调试控件喜欢通过浮窗形式展现，而浮窗的直接实现就是通过 window，比如 [DoraemonKit](https://github.com/didi/DoKit) 是很难舍弃的；另外有一些特殊需求也会用到浮窗，这时候相当于 windows 发生了变化，where 查询自然失效，反而废弃的 ``UIApplication.shared.keyWindow`` 能取值正确。
+很多调试控件喜欢通过浮窗形式展现，而浮窗的直接实现就是通过 window，比如 [DoraemonKit](https://github.com/didi/DoKit) 是很难舍弃的；另外有一些特殊需求也会用到浮窗，比如视频播放的小窗功能；这时候相当于 windows 发生了变化，where 查询自然失效，反而废弃的 ``UIApplication.shared.keyWindow`` 能取值正确。
 
 
 
