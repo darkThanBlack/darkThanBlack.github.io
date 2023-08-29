@@ -431,8 +431,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#tag" class="md-nav__link">
-    不惮于 tag
+  <a href="#_3" class="md-nav__link">
+    我的看法
   </a>
   
 </li>
@@ -691,7 +691,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about.md" class="md-nav__link">
+      <a href="../../about/" class="md-nav__link">
         About
       </a>
     </li>
@@ -781,8 +781,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#tag" class="md-nav__link">
-    不惮于 tag
+  <a href="#_3" class="md-nav__link">
+    我的看法
   </a>
   
 </li>
@@ -823,8 +823,21 @@
 <p>很多调试控件喜欢通过浮窗形式展现，而浮窗的直接实现就是通过 window，比如 <a href="https://github.com/didi/DoKit">DoraemonKit</a> 是很难舍弃的；另外有一些特殊需求也会用到浮窗，这时候相当于 windows 发生了变化，where 查询自然失效，反而废弃的 <code>UIApplication.shared.keyWindow</code> 能取值正确。</p>
 <h4 id="first-vs-last">.first vs .last</h4>
 <p>原楼层里也有相应的讨论，但在我看来本质上还是有场景使得 <code>windows.count &gt; 1</code> 导致。如果会出现多个 window，就很难确保方案不会随着 Apple 版本更新或者业务变化而失效。</p>
-<h4 id="tag">不惮于 tag</h4>
-<p>我的业务项目里确实会涉及多个浮窗，最终决定使用 tag 来管理。即使 <code>keyWindow</code> 本身的对象都发生了变化也没事。坏处自然是全局依赖，但这毕竟也属于业务。</p>
+<h4 id="_3">我的看法</h4>
+<ul>
+<li>控制范围<ul>
+<li>大面积出现 <code>topMost</code> 或者获取 <code>window</code> 的行为是不合理的。</li>
+</ul>
+</li>
+<li>自己封一层<ul>
+<li><code>URLNavigator</code> 的 <code>topMost</code> 扩展相对流行一些，但最好是自己实现接口方便扩展。</li>
+</ul>
+</li>
+<li>不惮于 tag<ul>
+<li>我的业务项目里确实会涉及多个浮窗，最终决定使用 tag 来管理。即使 <code>keyWindow</code> 本身的对象都发生了变化也没事。坏处自然是全局依赖，但这毕竟也属于业务。</li>
+</ul>
+</li>
+</ul>
 
 
 

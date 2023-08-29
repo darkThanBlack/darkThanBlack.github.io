@@ -8,8 +8,10 @@
       
       
       
-        <link rel="canonical" href="https://darkthanblack.github.io/About/">
+        <link rel="canonical" href="https://darkthanblack.github.io/about/">
       
+      
+        <link rel="prev" href="../living/spend-money/">
       
       
       <link rel="icon" href="../assets/images/logo.png">
@@ -586,11 +588,21 @@
 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../about.md" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         About
       </a>
+      
     </li>
   
 
@@ -615,55 +627,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#my-practice-is" class="md-nav__link">
-    My practice is?
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-tool-did-i-use" class="md-nav__link">
-    What tool did I use?
-  </a>
-  
-    <nav class="md-nav" aria-label="What tool did I use?">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#versions" class="md-nav__link">
-    Versions
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mkdocs" class="md-nav__link">
-    MKDocs
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#image-hosts" class="md-nav__link">
-    Image hosts
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -678,104 +641,7 @@
 
 
 <h1 id="about">About</h1>
-<h2 id="my-practice-is">My practice is?</h2>
-<ul>
-<li>branchs<ul>
-<li><code>main</code>: newest <code>README.md</code> +  all <code>.md</code> sources in <code>./docs/</code> + <code>mkdocs.yml</code></li>
-<li><code>gh-pages</code>: all webside sources, generate by MKDocs CI</li>
-<li><code>pictures</code>: image hosts, generate by PicGo CI</li>
-</ul>
-</li>
-<li>.gitignore<ul>
-<li><code>./site/</code></li>
-</ul>
-</li>
-</ul>
-<h2 id="what-tool-did-i-use">What tool did I use?</h2>
-<h4 id="versions">Versions</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Version</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Python</td>
-<td>3.8.2</td>
-</tr>
-<tr>
-<td>Markdown</td>
-<td>3.3.6</td>
-</tr>
-<tr>
-<td>mkdocs</td>
-<td>1.2.3</td>
-</tr>
-<tr>
-<td>mkdocs-material</td>
-<td>8.1.8</td>
-</tr>
-<tr>
-<td>mkdocs-material-extensions</td>
-<td>1.0.3</td>
-</tr>
-<tr>
-<td>pymdown-extensions</td>
-<td>9.1</td>
-</tr>
-<tr>
-<td>PicGo</td>
-<td>2.3.1-beta.2</td>
-</tr>
-</tbody>
-</table>
-<h4 id="mkdocs">MKDocs</h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># create</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>$<span class="w"> </span>mkdocs<span class="w"> </span>new<span class="w"> </span>my-project
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Local host: http://127.0.0.1:8000/</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>$<span class="w"> </span>mkdocs<span class="w"> </span>serve
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># File path: ./site/</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>$<span class="w"> </span>mkdocs<span class="w"> </span>build
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># Github CI branch: gl-pages</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>$<span class="w"> </span>mkdocs<span class="w"> </span>gh-deploy
-</code></pre></div>
-<ul>
-<li>
-<p><a href="https://squidfunk.github.io/mkdocs-material/">Doc: Theme-Material</a></p>
-</li>
-<li>
-<p><a href="https://www.mkdocs.org/user-guide/configuration/#introduction">Doc: Keywords</a></p>
-</li>
-</ul>
-<h4 id="image-hosts">Image hosts</h4>
-<ul>
-<li>Current: Github<ul>
-<li>CI branch: <code>pictures</code></li>
-<li>CI Tool: <a href="https://github.com/Molunerfinn/PicGo">PicGo</a><ul>
-<li><a href="https://github.com/Molunerfinn/PicGo/issues/781#issuecomment-1008603421">issue 781</a></li>
-</ul>
-</li>
-<li>image path: <code>./docs/assets/pictures/</code></li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>Sina weibo</p>
-</blockquote>
-<p><code>https://tva1.sinaimg.cn/large/008i3skNly1gy8f3g2v9fj301s01sdfm.jpg</code></p>
-<p><img alt="sina weibo" src="https://tva1.sinaimg.cn/large/008i3skNly1gy8f3g2v9fj301s01sdfm.jpg" />
-<img src="https://tva1.sinaimg.cn/large/008i3skNly1gy8f3g2v9fj301s01sdfm.jpg" alt="Sina weibo" style="zoom:20%;" /></p>
-<blockquote>
-<p>Github</p>
-</blockquote>
-<p><code>https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/logo_64.png</code></p>
-<p><img alt="Github" src="https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/logo_64.png" />
-<img src="https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/logo_64.png" alt="Github" style="zoom:20%;" /></p>
+<p>= _.=</p>
 
 
 
