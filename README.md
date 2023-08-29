@@ -15,6 +15,20 @@
 
 
 
+#### Versions
+
+| Name                       | Version      |
+| -------------------------- | ------------ |
+| Python                     | 3.8.2        |
+| Markdown                   | 3.3.6        |
+| mkdocs                     | 1.2.3        |
+| mkdocs-material            | 8.1.8        |
+| mkdocs-material-extensions | 1.0.3        |
+| pymdown-extensions         | 9.1          |
+| PicGo                      | 2.3.1-beta.2 |
+
+
+
 #### [MKDocs](https://www.mkdocs.org/)
 
 ```shell
