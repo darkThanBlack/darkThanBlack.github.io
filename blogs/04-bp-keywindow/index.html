@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://darkthanblack.github.io/blogs/04-bp-keywindow/">
       
       
-        <link rel="prev" href="../../objc.io/%231/issue-1-2/">
+        <link rel="prev" href="../05-bp-statusbar/">
       
       
         <link rel="next" href="../03-enterprise/">
@@ -339,6 +339,20 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="../05-bp-statusbar/" class="md-nav__link">
+        05 最佳实践 - statusBar
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
@@ -376,13 +390,20 @@
       
         <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
-    上下文
+    前提
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
+    上下文
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
     目标
   </a>
   
@@ -431,7 +452,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     我的看法
   </a>
   
@@ -677,13 +698,20 @@
       
         <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
-    上下文
+    前提
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
+    上下文
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
     目标
   </a>
   
@@ -732,7 +760,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     我的看法
   </a>
   
@@ -757,9 +785,11 @@
 <blockquote>
 <p>Created: 2023/08/28</p>
 </blockquote>
-<h4 id="_1">上下文</h4>
-<p>总有些东西会充斥在所有搜索引擎能搜到的平台上，并且所有人都宣称他是对的——别人是错的。自从 iOS 13 之后，<code>keyWindow</code> 也加入到这一阵列里来，在 <a href="https://stackoverflow.com/questions/57134259">StackOverflow</a> 上可以看到各路人马纷纷下场，包括 <code>Mattt</code> 之类的大神都吵得头破血流。总之，你需要先通读一遍这个链接里的高赞答案。</p>
-<h4 id="_2">目标</h4>
+<h4 id="_1">前提</h4>
+<p>不考虑多平台，pad 分屏等情况。</p>
+<h4 id="_2">上下文</h4>
+<p>总有些东西会充斥在所有搜索引擎能搜到的平台上，并且所有人都宣称他是对的——别人是错的。自从 iOS 13 之后，<code>keyWindow</code> 也加入到这一阵列里来，在 <a href="https://stackoverflow.com/questions/57134259">StackOverflow</a> 上可以看到各路人马纷纷下场，包括 <code>Mattt</code> 之类的大神都吵得头破血流。总之，你需要先通读一遍这个链接里的高赞答案，因为我不打算解释太多细节。</p>
+<h4 id="_3">目标</h4>
 <p>本文不会重新发起一个宣称，而是着力于指出各方案间的细微差别和各自局限，进而证明 <code>windows</code> 的管理本质上是业务特化的，并不存在一个通解。</p>
 <h4 id="uiapplicationsharedwindows">UIApplication.shared.windows</h4>
 <p>是一种原初的兼容方案，在 iOS 15 惨遭废弃。</p>
@@ -771,10 +801,10 @@
 <h4 id="windowlevel">windowLevel</h4>
 <p>也是关于是否需要做 filter 的考量，理由同上。层级是非常业务的。</p>
 <h4 id="custom-window-for-drift-view">Custom window for drift view</h4>
-<p>很多调试控件喜欢通过浮窗形式展现，而浮窗的直接实现就是通过 window，比如 <a href="https://github.com/didi/DoKit">DoraemonKit</a> 是很难舍弃的；另外有一些特殊需求也会用到浮窗，这时候相当于 windows 发生了变化，where 查询自然失效，反而废弃的 <code>UIApplication.shared.keyWindow</code> 能取值正确。</p>
+<p>很多调试控件喜欢通过浮窗形式展现，而浮窗的直接实现就是通过 window，比如 <a href="https://github.com/didi/DoKit">DoraemonKit</a> 是很难舍弃的；另外有一些特殊需求也会用到浮窗，比如视频播放的小窗功能；这时候相当于 windows 发生了变化，where 查询自然失效，反而废弃的 <code>UIApplication.shared.keyWindow</code> 能取值正确。</p>
 <h4 id="first-vs-last">.first vs .last</h4>
 <p>原楼层里也有相应的讨论，但在我看来本质上还是有场景使得 <code>windows.count &gt; 1</code> 导致。如果会出现多个 window，就很难确保方案不会随着 Apple 版本更新或者业务变化而失效。</p>
-<h4 id="_3">我的看法</h4>
+<h4 id="_4">我的看法</h4>
 <ul>
 <li>控制范围<ul>
 <li>大面积出现 <code>topMost</code> 或者获取 <code>window</code> 的行为是不合理的。</li>

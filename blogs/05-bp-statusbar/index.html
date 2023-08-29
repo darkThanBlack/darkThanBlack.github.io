@@ -8,20 +8,20 @@
       
       
       
-        <link rel="canonical" href="https://darkthanblack.github.io/blogs/01-faces/">
+        <link rel="canonical" href="https://darkthanblack.github.io/blogs/05-bp-statusbar/">
       
       
-        <link rel="prev" href="../02-modularize/">
+        <link rel="prev" href="../../objc.io/%231/issue-1-2/">
       
       
-        <link rel="next" href="../00-checklist/">
+        <link rel="next" href="../04-bp-keywindow/">
       
       <link rel="icon" href="../../assets/images/logo.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.17">
     
     
       
-        <title>01 记一次人脸识别业务落地 - moonShadow</title>
+        <title>05 最佳实践 - statusBar - moonShadow</title>
       
     
     
@@ -65,7 +65,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#faces" class="md-skip">
+        <a href="#statusbar" class="md-skip">
           Skip to content
         </a>
       
@@ -100,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              01 记一次人脸识别业务落地
+              05 最佳实践 - statusBar
             
           </span>
         </div>
@@ -339,11 +339,155 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../05-bp-statusbar/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          05 最佳实践 - statusBar
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         05 最佳实践 - statusBar
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    前提
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    上下文
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statusbar-appearance" class="md-nav__link">
+    StatusBar 本身：Appearance
+  </a>
+  
+    <nav class="md-nav" aria-label="StatusBar 本身：Appearance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#navigationbarbarstyle" class="md-nav__link">
+    NavigationBar.barStyle
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#present" class="md-nav__link">
+    Present
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scene-window" class="md-nav__link">
+    Scene / Window
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hook" class="md-nav__link">
+    Hook
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statusbar_1" class="md-nav__link">
+    StatusBar 相关：业务
+  </a>
+  
+    <nav class="md-nav" aria-label="StatusBar 相关：业务">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#statusbarframe" class="md-nav__link">
+    statusBarFrame
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#autolayout" class="md-nav__link">
+    AutoLayout
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frame" class="md-nav__link">
+    Frame
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    状态栏背景：固定
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    状态栏背景：动态
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -395,121 +539,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          01 记一次人脸识别业务落地
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../01-faces/" class="md-nav__link">
         01 记一次人脸识别业务落地
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    踩坑
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    原文
-  </a>
-  
-    <nav class="md-nav" aria-label="原文">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    流程图
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    后端需要做什么？
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    移动端的识别如何进行？
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    移动端需要做什么？
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
-    重点在哪里？
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
-    问题点在哪里？
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_9" class="md-nav__link">
-    测试相关？
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_10" class="md-nav__link">
-    风险点？
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -704,71 +738,105 @@
       
         <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
-    踩坑
+    前提
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
-    原文
+    上下文
   </a>
   
-    <nav class="md-nav" aria-label="原文">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statusbar-appearance" class="md-nav__link">
+    StatusBar 本身：Appearance
+  </a>
+  
+    <nav class="md-nav" aria-label="StatusBar 本身：Appearance">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    流程图
+  <a href="#navigationbarbarstyle" class="md-nav__link">
+    NavigationBar.barStyle
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#present" class="md-nav__link">
+    Present
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scene-window" class="md-nav__link">
+    Scene / Window
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hook" class="md-nav__link">
+    Hook
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statusbar_1" class="md-nav__link">
+    StatusBar 相关：业务
+  </a>
+  
+    <nav class="md-nav" aria-label="StatusBar 相关：业务">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#statusbarframe" class="md-nav__link">
+    statusBarFrame
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#autolayout" class="md-nav__link">
+    AutoLayout
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frame" class="md-nav__link">
+    Frame
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
-    后端需要做什么？
+    状态栏背景：固定
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#_5" class="md-nav__link">
-    移动端的识别如何进行？
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    移动端需要做什么？
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
-    重点在哪里？
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
-    问题点在哪里？
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_9" class="md-nav__link">
-    测试相关？
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_10" class="md-nav__link">
-    风险点？
+    状态栏背景：动态
   </a>
   
 </li>
@@ -793,159 +861,79 @@
                   
 
 
-<h1 id="faces">Faces</h1>
-<p>摘抄自本人内部主持的一次需求分析会议，隐去具体业务与敏感内容。流程设计依赖于具体需求。</p>
+<h1 id="statusbar">最佳实践：statusBar</h1>
 <blockquote>
-<p>Created: 2021/09/23</p>
-<p>Update: 2022/02/07 迁移至 github.io, 增加实际踩坑问题</p>
+<p>Created: 2023/08/29</p>
 </blockquote>
-<h2 id="_1">踩坑</h2>
-<ul>
-<li>已解决：<a href="https://github.com/pytorch/pytorch/issues/66993">PyTorch: Issue-66993</a></li>
-<li>Demo 中 .mm 调包调整，Lite 版有区别</li>
-<li>PyTorch-Lite 本质上要求 iOS 11.0+ ，即使自行编译 .a 也一样</li>
-</ul>
-<h2 id="_2">原文</h2>
-<blockquote>
-<p><strong>名词解释</strong></p>
-<p>列出词典以统一当前上下文语义。</p>
-<p>ML：Machine Learning，机器学习</p>
-<p>算法，ML 算法：一套特定的映射（A -&gt; B）规则</p>
-<p>特征，特征信息，特征向量：由算法生成的 Float[512]，对应一个特定的 student_id</p>
-<p>模型：一个特殊文件，描述了一套映射规则</p>
-<p>框架：一套第三方代码，用于操作相应的模型</p>
-<p>Tensorflow，TF，TFLite，Pytorch，PY，torch，coreML：一种框架</p>
-<p>MLKit：Google 的 SDK，包含了某些框架和模型</p>
-</blockquote>
-<h4 id="_3">流程图</h4>
-<p><img alt="流程图" class="img-pushable" src="https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/face_detect_01.svg" /></p>
-<h4 id="_4">后端需要做什么？</h4>
-<ul>
-<li>提供一个特征信息接口</li>
-<li>提供业务接口</li>
-<li>数据清洗</li>
-</ul>
-<h4 id="_5">移动端的识别如何进行？</h4>
-<blockquote>
-<p>主工程</p>
-</blockquote>
-<ul>
-<li>输入：视频流</li>
-<li>视频流相关处理（抽帧？生成图片？）</li>
-<li><del>ML 处理：姿态检测（Post Detection）</del></li>
-<li>ML 处理：人脸识别（Face Detection）<ul>
-<li>技术选型：MLKit</li>
-<li>判断当前输入是否存在人脸？<ul>
-<li>给出提示</li>
-</ul>
-</li>
-<li>输出人脸范围，<del>人脸特征点</del></li>
-</ul>
-</li>
-<li>
-<p>根据人脸范围，截取并格式化输入图片</p>
-<ul>
-<li><code>sampleBuffer = 3 * 112 * 112, Tensor = {1, 3, 112, 112}</code></li>
-</ul>
-</li>
-<li>
-<p>ML 处理：人脸检测</p>
-<ul>
-<li>技术选型：PyTorch</li>
-<li>输入：buffer，.pt 模型文件</li>
-<li>输出：特征向量 <code>listA = Float[512]</code></li>
-</ul>
-</li>
-<li>ML 算法：特征比对<ul>
-<li>技术选型：计算方法需和 PyTorch 使用的模型相对应</li>
-<li>遍历从后台获取的所有特征信息列表，按规定的计算方法逐个和 listA 比对</li>
-<li>每次比对会输出一个 0-1 的概率 p，p 越大则认为是同一个学生的概率越大</li>
-</ul>
-</li>
-<li>当 p 大于某个阈值时，直接给出检测结果</li>
-<li>同时获取用户对应照片，上传至后台存档</li>
-</ul>
-<h4 id="_6">移动端需要做什么？</h4>
-<blockquote>
-<p>Verify Demo</p>
-</blockquote>
-<ul>
-<li>首先，需要设计一个流程，以确保本地代码所有用到的参数和框架设置正确；只有确保接入正确后，才能反向来验证模型输出概率的准确性。</li>
-<li>因为主流程输入的是视频流而非照片，所以需要验证工程或输入照片的测试入口，不然没法测。</li>
-<li>具体来说，理论上如果所有输入的变量，参数，模型，框架和算法工程师本地的设置完全一致，那么输入某个已录入的照片 A，最后输出的 p 必为 1。<ul>
-<li>不同的人脸检测框架会输出不同的图片，需要直接用算法工程师生成的 112*112 图片进行测试；</li>
-<li>将图片转成 RGB 数组，该过程存在平台和框架差异，我 iOS 本地会先转成 RGBA 数组再转成 RGB 一维数组，python 输入的是一个三维数组，对下来部分值存在差别，误差大概在 1 左右；</li>
-<li>将 buffer 引入 PyTorch 处理，观察输出值；</li>
-<li>按算法工程师提供的方法计算，观察输出的概率 p；</li>
-<li>iOS 此流程目前已经走通，输出的 p &gt; 0.999999，认为原因是 buffer 输出的差异导致。</li>
-</ul>
-</li>
-<li>接下来再接入<ul>
-<li>视频流</li>
-<li>姿态检测</li>
-</ul>
-</li>
-<li>由于人脸识别算法修改为 MLKit，需要遍历存量图片以向算法工程师反馈整体准确率  @DIO</li>
-<li>下载/解析/存储特征信息列表</li>
-<li>识别成功后，业务流程处理<ul>
-<li>相机流</li>
-<li>业务接口与图片存档</li>
-</ul>
-</li>
-<li>业务 UI 处理</li>
-</ul>
-<h4 id="_7">重点在哪里？</h4>
-<ul>
-<li>速度与准确率的平衡<ul>
-<li>模型越大，精度越高，速度越慢。</li>
-<li>本地判断速度 &gt;&gt; 远端，而精度 &lt;&lt; 远端</li>
-</ul>
-</li>
-<li>性能<ul>
-<li>识别流程是随着视频流输入一直不断进行着的，所有环节都要考虑到性能问题</li>
-</ul>
-</li>
-<li>不断反馈<ul>
-<li>模型精度会根据实际情况调整，需要协助算法工程师进行快速验证</li>
-</ul>
-</li>
-</ul>
-<h4 id="_8">问题点在哪里？</h4>
-<ul>
-<li>特征信息列表<ul>
-<li>是否增量更新？</li>
-<li>解析和遍历速度能否优化？</li>
-<li>数据安全是否需要考虑？</li>
-</ul>
-</li>
-<li>p 的阈值需要敲定</li>
-<li>姿态检测的阈值需要调试</li>
-<li>图片存档相关处理<ul>
-<li>看 MLKit 需要 buffer 还是图片</li>
-</ul>
-</li>
-<li>包体大小</li>
-<li>iOS 相关<ul>
-<li>iOS 12.0 +</li>
-<li>arm64 模拟器包处理</li>
-</ul>
-</li>
-</ul>
-<h4 id="_9">测试相关？</h4>
-<ul>
-<li>监控</li>
-<li>如何介入？</li>
-<li>机型适配？<ul>
-<li>iOS：低性能手机；iOS 12.0 +</li>
-<li>Android：待补充</li>
-</ul>
-</li>
-</ul>
-<h4 id="_10">风险点？</h4>
-<ul>
-<li>实际使用时识别率可能过低；</li>
-<li>技术难点上处理时间过长。</li>
-</ul>
+<h4 id="_1">前提</h4>
+<p>不考虑定制，屏幕旋转，pad 分屏等情况。</p>
+<h4 id="_2">上下文</h4>
+<p>你永远能在项目里看到诸如 <code>ScreenWidth</code>，<code>StatusBarHeight</code>，<code>NavigationBarHeight</code> 之类的东西，运气好的还有 <code>isIPhoneX</code>。尽管五百年前就出现了 <code>safeArea</code> 的概念，但我很难在项目里看到标准的业务实践。</p>
+<h4 id="_3">目标</h4>
+<p>总而言之，本文尽量将讨论范围约束在 <code>statusBar</code>，甚至只是 <code>statusBarHeight</code> 。网上大量的 <code>safeArea</code> 文章其实只介绍了安全区概念本身，和具体某一侧边缘的解决方案往往有差距。</p>
+<h3 id="statusbar-appearance">StatusBar 本身：Appearance</h3>
+<p><a href="https://juejin.cn/post/7083399385702203428">随便一搜</a> 就是，完善点的文章提得也比较全，这里稍微做个罗列。</p>
+<h4 id="navigationbarbarstyle">NavigationBar.barStyle</h4>
+<p>只有使用原生导航栏时需要关注。</p>
+<p>虽然在我看来大型项目依然使用原生导航栏本身就是问题，但这是另一个话题，略过。</p>
+<h4 id="present">Present</h4>
+<p>模态弹出时需要关注，纯业务。</p>
+<h4 id="scene-window">Scene / Window</h4>
+<p>前面的链接里提到了他们碰到的一个相关问题，但我不认为是 <code>window</code> 本身层级，而是 SDK 业务代码导致，因为单纯自定义一个 <code>window</code> 加上去不会有问题，估计跟 <code>window</code> 上再挂载的 <code>rootViewController</code> 有关。</p>
+<h4 id="hook">Hook</h4>
+<p>我本身就反对通过 <code>hook</code> 实现业务 UI，但的确存在一些诸如 <a href="https://juejin.cn/post/6844903925678604295">利用状态栏来实现网络状态检测</a> 之类的特殊手段。</p>
+<h3 id="statusbar_1">StatusBar 相关：业务</h3>
+<p>你必须强迫自己去思考这项业务为什么必须要与状态栏本身的各种状态有所联系。</p>
+<h4 id="statusbarframe">statusBarFrame</h4>
+<p>官方注释都提到状态栏隐藏时会返回 <code>.zero</code>，但版本兼容后如果在 <code>window.makeKeyAndVisable</code> 方法调用前就去获取，结果依然是 <code>.zero</code>，原因想来也不难理解。</p>
+<h4 id="autolayout">AutoLayout</h4>
+<p>```swift
+let father = UIView()
+let son = UIView()</p>
+<p>func setup() {
+    [father, son].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }</p>
+<div class="highlight"><pre><span></span><code>if #available(iOS 11.0, *) {
+  son.topAnchor.constraint(equalTo: father.safeAreaLayoutGuide.topAnchor, constant: 0.0).isActive = true
+} else {
+  son.topAnchor.constraint(equalTo: father.topAnchor, constant: 0.0).isActive = true
+}
+</code></pre></div>
+<p>}
+   ```</p>
+<p>总之，需要最外层有一个整体的容器，由它来关注与处理安全区的间距差别。</p>
+<p>也可以由内部撑开，营造一种类似于 <code>padding</code> 的效果。</p>
+<p>这是 <code>autoLayout</code> 的原始写法，在 SDK 内就得这样写，换成 <code>SnapKit</code> 之类的语法糖思路也是一样的。</p>
+<h4 id="frame">Frame</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">let</span> <span class="nv">father</span> <span class="p">=</span> <span class="bp">UIView</span><span class="p">()</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kd">let</span> <span class="nv">son</span> <span class="p">=</span> <span class="bp">UIView</span><span class="p">()</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kr">override</span> <span class="kd">var</span> <span class="nv">intrinsicContentSize</span><span class="p">:</span> <span class="n">CGSize</span> <span class="p">{</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="k">return</span> <span class="p">.</span><span class="n">zero</span>  <span class="c1">//</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">}</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="kr">override</span> <span class="kd">func</span> <span class="nf">sizeThatFits</span><span class="p">(</span><span class="kc">_</span> <span class="n">size</span><span class="p">:</span> <span class="n">CGSize</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">CGSize</span> <span class="p">{</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="k">return</span> <span class="p">.</span><span class="n">zero</span>  <span class="c1">// </span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p">}</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="kr">override</span> <span class="kd">func</span> <span class="nf">layoutSubviews</span><span class="p">()</span> <span class="p">{</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="kc">super</span><span class="p">.</span><span class="n">layoutSubviews</span><span class="p">()</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="k">if</span> <span class="cp">#available</span><span class="p">(</span><span class="cp">iOS</span> <span class="mf">11.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>        <span class="n">son</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">y</span> <span class="p">=</span> <span class="n">father</span><span class="p">.</span><span class="n">safeAreaInsets</span><span class="p">.</span><span class="n">top</span> <span class="o">+</span> <span class="mf">8.0</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        <span class="n">son</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">y</span> <span class="p">=</span> <span class="mf">8.0</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="p">}</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="p">}</span>
+</code></pre></div>
+<p>手动布局的最佳实践需要实现 <code>layoutSubviews</code>， <code>sizeThatFits:</code> 和 <code>intrinsicContentSize</code> 三个方法，而其中是否需要关注 <code>safeArea</code> 由业务 UI 层级决定，不要弄混。</p>
+<h4 id="_4">状态栏背景：固定</h4>
+<p>如果是自定义导航栏的话，只需要业务 <code>viewController</code> 自行配合导航栏状态即可实现。</p>
+<p>需要将自定义导航栏状态与状态栏的状态实现关联吗？</p>
+<p>由于 <code>preferredStatusBarStyle</code> 是 <code>override</code>，那要么在 <code>style</code> 的实现里与自定义导航栏对象发生关联，要么就需要 <code>runtime</code> 或者其他实现，所以总而言之我认为并无太大必要，因为一般不存在同个页面导航栏本身状态一直发生变化的业务场景。</p>
+<h4 id="_5">状态栏背景：动态</h4>
+<p>存在一些无边框设计，图片或者控件会直接顶到导航栏下方。</p>
+<p>第一步，需要对状态栏的背景区域做截图或者重绘，拿到不包含状态栏本身 UI 的背景图片；注意不能是业务图片的整体色调或者色值，因为图片的一小部分可能就是很白或者很黑。</p>
+<p>第二步，对这个特殊图片提主题色，拿到一个色值与纯白/纯黑比对，或者通过二值化等其他操作直接得出结论；最后做起来整体可能有一点麻烦，但并不难。</p>
 
 
 
