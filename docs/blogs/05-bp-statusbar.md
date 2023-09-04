@@ -56,11 +56,13 @@
 
 #### AutoLayout
 
-   ```swift
+```swift
 let father = UIView()
 let son = UIView()
 
-func setup() {
+func viewDidLoad() {
+    super.viewDidLoad()
+    
     [father, son].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
     
     if #available(iOS 11.0, *) {
@@ -69,7 +71,7 @@ func setup() {
       son.topAnchor.constraint(equalTo: father.topAnchor, constant: 0.0).isActive = true
     }
 }
-   ```
+```
 
 总之，需要最外层有一个整体的容器，由它来关注与处理安全区的间距差别。
 
@@ -84,11 +86,11 @@ let father = UIView()
 let son = UIView()
 
 override var intrinsicContentSize: CGSize {
-    return .zero  //
+    return .zero  // do sth.
 }
 
 override func sizeThatFits(_ size: CGSize) -> CGSize {
-    return .zero  // 
+    return .zero  // do sth.
 }
 
 override func layoutSubviews() {
