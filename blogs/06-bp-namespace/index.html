@@ -430,6 +430,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#me-let-vs-var" class="md-nav__link">
+    me: let vs. var
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -752,6 +759,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#me-let-vs-var" class="md-nav__link">
+    me: let vs. var
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -775,8 +789,9 @@
 <p>这里暂不讨论命名空间在业务项目中广泛使用，以及依赖解除等设计模式上的问题，仅集中在代码实现上。</p>
 <h4 id="_3">上下文</h4>
 <p><code>KingFisher</code> 提供了一种在 <code>Swift</code> 中实现命名空间隔离的非常好的工程实践，不少人包括我自己也会尝试仿照它的模式进行基础库的搭建，如果你不知道我在说什么，那么阅读 <code>KingFisher</code> 的源码和一系列博文是必须的。</p>
-<h4 id="_4">目标</h4>
 <p>无论如何， <code>KingFisher</code> 本身的扩展主要集中在图片处理上，要想将这个模式推广到整个业务中去，需要比库本身的开发更为谨慎。尽管实现源码非常简单，但搭建过程中依然有很多细节和思辨没有体现出来，这就导致我看到的很多仿写库存在着各种各样的误区。</p>
+<h4 id="_4">目标</h4>
+<p>对以 <code>KingFisher</code> 为标杆的命名空间业务模式展开讨论并改进。</p>
 <h4 id="wrapper">一个典型的 Wrapper</h4>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">public</span> <span class="kd">struct</span> <span class="nc">DTBKitWrapper</span><span class="p">&lt;</span><span class="n">Base</span><span class="p">&gt;</span> <span class="p">{</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="kd">public</span> <span class="kd">let</span> <span class="nv">me</span><span class="p">:</span> <span class="n">Base</span>
@@ -802,9 +817,11 @@
 <p>看起来好像没有任何问题，我们再增加一下调用，并观察调用者。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="kd">let</span> <span class="nv">label</span> <span class="p">=</span> <span class="bp">UILabel</span><span class="p">()</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="n">label</span><span class="p">.</span><span class="n">dtb</span><span class="p">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;test1&quot;</span><span class="p">)</span>  <span class="c1">// let w1 = label.dtb</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">label</span><span class="p">.</span><span class="n">dtb</span><span class="p">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;test2&quot;</span><span class="p">)</span>  <span class="c1">// let w2 = label.dtb</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="p">}</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="n">label</span><span class="p">.</span><span class="n">dtb</span><span class="p">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;test1&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">label</span><span class="p">.</span><span class="n">dtb</span><span class="p">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;test2&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="kd">let</span> <span class="nv">w1</span> <span class="p">=</span> <span class="n">label</span><span class="p">.</span><span class="n">dtb</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="kd">let</span> <span class="nv">w2</span> <span class="p">=</span> <span class="n">label</span><span class="p">.</span><span class="n">dtb</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="p">}</span>
 </code></pre></div>
 <p>提问：w1 和 w2 的地址是否相同？他们在内存中是如何分布的？</p>
 <p><code>me: Base</code> 确实保证了 <code>Wrapper</code> 引用的是同一个对象，但结构体本身并没有复用。</p>
@@ -813,8 +830,8 @@
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="kd">let</span> <span class="nv">w2</span> <span class="p">=</span> <span class="nb">Int64</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="n">dtb</span>
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="p">}</span>
 </code></pre></div>
-<p>提问：如果扩展对象是数值类型呢？</p>
-<p>相较于对象类型，基础类型本身的占用很小，使用又特别广泛，引入的结构体占用甚至比类型本身的占用还大，从倍率来说相当于成倍地提升了空间消耗，所以越是基础的类型反而越要慎用。</p>
+<p>进一步提问：如果扩展对象是数值类型呢？</p>
+<p>相较于对象类型，基础类型本身的占用很小，使用又特别广泛，假如对基础类型做类似的扩展，从倍率来说相当于成倍地提升了空间消耗，所以越是基础的类型越要谨慎。</p>
 <h4 id="func_1">改进版 func</h4>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kd">extension</span> <span class="nc">DTBKitWrapper</span> <span class="k">where</span> <span class="n">Base</span><span class="p">:</span> <span class="bp">UILabel</span> <span class="p">{</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">setText</span><span class="p">(</span><span class="kc">_</span> <span class="n">value</span><span class="p">:</span> <span class="nb">String</span><span class="p">?)</span> <span class="p">-&gt;</span> <span class="n">DTBKitWrapper</span><span class="p">&lt;</span><span class="n">Base</span><span class="p">&gt;</span> <span class="p">{</span>
@@ -874,10 +891,22 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
 <a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    <span class="kd">let</span> <span class="nv">image</span> <span class="p">=</span> <span class="bp">UIImage</span><span class="p">(</span><span class="n">named</span><span class="p">:</span> <span class="s">&quot;test&quot;</span><span class="p">)</span>
 <a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    <span class="kd">let</span> <span class="nv">thumb</span> <span class="p">=</span> <span class="n">image</span><span class="p">.</span><span class="n">dtb</span><span class="p">.</span><span class="n">scale</span><span class="p">(</span><span class="n">to</span><span class="p">:</span> <span class="mf">20.0</span><span class="p">)</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    <span class="kd">let</span> <span class="nv">other01</span><span class="p">:</span> <span class="bp">CIImage</span> <span class="p">=</span> <span class="n">thumb</span><span class="p">.</span><span class="n">dtb</span><span class="p">.</span><span class="n">ci</span><span class="p">()</span>
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    <span class="kd">let</span> <span class="nv">other02</span> <span class="p">=</span> <span class="n">image</span><span class="p">.</span><span class="n">dtb</span><span class="p">.</span><span class="n">scale</span><span class="p">(</span><span class="n">to</span><span class="p">:</span> <span class="mf">20.0</span><span class="p">).</span><span class="n">dtb</span><span class="p">.</span><span class="n">ci</span><span class="p">().</span><span class="n">dtb</span><span class="p">.</span><span class="n">smartColor</span><span class="p">()</span>
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="p">}</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    <span class="kd">let</span> <span class="nv">ciImage</span><span class="p">:</span> <span class="bp">CIImage</span> <span class="p">=</span> <span class="n">thumb</span><span class="p">.</span><span class="n">dtb</span><span class="p">.</span><span class="n">ci</span><span class="p">()</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    <span class="kd">let</span> <span class="nv">color</span> <span class="p">=</span> <span class="n">ciImage</span><span class="p">.</span><span class="n">dtb</span><span class="p">.</span><span class="n">smartColor</span><span class="p">()</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>    <span class="kd">let</span> <span class="nv">chainResult</span> <span class="p">=</span> <span class="n">image</span><span class="p">.</span><span class="n">dtb</span><span class="p">.</span><span class="n">scale</span><span class="p">(</span><span class="n">to</span><span class="p">:</span> <span class="mf">20.0</span><span class="p">).</span><span class="n">dtb</span><span class="p">.</span><span class="n">ci</span><span class="p">().</span><span class="n">dtb</span><span class="p">.</span><span class="n">smartColor</span><span class="p">()</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="p">}</span>
 </code></pre></div>
+<p>在设计时直接将 <code>UIImage</code> 对象返回符合直觉，但观察业务方的调用，如果不使用中间变量的话链式语法就过于冗长了。假如遵照前文思路，直接返回结构体本身呢？</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kd">let</span> <span class="nv">chains</span> <span class="p">=</span> <span class="n">image</span><span class="p">.</span><span class="n">dtb</span><span class="p">.</span><span class="n">scale</span><span class="p">(</span><span class="n">to</span><span class="p">:</span> <span class="mf">20.0</span><span class="p">).</span><span class="n">ci</span><span class="p">().</span><span class="n">smartColor</span><span class="p">().</span><span class="n">done</span>
+</code></pre></div>
+<p>再回过头去看，假如我只想使用单次结果时：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kd">let</span> <span class="nv">ci01</span> <span class="p">=</span> <span class="n">image</span><span class="p">.</span><span class="n">dtb</span><span class="p">.</span><span class="n">ci</span><span class="p">()</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="kd">let</span> <span class="nv">ci02</span> <span class="p">=</span> <span class="n">image</span><span class="p">.</span><span class="n">dtb</span><span class="p">.</span><span class="n">ci</span><span class="p">().</span><span class="n">done</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="kd">let</span> <span class="nv">ci03</span><span class="p">:</span> <span class="bp">CIImage</span> <span class="p">=</span> <span class="n">image</span><span class="p">.</span><span class="n">dtb</span><span class="p">.</span><span class="n">ci</span><span class="p">()</span>
+</code></pre></div>
+<p>综上所述，无论业务方需要单次还是多次调用，直接返回 <code>Wrapper</code> 对象都是更好的选择。</p>
+<h4 id="me-let-vs-var">me: let vs. var</h4>
 
 
 
