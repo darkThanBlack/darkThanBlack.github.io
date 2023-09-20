@@ -4,7 +4,7 @@
 
 
 
-#### 前提
+## Intro
 
 这里暂不讨论命名空间在业务项目中广泛使用，以及依赖解除等设计模式上的问题，仅集中在代码实现上。
 
@@ -21,6 +21,12 @@
 #### 目标
 
 对以 ``KingFisher`` 为标杆的命名空间业务模式展开讨论并改进。
+
+
+
+## Chain
+
+> 链式语法的设计。
 
 
 
@@ -113,7 +119,7 @@ func update(label: UILabel) {
 }
 ```
 
-可以通过增加 ``@discardableResult`` 注解来保持一致性，同时简写回参：
+通过增加 ``@discardableResult`` 注解来保持一致性，同时简写回参：
 
 ```swift
 extension DTBKitWrapper where Base: UILabel {
@@ -192,5 +198,36 @@ let ci03: CIImage = image.dtb.ci()
 
 
 
+## Extension - where
+
+> 泛型约束很难应对所有场景。
+
+
+
+#### where: class vs. func
+
+> 方法本身的约束...
+
+
+
+#### where: Array
+
+> 带泛型的类本身难以约束...
+
+
+
+#### 难解的 static func
+
+> 静态方法...
+
+
+
+#### Property:  Singleton vs. Objc runtime
+
+> 不得不需要添加属性时...
+
+
+
 #### me: let vs. var
 
+> 处理基础类型/结构体/指针...
