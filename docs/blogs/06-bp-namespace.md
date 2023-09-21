@@ -4,7 +4,7 @@
 
 
 
-#### 前提
+## Intro
 
 这里暂不讨论命名空间在业务项目中广泛使用，以及依赖解除等设计模式上的问题，仅集中在代码实现上。
 
@@ -14,11 +14,19 @@
 
 ``KingFisher`` 提供了一种在 ``Swift`` 中实现命名空间隔离的非常好的工程实践，不少人包括我自己也会尝试仿照它的模式进行基础库的搭建，如果你不知道我在说什么，那么阅读 ``KingFisher`` 的源码和一系列博文是必须的。
 
+无论如何， ``KingFisher`` 本身的扩展主要集中在图片处理上，要想将这个模式推广到整个业务中去，需要比库本身的开发更为谨慎。尽管实现源码非常简单，但搭建过程中依然有很多细节和思辨没有体现出来，这就导致我看到的很多仿写库存在着各种各样的误区。
+
 
 
 #### 目标
 
-无论如何， ``KingFisher`` 本身的扩展主要集中在图片处理上，要想将这个模式推广到整个业务中去，需要比库本身的开发更为谨慎。尽管实现源码非常简单，但搭建过程中依然有很多细节和思辨没有体现出来，这就导致我看到的很多仿写库存在着各种各样的误区。
+对以 ``KingFisher`` 为标杆的命名空间业务模式展开讨论并改进。
+
+
+
+## Chain
+
+> 链式语法的设计。
 
 
 
@@ -58,8 +66,10 @@ func main() {
 ```swift
 func main() {
     let label = UILabel()
-    label.dtb.setText("test1")  // let w1 = label.dtb
-    label.dtb.setText("test2")  // let w2 = label.dtb
+    label.dtb.setText("test1")
+    label.dtb.setText("test2")
+    let w1 = label.dtb
+	let w2 = label.dtb
 }
 ```
 
@@ -76,9 +86,9 @@ func main() {
 }
 ```
 
-提问：如果扩展对象是数值类型呢？
+进一步提问：如果扩展对象是数值类型呢？
 
-相较于对象类型，基础类型本身的占用很小，使用又特别广泛，引入的结构体占用甚至比类型本身的占用还大，从倍率来说相当于成倍地提升了空间消耗，所以越是基础的类型反而越要慎用。
+相较于对象类型，基础类型本身的占用很小，使用又特别广泛，假如对基础类型做类似的扩展，从倍率来说相当于成倍地提升了空间消耗，所以越是基础的类型越要谨慎。
 
 
 
@@ -109,7 +119,7 @@ func update(label: UILabel) {
 }
 ```
 
-可以通过增加 ``@discardableResult`` 注解来保持一致性，同时简写回参：
+通过增加 ``@discardableResult`` 注解来保持一致性，同时简写回参：
 
 ```swift
 extension DTBKitWrapper where Base: UILabel {
@@ -163,8 +173,61 @@ extension DTBKitWrapper where Base: UIImage {
 func main() {
 	let image = UIImage(named: "test")
     let thumb = image.dtb.scale(to: 20.0)
-    let other01: CIImage = thumb.dtb.ci()
-    let other02 = image.dtb.scale(to: 20.0).dtb.ci().dtb.smartColor()
+    let ciImage: CIImage = thumb.dtb.ci()
+    let color = ciImage.dtb.smartColor()
+    
+    let chainResult = image.dtb.scale(to: 20.0).dtb.ci().dtb.smartColor()
 }
 ```
 
+在设计时直接将 ``UIImage`` 对象返回符合直觉，但观察业务方的调用，如果不使用中间变量的话链式语法就过于冗长了。假如遵照前文思路，直接返回结构体本身呢？
+
+```swift
+let chains = image.dtb.scale(to: 20.0).ci().smartColor().done
+```
+
+再回过头去看，假如我只想使用单次结果时：
+
+```swift
+let ci01 = image.dtb.ci()
+let ci02 = image.dtb.ci().done
+let ci03: CIImage = image.dtb.ci()
+```
+
+综上所述，无论业务方需要单次还是多次调用，直接返回 ``Wrapper`` 对象都是更好的选择。
+
+
+
+## Extension - where
+
+> 泛型约束很难应对所有场景。
+
+
+
+#### where: class vs. func
+
+> 方法本身的约束...
+
+
+
+#### where: Array
+
+> 带泛型的类本身难以约束...
+
+
+
+#### 难解的 static func
+
+> 静态方法...
+
+
+
+#### Property:  Singleton vs. Objc runtime
+
+> 不得不需要添加属性时...
+
+
+
+#### me: let vs. var
+
+> 处理基础类型/结构体/指针...
