@@ -198,6 +198,137 @@ let ci03: CIImage = image.dtb.ci()
 
 
 
+#### Chainable setter
+
+很容易想到，链式语法的应用场景之一就是改写一系列的赋值语句，让业务看起来更为紧凑，而其中最容易改写的就是大部分的成员变量赋值，实现也很简单，不再赘述：
+
+```swift
+UIView().dtb.text("title").textColor(.gray).backgroundColor(.white)
+```
+
+除此之外，我们还希望能够在代码里显式地标明哪些类已经支持了 "Chain" 语法，这里存在着多种思路：
+
+
+
+#### setter: @dynamicMemberLookup
+
+具体参见 [Swift 5.1: @dynamicMemberLookup](https://zhuanlan.zhihu.com/p/415217937)，总而言之，按这个思路最终改造后的代码如下：
+
+```swift
+// [Style3] key-path
+extension DTBKitWrapper where Base == UIView {
+	@dynamicMemberLookup
+    subscript<T>(dynamicMember keyPath: WritableKeyPath<Base, T>) -> ((T) -> (DTBKitChainWrapper<Base>)) {
+        var n = me
+        return { value in
+            n[keyPath: keyPath] = value
+            return DTBKitChainWrapper(n)
+        }
+    }
+}
+```
+
+这么做当然有一堆问题，比如
+
+* 理论上基于闭包的方法应该和自定义方法良好共存，但事实上并非如此；
+* 结合闭包的结构体在内存管理上需要更多思考；
+* 对系统类的扩展必然需要大量的自定义方法；
+* Base 是 class 还是 struct 的兼容；
+
+此思路作罢。
+
+
+
+#### setter: another wrapper
+
+另一种思路是拆成多种 "Wrapper"，链式语法只在新的 wrapper 内实现，并定义一系列的操作符用来转换：
+
+```swift
+// [Style2] another wrapper
+public protocol DTBKitChainable {
+    associatedtype ChainT
+    var obj: ChainT { get }
+}
+
+extension DTBKitChainable {
+    ///
+    public var set: DTBKitChainWrapper<ChainT> {
+        get { return DTBKitChainWrapper(obj) }
+        set { }
+    }
+}
+
+///
+public struct DTBKitChainWrapper<Base> {
+    internal let me: Base
+    public init(_ value: Base) { self.me = value }
+}
+
+/// Syntax candy
+extension DTBKitChainWrapper {
+    public var then: DTBKitWrapper<Base> { return DTBKitWrapper(me) }
+    public var unBox: Base { return me }
+    public func done() {}
+}
+```
+
+这种写法的好处是进一步隔离了各扩展方法，并且强制业务方使用语义调用：
+
+```swift
+UIView().dtb.set.text("title").textColor(.gray)
+UIView().dtb.text("")  // syntax error!
+```
+
+但这同样会导致业务方无法混用，废话连词变多：
+
+```swift
+let res = UIImage().set.base64("123").dtb.zipTo(0.7).set.tintColor(.gray).value
+```
+
+业务层不应该感知具体的 wrapper，而是只注意返回值类型。
+
+
+
+#### setter: any protocol
+
+继续基于另起 wrapper 的思路往下看，原有的 wrapper 必须要有个方法来转换到新的 wrapper：
+
+```swift
+public struct DTBKitWrapper<Base> {
+	public func set() -> Self where Self: DTBKitChainable { return self }
+}
+```
+
+调用者需要带方法括号不太美观，能不能省去：
+
+```swift
+public var set: any DTBKitChainable { return self as DTBKitChainable }
+```
+
+再去查一下 ``any protocol`` 实现，可以知道这又是在内存管理上不太好的做法。既然业务和内存两方面都存在问题，那这个思路也走不通。
+
+退而求其次，
+
+* 依然通过新的 protocol 来标明哪些类支持相应操作；
+* 不强求扩展方法之间互相隔离，但提供空白操作符给业务层用来标明语义；
+* 特殊的公有方法可以直接在 protocol 里实现，利用 where 隔离；
+
+业务方调用时，
+
+```swift
+UILabel().dtb.set.text("123")
+UILabel().dtb.text("456")
+
+UILabel().dtb.value.text
+UILabel().dtb.get.text
+```
+
+都是等效的，业务方可以根据自己的习惯使用。
+
+
+
+
+
 ## Extension - where
 
 > 泛型约束很难应对所有场景。
