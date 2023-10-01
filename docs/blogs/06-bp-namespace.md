@@ -327,11 +327,112 @@ UILabel().dtb.get.text
 
 
 
+## Definition
+
+> 内存管理与声明语义。
+
+
+
+#### 先看一些与 struct 相关的知识储备
+
+[二进制优化与 COW](https://juejin.cn/post/7191406877819797561)
+
+
+
+#### me: let vs. var
+
+考虑到语言本身就设计了 ``mutating`` 关键字来显式地表明对成员变量的修改，所以更直觉的选择是另起一个 Wrapper ：
+
+```swift
+public struct DTBKitMutableWrapper<Base> {
+    internal var me: Base
+    public init(_ base: Base) {
+        self.me = base
+    }
+}
+```
+
+
+
+#### me: optional
+
+在处理 ``me`` 成员变量本身业务时当然有可能出现各种错误：
+
+```swift
+extension DTBKitMutableWrapper where Base == String {
+    func sub() {
+      if let c = me.first(where: { $0 == "a" }) {
+      	me = String(c)
+      } else {
+        // A. me = nil
+        // B. me = ""
+        // C. me = me
+      }
+    }
+}
+```
+
+从业务角度来说 ABC 三种处理方案都说得通，但明显 A 方案需要修改声明为 `` var me: Base?``；而再进一步思考，就是如何将 ``throw`` 和 ``optional`` 也纳入链式语法设计中的问题了，先按下不表。
+
+
+
+#### me: weak
+
+考虑以下代码：
+
+```swift
+extension DTBKitMutableWrapper where Base: UIView {
+	  @discardableResult
+    public func removeFromSuperview() -> Self {
+        me.removeFromSuperview()
+        return self
+    }
+}
+```
+
+一般业务实践中基本上和置空操作在一起：
+
+```swift
+class Test {
+	let buttons: [UIView] = [button01, button02, button03]
+	
+	func reset() {
+		buttons.map{ $0.removeFromSuperView() }
+		buttons.removeAll()
+		// do sth.
+	}
+}
+```
+
+一番改造后的 Wrapper 可能类似于：
+
+```swift
+extension DTBKitMutableOptionalWrapper where Base: UIView {
+	  @discardableResult
+    public func removeFromSuperview() -> Self {
+        me?.removeFromSuperview()
+        me = nil
+        return self
+    }
+}
+```
+
+那么如果不用 ``optional`` 和置空操作，``removeFromSuperview`` 等类似的函数会不会造成引用计数和内存方面的问题？``me`` 属性本身是否需要 ``weak`` 修饰呢？
+
+[Swift-Regret-Weak-Vars-in-Structs](https://belkadan.com/blog/2021/12/Swift-Regret-Weak-Vars-in-Structs/#)
+
+
+
+## Semantic Candy
+
+> 创建语法糖来增强语义。
+
+
 
 
 ## Extension - where
 
-> 泛型约束很难应对所有场景。
+> 泛型约束使用。
 
 
 
@@ -359,6 +460,11 @@ UILabel().dtb.get.text
 
 
 
+## Wrapper
+
+
+
 #### me: let vs. var
 
 > 处理基础类型/结构体/指针...
+
