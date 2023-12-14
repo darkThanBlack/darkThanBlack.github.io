@@ -88,7 +88,7 @@ func main() {
 
 进一步提问：如果扩展对象是数值类型呢？
 
-相较于对象类型，基础类型本身的占用很小，使用又特别广泛，假如对基础类型做类似的扩展，从倍率来说相当于成倍地提升了空间消耗，所以越是基础的类型越要谨慎。
+相较于对象类型，基础类型本身的占用很小，使用又特别广泛，假如对基础类型做类似的扩展，从倍率来说相当于成倍地提升了空间消耗，越是基础的类型越要谨慎。
 
 
 
@@ -133,29 +133,7 @@ extension DTBKitWrapper where Base: UILabel {
 
 
 
-#### me: public vs. internal
-
-将所有 extension 方法视为一个三方库，在前文的改造之后，外部业务必然出现大量对 ``me`` 属性的调用，这会使得我们难以区分对相应属性的修改来自于内部还是外部，所以我更倾向于将 ``me`` 看成是库的私有属性进行处理，同时另行暴露外部接口。
-
-```swift
-public struct DTBKitWrapper<Base> {
-    let me: Base
-    public var done: Base {
-        return me
-    }
-    public init(_ base: Base) {
-        self.me = base
-    }
-}
-
-func main() {
-    let label = UILabel().dtb.setText("A").done
-}
-```
-
-
-
-#### 一个典型的 func，返回一个类型相同的新对象
+#### 一个 func，返回一个类型相同的新对象
 
 ```swift
 extension DTBKitWrapper where Base: UIImage {
@@ -198,21 +176,228 @@ let ci03: CIImage = image.dtb.ci()
 
 
 
-## Definition
+#### 一个 func，返回其他类型的对象
+
+这时其实是强业务相关，因为业务方拿到返回值后可能会做两件事：
+
+* 返回值与当前对象无关；
+* 需要对返回值进行处理后更新当前对象；
+* 两种情况都有可能。
+
+而**链式语法在设计上应当注意业务是连续的**，所以除了第二种情况，应该让业务方通过拆箱方法获取原始值后自行调用，举个例子：
+
+```swift
+@discardableResult
+public func sizeThatFits(_ size: CGSize, setter: ((_ base: Base, _ result: CGSize) -> Void)) -> Self {
+    setter(me, me.sizeThatFits(size))
+    return self
+}
+```
+
+提供方法的目的是为了更新 ``UIView``本身，如果业务方拿到 ``size`` 以后是为了做其他事，那么直接调用原始的 ``sizeThatFits:`` 方法即可。
+
+
+
+#### Chainable setter
+
+很容易想到，链式语法的应用场景之一就是改写一系列的赋值语句，让业务看起来更为紧凑，而其中最容易改写的就是大部分的成员变量赋值，实现也很简单，不再赘述：
+
+```swift
+UIView().dtb.text("title").textColor(.gray).backgroundColor(.white)
+```
+
+除此之外，我们还希望能够在代码里显式地标明哪些类已经支持了 "Chain" 语法，这里存在着多种思路：
+
+
+
+#### setter: @dynamicMemberLookup
+
+具体参见 [Swift 5.1: @dynamicMemberLookup](https://zhuanlan.zhihu.com/p/415217937)，总而言之，按这个思路最终改造后的代码如下：
+
+```swift
+// [Style3] key-path
+extension DTBKitWrapper where Base == UIView {
+	@dynamicMemberLookup
+    subscript<T>(dynamicMember keyPath: WritableKeyPath<Base, T>) -> ((T) -> (DTBKitChainWrapper<Base>)) {
+        var n = me
+        return { value in
+            n[keyPath: keyPath] = value
+            return DTBKitChainWrapper(n)
+        }
+    }
+}
+```
+
+这么做当然有一堆问题，比如
+
+* 理论上基于闭包的方法应该和自定义方法良好共存，但事实上并非如此；
+* 结合闭包的结构体在内存管理上需要更多思考；
+* 对系统类的扩展必然需要大量的自定义方法；
+
+此思路作罢。
+
+
+
+#### setter: another wrapper
+
+另一种思路是拆成多种 "Wrapper"，链式语法只在新的 wrapper 内实现，并定义一系列的操作符用来转换：
+
+```swift
+// [Style2] another wrapper
+public protocol DTBKitChainable {
+    associatedtype ChainT
+    var obj: ChainT { get }
+}
+
+extension DTBKitChainable {
+    ///
+    public var set: DTBKitChainWrapper<ChainT> {
+        get { return DTBKitChainWrapper(obj) }
+        set { }
+    }
+}
+
+///
+public struct DTBKitChainWrapper<Base> {
+    internal let me: Base
+    public init(_ value: Base) { self.me = value }
+}
+
+/// Syntax candy
+extension DTBKitChainWrapper {
+    public var then: DTBKitWrapper<Base> { return DTBKitWrapper(me) }
+    public var unBox: Base { return me }
+    public func done() {}
+}
+```
+
+这种写法的好处是进一步隔离了各扩展方法，并且强制业务方使用语义调用：
+
+```swift
+UIView().dtb.set.text("title").textColor(.gray)
+UIView().dtb.text("")  // syntax error!
+```
+
+但这同样会导致业务方无法混用，废话连词变多：
+
+```swift
+let res = UIImage().set.base64("123").dtb.zipTo(0.7).set.tintColor(.gray).value
+```
+
+业务层不需要感知具体的 wrapper，只注意返回值类型。
+
+
+
+#### setter: any protocol
+
+继续基于另起 wrapper 的思路往下看，原有的 wrapper 必须要有个方法来转换到新的 wrapper：
+
+```swift
+public struct DTBKitWrapper<Base> {
+	public func set() -> Self where Self: DTBKitChainable { return self }
+}
+```
+
+调用者需要带方法括号不太美观，能不能省去：
+
+```swift
+public var set: any DTBKitChainable { return self as DTBKitChainable }
+```
+
+再去查一下 ``any protocol`` 实现，可以知道这又是在内存管理上不太好的做法。既然业务和内存两方面都存在问题，那这个思路也走不通。
+
+退而求其次，
+
+* 依然通过新的 protocol 来标明哪些类支持相应操作；
+* 不强求扩展方法之间互相隔离，但提供空白操作符给业务层用来标明语义；
+* 特殊的公有方法可以直接在 protocol 里实现，利用 where 隔离；
+
+业务方调用时，
+
+```swift
+UILabel().dtb.set.text("123")
+UILabel().dtb.text("456")
+
+UILabel().dtb.value.text
+UILabel().dtb.get.text
+```
+
+都是等效的，业务方可以根据自己的习惯使用。
+
+
+
+#### setter: struct
+
+以上所有处理均只考虑了 ``Base`` 是 ``class`` 的情况，当 ``me`` 是一个 ``struct`` 的时候直接修改 ``me`` 属性不是个好主意，同时其他 ``protocol`` 相关的语法也会收到限制。当然你第一反应会说 ``mutating``：
+
+```swift
+extension DTBKitMutableWrapper where Base == CGSize {
+    @discardableResult
+    public mutating func width(_ value: CGFloat) -> Self where Base: DTBKitChainable {
+        me.width = value
+        return self
+    }
+}
+```
+
+然而如果像这样去使用是会报错的：
+
+```swift
+let result = CGSize.zero.dtb.width(1.0).height(2.0).value  // build error
+```
+
+因为 ``wrapper`` 本身也是结构体，同样需要先由外层持有：
+
+```swift
+var size: CGSize = .zero
+size.dtb.width(1.0)
+```
+
+所以 ``struct`` 的 ``chain`` 方法仅能用于过程中修改，用处被削弱了很多；大部分情况还是需要重新创建一个新的 ``struct``。
+
+
+
+## Wrapper
 
 > 内存管理与声明语义。
 
 
 
-#### 先看一些与 struct 相关的知识储备
+#### 知识储备
 
-[二进制优化与 COW](https://juejin.cn/post/7191406877819797561)
+[01  美团：Swift 性能优化](https://tech.meituan.com/2018/11/01/swift-compile-performance-optimization.html)
+
+[02  京东：二进制优化与 COW](https://juejin.cn/post/7191406877819797561)
+
+[03  Swift-Regret-Weak-Vars-in-Structs](https://belkadan.com/blog/2021/12/Swift-Regret-Weak-Vars-in-Structs/#)
+
+
+
+#### me: public vs. internal
+
+将所有 extension 方法视为一个三方库，在前文的改造之后，外部业务必然出现大量对 ``me`` 属性的调用，这会使得我们难以区分对相应属性的修改来自于内部还是外部，所以我更倾向于将 ``me`` 看成是库的私有属性进行处理，同时另行暴露外部接口。
+
+```swift
+public struct DTBKitWrapper<Base> {
+    let me: Base
+    public var done: Base {
+        return me
+    }
+    public init(_ base: Base) {
+        self.me = base
+    }
+}
+
+func main() {
+    let label = UILabel().dtb.setText("A").done
+}
+```
 
 
 
 #### me: let vs. var
 
-考虑到语言本身就设计了 ``mutating`` 关键字来显式地表明对成员变量的修改，所以更直觉的选择是另起一个 Wrapper ：
+直觉的选择是另起一个 Wrapper ：
 
 ```swift
 public struct DTBKitMutableWrapper<Base> {
@@ -222,28 +407,6 @@ public struct DTBKitMutableWrapper<Base> {
     }
 }
 ```
-
-
-
-#### me: optional
-
-在处理 ``me`` 成员变量本身业务时当然有可能出现各种错误：
-
-```swift
-extension DTBKitMutableWrapper where Base == String {
-    func sub() {
-      if let c = me.first(where: { $0 == "a" }) {
-      	me = String(c)
-      } else {
-        // A. me = nil
-        // B. me = ""
-        // C. me = me
-      }
-    }
-}
-```
-
-从业务角度来说 ABC 三种处理方案都说得通，但明显 A 方案需要修改声明为 `` var me: Base?``；而再进一步思考，就是如何将 ``throw`` 和 ``optional`` 也纳入链式语法设计中的问题了，先按下不表。
 
 
 
@@ -279,7 +442,7 @@ class Test {
 
 ```swift
 extension DTBKitMutableOptionalWrapper where Base: UIView {
-	  @discardableResult
+	@discardableResult
     public func removeFromSuperview() -> Self {
         me?.removeFromSuperview()
         me = nil
@@ -288,9 +451,29 @@ extension DTBKitMutableOptionalWrapper where Base: UIView {
 }
 ```
 
-那么如果不用 ``optional`` 和置空操作，``removeFromSuperview`` 等类似的函数会不会造成引用计数和内存方面的问题？``me`` 属性本身是否需要 ``weak`` 修饰呢？
+那么如果不考虑 ``optional`` 和置空，``removeFromSuperview`` 等类似的函数会不会造成引用计数和内存方面的问题？``me`` 属性本身是否需要 ``weak`` 修饰呢？参见"知识储备"链接 01。
 
-[Swift-Regret-Weak-Vars-in-Structs](https://belkadan.com/blog/2021/12/Swift-Regret-Weak-Vars-in-Structs/#)
+
+
+#### me: optional
+
+在处理 ``me`` 成员变量本身业务时当然有可能出现各种错误：
+
+```swift
+extension DTBKitMutableWrapper where Base == String {
+    func sub() {
+      if let c = me.first(where: { $0 == "a" }) {
+      	me = String(c)
+      } else {
+        // A. me = nil
+        // B. me = ""
+        // C. me = me
+      }
+    }
+}
+```
+
+从业务角度来说 ABC 三种处理方案都说得通，但明显 A 方案需要修改声明为 `` var me: Base?``；而再进一步思考，就是如何将 ``throw`` 和 ``optional`` 也纳入链式语法设计中的问题了，先按下不表。
 
 
 
@@ -301,14 +484,13 @@ extension DTBKitMutableOptionalWrapper where Base: UIView {
 
 
 
+## Protocol
 
-## Extension - where
-
-> 泛型约束很难应对所有场景。
-
+> 泛型约束使用。
 
 
-#### where: class vs. func
+
+#### where
 
 > 方法本身的约束...
 
@@ -320,23 +502,19 @@ extension DTBKitMutableOptionalWrapper where Base: UIView {
 
 
 
-#### 难解的 static func
+## Static
+
+> 全局/静态方法处理...
+
+
+
+#### static / class func
 
 > 静态方法...
 
 
 
-#### Property:  Singleton vs. Objc runtime
+#### 添加属性：Singleton vs. Objc runtime
 
 > 不得不需要添加属性时...
-
-
-
-## Wrapper
-
-
-
-#### me: let vs. var
-
-> 处理基础类型/结构体/指针...
 
