@@ -11,6 +11,8 @@ nav:
             - '1.1 更轻量的 ViewControllers': 'objc.io/#1/issue-1-1.md'
             - '1.2 整洁的 Table View 代码': 'objc.io/#1/issue-1-2.md'
     - 'Blogs':
+        - '08 API 拾遗':   'blogs/08-api.md'
+        - '07 Mac OS 升级方案':   'blogs/07-macosupdate.md'
         - '06 最佳实践 - 命名空间':   'blogs/06-bp-namespace.md'
         - '05 最佳实践 - statusBar': 'blogs/05-bp-statusbar.md'
         - '04 最佳实践 - keyWindow': 'blogs/04-bp-keywindow.md'
