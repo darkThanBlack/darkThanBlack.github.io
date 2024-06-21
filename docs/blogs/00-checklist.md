@@ -1,6 +1,10 @@
 # 飞行清单 - 新电脑
 
-[个人工作流](https://github.com/darkThanBlack/MOONWorkflow)
+
+
+#### [个人工作流](https://github.com/darkThanBlack/MOONWorkflow)
+
+* 先处理 SS
 
 
 
@@ -10,14 +14,31 @@
 * Apple ID
     * 关闭 iCloud 云盘同步选项
 * 程序坞与菜单栏
-    * 置于屏幕底部，以神奇效果最小化，连按标题栏以缩放，弹跳打开APP并显示指示灯
+    * 显示建议和最近使用的 APP  关闭
+    * 下载 右键 从程序坞移除
+* Finder
+
+    * 边栏：仅外接磁盘，并隐藏标签
+    * 高级：显示所有文件扩展名，搜索当前文件夹
+
 * Siri
     * 关闭
-* 辅助功能
+* 键盘快捷键
     * 取消所有选项的选择，除了：
         * 显示：摇动鼠标指针以定位
 * 安全性与隐私
-    * 任何来源：``sudo spctl --master-disable``
+    ```shell
+    # 任何来源
+    $ sudo spctl --master-disable
+    
+    # Content 内容变化后报错
+    $ sudo xattr -rd com.apple.quarantine /Applications/*.app
+    
+    # 重签名
+    sudo xattr -cr /Applications/Sketch.app
+    sudo codesign --force --deep --sign /Applications/Sketch.app
+    ```
+
     * M1 芯片：注意 ``Rosetta``
 * 软件更新
     * 取消自动更新
@@ -62,23 +83,14 @@
         * 防止自动进入睡眠
         * 唤醒以供网络访问
 * 共享
-    * 电脑名称：
-        * ``moon`` + ``personal / 公司简拼`` + ``iphone / mbp / mac`` + `` 13/14/15`` ``intel / M1``+ ``2017 / 2022``，中划线连接
-
-
-
-#### 畅游因特网
-
-* KcpTun + SS_NG，[个人工作流](https://github.com/darkThanBlack/MOONWorkflow)
+    * 电脑名称
 
 
 
 #### App Store
 
-* QQ，微信，钉钉，WPS Office，网易云音乐
-* Xcode
-    * 安装完成后，手动设置 ``command-line-tools`` 路径。
-* Transporter
+* QQ，微信，钉钉，WPS Office，网易云音乐，Transporter
+* Xcode 和 模拟器环境 单独下载 / 用 U 盘
 
 
 
@@ -102,15 +114,7 @@
         * 高级
             * 模糊音：``z=zh, c=ch, s=sh``
             * 关闭自定义表情，关闭 TouchBar，关闭版本更新
-* [Alfred](https://macwk.com/soft/alfred-4)
-    * [个人工作流](https://github.com/darkThanBlack/MOONWorkflow)
-* [Karabiner](https://karabiner-elements.pqrs.org/)
-    * 配置：
-* [Typora](https://macwk.com/soft/typora)
-    * [PicGo](https://picgo.github.io/PicGo-Doc/zh/guide/#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85)
-        * 配置：``~/Library/Application Support/picgo/data.json``
-* [iTerm2](https://iterm2.com/downloads.html)
-    * 配置：指定目录
 * [Charles](https://www.charlesproxy.com/download/)
     * 配置：
-* VSCode
+* [VSCode](https://code.visualstudio.com/)
+
