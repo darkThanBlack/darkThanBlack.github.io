@@ -32,6 +32,22 @@
 #### [MKDocs](https://www.mkdocs.org/)
 
 ```shell
+# python env
+brew install python@3.12
+
+# use venv
+python3.12 -m venv ~/venv3.12
+source ~/venv3.12/bin/activate
+
+# install plugins
+python3.12 -m pip install mkdocs-material
+python3.12 -m pip install mkdocs_pymdownx_material_extras
+
+# exit venv
+deactivate
+```
+
+```shell
 # create
 $ mkdocs new my-project
 
