@@ -252,7 +252,7 @@ func main() {
 
 **结论：**
 
-* 在需要返回**对象类型**的情况下，一般保持返回包装后的对象是更好的选择。
+* 在需要返回**引用类型**的情况下，一般保持返回包装后的对象是更好的选择。
 
 
 
@@ -301,33 +301,44 @@ private lazy var titleLabel = {
 
 #### explore: @dynamicMemberLookup
 
-具体参见 [Swift 5.1: @dynamicMemberLookup](https://zhuanlan.zhihu.com/p/415217937)，总而言之，按这个思路最终改造后的代码如下：
+参见 [Swift 5.1: @dynamicMemberLookup](https://zhuanlan.zhihu.com/p/415217937)
+
+先看微调后的核心代码：
 
 ```swift
-// [Style3] key-path
-extension DTBKitWrapper where Base == UIView {
-	@dynamicMemberLookup
-    subscript<T>(dynamicMember keyPath: WritableKeyPath<Base, T>) -> ((T) -> (DTBKitChainWrapper<Base>)) {
-        var n = me
+@dynamicMemberLookup
+struct DTBKitWrapper<Base> {
+    private let me: Base
+    
+    subscript<Value>(dynamicMember keyPath: WritableKeyPath<Base, Value>) -> ((Value) -> DTBKitWrapper<Base>) {
+        var subject = self.me
         return { value in
-            n[keyPath: keyPath] = value
-            return DTBKitChainWrapper(n)
+            subject[keyPath: keyPath] = value
+            // 避免多次创建
+            // return DTBKitWrapper(subject)
+            return self
         }
     }
 }
 ```
 
-这么做当然有一堆问题，比如
+优势：
 
-* 理论上基于闭包的方法应该和自定义方法良好共存，但事实上并非如此；
+* 如文中所说，可以避免大量体力活，同时兼容 API 可能的变动
+
+劣势：
+
+* 自动完成的时候括号不会补全，而且方法容易变白
+* 一堆 get only 和无效属性都会被响应
+* ~~理论上基于闭包的方法应该和自定义方法良好共存，但事实上并非如此；~~
 * 结合闭包的结构体在内存管理上需要更多思考；
-* 对系统类的扩展必然需要大量的自定义方法；
+* ~~对系统类的扩展必然需要大量的自定义方法；~~
 
-此思路作罢。
+~~此思路作罢。~~
 
 
 
-#### explore: another wrapper
+#### ~~explore: another wrapper~~
 
 另一种思路是拆成多种 "Wrapper"，链式语法只在新的 wrapper 内实现，并定义一系列的操作符用来转换：
 
@@ -377,7 +388,7 @@ let res = UIImage().set.base64("123").dtb.zipTo(0.7).set.tintColor(.gray).value
 
 
 
-#### explore: any protocol
+#### ~~explore: any protocol~~
 
 继续基于另起 wrapper 的思路往下看，原有的 wrapper 必须要有个方法来转换到新的 wrapper：
 
@@ -411,7 +422,7 @@ UILabel().dtb.value.text
 UILabel().dtb.get.text
 ```
 
-可以做，但没必要搞一堆无意义的关键字出来。
+**结论**：换 Wrapper 对象有它的用处，但没必要搞一堆无意义的关键字出来。
 
 
 
@@ -478,9 +489,7 @@ let edge2 = UIEdgeInsets.dtb.create(left: 2)
 let edge3 = UIEdgeInsets(0, 2, 0, 0)
 ```
 
-
-
-还有另一种方法，通过 class 进行转换，核心代码如下：
+还有另一种思路，即通过 class 进行转换，核心代码如下：
 
 ```swift
 public struct DTBKitStaticWrapper<T> {}
