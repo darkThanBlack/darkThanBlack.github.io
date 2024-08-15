@@ -83,7 +83,7 @@ func main() {
 }
 ```
 
-进一步提问：如果被扩展的对象是基础类型呢？
+进一步提问：如果被扩展的对象是值类型呢？
 
 **结论：**
 
@@ -94,7 +94,7 @@ func main() {
 **扩展结论：**
 
 * 实际上，KF 的作者在最初对这一模式的性能影响确实有过调研，详情参见他的博客；尽管这额外的开销相较于优点来说值得承受，但这并不意味着扩展结构就可以被滥用，尤其是要推广到整个业务的时候，所以在设计过程中就应该设法引导开发者降低不必要的 ``struct`` 创建次数。
-* 相较于对象类型，基础类型（数字，字符串等）本身使用就特别广泛，假如对基础类型做类似的扩展，从倍率来说相当于成倍地提升了空间消耗，越是基础的类型越要谨慎。
+* 相较于引用类型，基础类型（数字，字符串等）本身使用就特别广泛，假如对基础类型做类似的扩展，从倍率来说相当于成倍地提升了空间消耗，越是基础的类型越要谨慎。
 
 
 
@@ -308,7 +308,6 @@ private lazy var titleLabel = {
 ```swift
 @dynamicMemberLookup
 struct DTBKitWrapper<Base> {
-    private let me: Base
     
     subscript<Value>(dynamicMember keyPath: WritableKeyPath<Base, Value>) -> ((Value) -> DTBKitWrapper<Base>) {
         var subject = self.me
@@ -324,21 +323,26 @@ struct DTBKitWrapper<Base> {
 
 优势：
 
-* 如文中所说，可以避免大量体力活，同时兼容 API 可能的变动
+* 如文中所说，可以避免大量体力活
+* 系统 API 变化或新增时可以直接兼容
+* 对自定义类同样有效
 
 劣势：
 
-* 自动完成的时候括号不会补全，而且方法容易变白
-* 一堆 get only 和无效属性都会被响应
-* ~~理论上基于闭包的方法应该和自定义方法良好共存，但事实上并非如此；~~
-* 结合闭包的结构体在内存管理上需要更多思考；
-* ~~对系统类的扩展必然需要大量的自定义方法；~~
+* 只能对属性生效
+* 无法区分 get only，open，继承等语义
+* IDE 自动完成的时候括号不会补全，而且方法容易变白
+* ~~理论上基于闭包的方法应该和自定义方法良好共存，但事实上并非如此~~
+* ~~结合闭包的结构体在内存管理上需要更多思考~~
+* ~~对系统类的扩展必然需要大量声明~~
 
 ~~此思路作罢。~~
 
+**结论**：作为引用类型的补充。
 
 
-#### ~~explore: another wrapper~~
+
+#### explore: another wrapper
 
 另一种思路是拆成多种 "Wrapper"，链式语法只在新的 wrapper 内实现，并定义一系列的操作符用来转换：
 
@@ -388,7 +392,7 @@ let res = UIImage().set.base64("123").dtb.zipTo(0.7).set.tintColor(.gray).value
 
 
 
-#### ~~explore: any protocol~~
+#### explore: any protocol
 
 继续基于另起 wrapper 的思路往下看，原有的 wrapper 必须要有个方法来转换到新的 wrapper：
 
@@ -409,7 +413,7 @@ public var set: any DTBKitChainable { return self as DTBKitChainable }
 退而求其次，
 
 * 依然通过新的 protocol 来标明哪些类支持相应操作；
-* 不强求扩展方法之间互相隔离，但提供空白操作符给业务层用来标明语义；
+* 不强求扩展方法之间互相隔离，~~但提供空白操作符给业务层用来标明语义~~；
 * 特殊的公有方法可以直接在 protocol 里实现，利用 where 隔离；
 
 业务方调用：
@@ -422,7 +426,7 @@ UILabel().dtb.value.text
 UILabel().dtb.get.text
 ```
 
-**结论**：换 Wrapper 对象有它的用处，但没必要搞一堆无意义的关键字出来。
+**结论**：设计不同的 Wrapper 对象有它的用处，但没必要搞一堆无意义的关键字出来。
 
 
 
