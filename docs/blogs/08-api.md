@@ -16,7 +16,7 @@
 
 ```swift
 
-		// 数据预加载，实现也不难，问题在于正常情况下性能瓶颈不在这里
+	// 数据预加载，实现也不难，问题在于正常情况下性能瓶颈不在这里
     @available(iOS 10.0, *)
     weak open var prefetchDataSource: UITableViewDataSourcePrefetching?
 
@@ -31,17 +31,17 @@
     weak open var dropDelegate: UITableViewDropDelegate?
 		
     // TODO: wwdc 2022
-		@available(iOS 16.0, *)
+	@available(iOS 16.0, *)
     open var selfSizingInvalidation: UITableView.SelfSizingInvalidation
 
   	// 3D Touch 菜单
     @available(iOS 14.0, *)
     open var contextMenuInteraction: UIContextMenuInteraction? { get }
+	
+    // 不常用
+    rect(for:)
 		
-		// 不常用
-		rect(for:)
-		
-		@available(iOS 15.0, *)
+	@available(iOS 15.0, *)
     open func reconfigureRows(at indexPaths: [IndexPath])
 	
     open var sectionIndexMinimumDisplayRowCount: Int // show special section index list on right when row count reaches this value. default is 0
@@ -52,7 +52,7 @@
     @available(iOS 9.0, *)
     open var cellLayoutMarginsFollowReadableWidth: Bool // if cell layout margins are derived from the width of the readableContentGuide. default is NO.
 		
-		// TODO: Focus
+	// TODO: Focus
     @available(iOS 9.0, *)
     open var remembersLastFocusedIndexPath: Bool
     
@@ -68,4 +68,8 @@
     UISpringLoadedInteractionSupporting
   
 ```
+
+
+
+https://docs.swift.org/swift-book/documentation/the-swift-programming-language/attributes
 

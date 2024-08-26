@@ -561,22 +561,38 @@ let attr = NSAttributedString(
 
 #### me: public vs. internal
 
-将所有 extension 方法视为一个三方库，在前文的改造之后，外部业务必然出现大量对 ``me`` 属性的调用，这会使得我们难以区分对相应属性的修改来自于内部还是外部，所以我更倾向于将 ``me`` 看成是库的私有属性进行处理，同时另行暴露外部接口。
+~~将所有 extension 方法视为一个三方库，在前文的改造之后，外部业务必然出现大量对 ``me`` 属性的调用，这会使得我们难以区分对相应属性的修改来自于内部还是外部，所以我更倾向于将 ``me`` 看成是库的私有属性进行处理，同时另行暴露外部接口。~~
+
+理想很丰满，但是 internal 以后自定义方法除非对 value 进行操作，否则无法修改 me 的属性；如果
 
 ```swift
-public struct DTBKitWrapper<Base> {
-    let me: Base
-    public var done: Base {
-        return me
-    }
-    public init(_ base: Base) {
-        self.me = base
-    }
-}
+import DTBKit
 
-func main() {
-    let label = UILabel().dtb.setText("A").value
+public typealias XMKitWrapper = DTBKit.DTBKitWrapper
+public extension XMKitWrapper {
+	var me: Base { return value }
 }
+```
+
+在 Debug 模式下能通过编译，放到私有 Cocoapods 库中后，Release 模式会出现符号引用错误：
+
+```tex
+1.	Apple Swift version 5.10 (swiftlang-5.10.0.13 clang-1500.3.9.4)
+2.	Compiling with the current language version
+3.	While evaluating request ExecuteSILPipelineRequest(Run pipelines { PrepareOptimizationPasses, EarlyModulePasses, HighLevel,Function+EarlyLoopOpt, HighLevel,Module+StackPromote, MidLevel,Function, ClosureSpecialize, LowLevel,Function, LateLoopOpt, SIL Debug Info Generator } on SIL for XMSport)
+4.	While running pass #33574 SILModuleTransform "PerformanceSILLinker".
+5.	While deserializing SIL function "$s6DTBKit0A7WrapperV5XMKitAD12AlertCreaterCRbzlE5titleyACyAFGSSSgAFRszrlF"
+6.	*** DESERIALIZATION FAILURE ***
+*** If any module named here was modified in the SDK, please delete the ***
+*** new swiftmodule files from the SDK and keep only swiftinterfaces.   ***
+module 'XMKit', builder version '5.10(5.10)/Apple Swift version 5.10 (swiftlang-5.10.0.13 clang-1500.3.9.4)', built from source, non-resilient, loaded from '/Users/xuyiding/Library/Developer/Xcode/DerivedData/XMSport-fecvclpfuqscmegygspvgkdnntiq/Build/Products/Release-iphonesimulator/XMKit/XMKit.framework/Modules/XMKit.swiftmodule/x86_64-apple-ios-simulator.swiftmodule'
+result is ambiguous (_)
+Cross-reference to module 'DTBKit'
+... DTBKitWrapper
+... me
+... with type τ_0_0
+
+Command SwiftCompile failed with a nonzero exit code
 ```
 
 
@@ -587,7 +603,7 @@ func main() {
 
 ```swift
 public struct DTBKitMutableWrapper<Base> {
-    internal var me: Base
+    public var me: Base
     public init(_ base: Base) {
         self.me = base
     }
