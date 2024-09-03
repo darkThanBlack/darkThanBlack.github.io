@@ -1453,7 +1453,7 @@
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="kd">let</span> <span class="nv">w2</span> <span class="p">=</span> <span class="nb">Int64</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="n">dtb</span>
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="p">}</span>
 </code></pre></div>
-<p>进一步提问：如果被扩展的对象是基础类型呢？</p>
+<p>进一步提问：如果被扩展的对象是值类型呢？</p>
 <p><strong>结论：</strong></p>
 <ul>
 <li>
@@ -1466,7 +1466,7 @@
 <p><strong>扩展结论：</strong></p>
 <ul>
 <li>实际上，KF 的作者在最初对这一模式的性能影响确实有过调研，详情参见他的博客；尽管这额外的开销相较于优点来说值得承受，但这并不意味着扩展结构就可以被滥用，尤其是要推广到整个业务的时候，所以在设计过程中就应该设法引导开发者降低不必要的 <code>struct</code> 创建次数。</li>
-<li>相较于对象类型，基础类型（数字，字符串等）本身使用就特别广泛，假如对基础类型做类似的扩展，从倍率来说相当于成倍地提升了空间消耗，越是基础的类型越要谨慎。</li>
+<li>相较于引用类型，基础类型（数字，字符串等）本身使用就特别广泛，假如对基础类型做类似的扩展，从倍率来说相当于成倍地提升了空间消耗，越是基础的类型越要谨慎。</li>
 </ul>
 <h4 id="func_1">改进版 func，支持链式调用</h4>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kd">extension</span> <span class="nc">DTBKitWrapper</span> <span class="k">where</span> <span class="n">Base</span><span class="p">:</span> <span class="bp">UILabel</span> <span class="p">{</span>
@@ -1592,7 +1592,7 @@
 </code></pre></div>
 <p><strong>结论：</strong></p>
 <ul>
-<li>在需要返回<strong>对象类型</strong>的情况下，一般保持返回包装后的对象是更好的选择。</li>
+<li>在需要返回<strong>引用类型</strong>的情况下，一般保持返回包装后的对象是更好的选择。</li>
 </ul>
 <h2 id="explore">Explore</h2>
 <blockquote>
@@ -1627,26 +1627,39 @@
 <li>在处理 struct 的时候又会不得不回过头来考虑这种模式，参见后文说明。</li>
 </ul>
 <h4 id="explore-dynamicmemberlookup">explore: @dynamicMemberLookup</h4>
-<p>具体参见 <a href="https://zhuanlan.zhihu.com/p/415217937">Swift 5.1: @dynamicMemberLookup</a>，总而言之，按这个思路最终改造后的代码如下：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1">// [Style3] key-path</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="kd">extension</span> <span class="nc">DTBKitWrapper</span> <span class="k">where</span> <span class="n">Base</span> <span class="p">==</span> <span class="bp">UIView</span> <span class="p">{</span>
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    <span class="p">@</span><span class="n">dynamicMemberLookup</span>
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>    <span class="kd">subscript</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="n">dynamicMember</span> <span class="n">keyPath</span><span class="p">:</span> <span class="n">WritableKeyPath</span><span class="p">&lt;</span><span class="n">Base</span><span class="p">,</span> <span class="n">T</span><span class="p">&gt;)</span> <span class="p">-&gt;</span> <span class="p">((</span><span class="n">T</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="p">(</span><span class="n">DTBKitChainWrapper</span><span class="p">&lt;</span><span class="n">Base</span><span class="p">&gt;))</span> <span class="p">{</span>
-<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>        <span class="kd">var</span> <span class="nv">n</span> <span class="p">=</span> <span class="n">me</span>
+<p>参见 <a href="https://zhuanlan.zhihu.com/p/415217937">Swift 5.1: @dynamicMemberLookup</a></p>
+<p>先看微调后的核心代码：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="p">@</span><span class="n">dynamicMemberLookup</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="kd">struct</span> <span class="nc">DTBKitWrapper</span><span class="p">&lt;</span><span class="n">Base</span><span class="p">&gt;</span> <span class="p">{</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>    <span class="kd">subscript</span><span class="p">&lt;</span><span class="n">Value</span><span class="p">&gt;(</span><span class="n">dynamicMember</span> <span class="n">keyPath</span><span class="p">:</span> <span class="n">WritableKeyPath</span><span class="p">&lt;</span><span class="n">Base</span><span class="p">,</span> <span class="n">Value</span><span class="p">&gt;)</span> <span class="p">-&gt;</span> <span class="p">((</span><span class="n">Value</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">DTBKitWrapper</span><span class="p">&lt;</span><span class="n">Base</span><span class="p">&gt;)</span> <span class="p">{</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>        <span class="kd">var</span> <span class="nv">subject</span> <span class="p">=</span> <span class="kc">self</span><span class="p">.</span><span class="n">me</span>
 <a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>        <span class="k">return</span> <span class="p">{</span> <span class="n">value</span> <span class="k">in</span>
-<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>            <span class="n">n</span><span class="p">[</span><span class="n">keyPath</span><span class="p">:</span> <span class="n">keyPath</span><span class="p">]</span> <span class="p">=</span> <span class="n">value</span>
-<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>            <span class="k">return</span> <span class="n">DTBKitChainWrapper</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>        <span class="p">}</span>
-<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>    <span class="p">}</span>
-<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="p">}</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>            <span class="n">subject</span><span class="p">[</span><span class="n">keyPath</span><span class="p">:</span> <span class="n">keyPath</span><span class="p">]</span> <span class="p">=</span> <span class="n">value</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>            <span class="c1">// 避免多次创建</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>            <span class="c1">// return DTBKitWrapper(subject)</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>            <span class="k">return</span> <span class="kc">self</span>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>        <span class="p">}</span>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>    <span class="p">}</span>
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="p">}</span>
 </code></pre></div>
-<p>这么做当然有一堆问题，比如</p>
+<p>优势：</p>
 <ul>
-<li>理论上基于闭包的方法应该和自定义方法良好共存，但事实上并非如此；</li>
-<li>结合闭包的结构体在内存管理上需要更多思考；</li>
-<li>对系统类的扩展必然需要大量的自定义方法；</li>
+<li>如文中所说，可以避免大量体力活</li>
+<li>系统 API 变化或新增时可以直接兼容</li>
+<li>对自定义类同样有效</li>
 </ul>
-<p>此思路作罢。</p>
+<p>劣势：</p>
+<ul>
+<li>只能对属性生效</li>
+<li>无法区分 get only，open，继承等语义</li>
+<li>IDE 自动完成的时候括号不会补全，而且方法容易变白</li>
+<li><del>理论上基于闭包的方法应该和自定义方法良好共存，但事实上并非如此</del></li>
+<li><del>结合闭包的结构体在内存管理上需要更多思考</del></li>
+<li><del>对系统类的扩展必然需要大量声明</del></li>
+</ul>
+<p><del>此思路作罢。</del></p>
+<p><strong>结论</strong>：作为引用类型的补充。</p>
 <h4 id="explore-another-wrapper">explore: another wrapper</h4>
 <p>另一种思路是拆成多种 "Wrapper"，链式语法只在新的 wrapper 内实现，并定义一系列的操作符用来转换：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1">// [Style2] another wrapper</span>
@@ -1697,7 +1710,7 @@
 <p>退而求其次，</p>
 <ul>
 <li>依然通过新的 protocol 来标明哪些类支持相应操作；</li>
-<li>不强求扩展方法之间互相隔离，但提供空白操作符给业务层用来标明语义；</li>
+<li>不强求扩展方法之间互相隔离，<del>但提供空白操作符给业务层用来标明语义</del>；</li>
 <li>特殊的公有方法可以直接在 protocol 里实现，利用 where 隔离；</li>
 </ul>
 <p>业务方调用：</p>
@@ -1707,7 +1720,7 @@
 <a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="bp">UILabel</span><span class="p">().</span><span class="n">dtb</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">text</span>
 <a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="bp">UILabel</span><span class="p">().</span><span class="n">dtb</span><span class="p">.</span><span class="kr">get</span><span class="p">.</span><span class="n">text</span>
 </code></pre></div>
-<p>可以做，但没必要搞一堆无意义的关键字出来。</p>
+<p><strong>结论</strong>：设计不同的 Wrapper 对象有它的用处，但没必要搞一堆无意义的关键字出来。</p>
 <h2 id="struct">Struct</h2>
 <blockquote>
 <p>处理结构体时需要额外考虑很多东西。</p>
@@ -1753,7 +1766,7 @@
 <a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a><span class="kd">let</span> <span class="nv">edge2</span> <span class="p">=</span> <span class="n">UIEdgeInsets</span><span class="p">.</span><span class="n">dtb</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="kr">left</span><span class="p">:</span> <span class="mi">2</span><span class="p">)</span>
 <a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a><span class="kd">let</span> <span class="nv">edge3</span> <span class="p">=</span> <span class="n">UIEdgeInsets</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </code></pre></div>
-<p>还有另一种方法，通过 class 进行转换，核心代码如下：</p>
+<p>还有另一种思路，即通过 class 进行转换，核心代码如下：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="kd">public</span> <span class="kd">struct</span> <span class="nc">DTBKitStaticWrapper</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="p">{}</span>
 <a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
 <a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="kd">extension</span> <span class="nc">DTBKitStaticWrapper</span> <span class="k">where</span> <span class="n">T</span><span class="p">:</span> <span class="n">DTBKitStructable</span> <span class="o">&amp;</span> <span class="n">DTBKitStructChainable</span> <span class="p">{</span>
@@ -1803,75 +1816,87 @@
 <p><a href="https://juejin.cn/post/7191406877819797561">02  京东：二进制优化与 COW</a></p>
 <p><a href="https://belkadan.com/blog/2021/12/Swift-Regret-Weak-Vars-in-Structs/#">03  Swift-Regret-Weak-Vars-in-Structs</a></p>
 <h4 id="me-public-vs-internal">me: public vs. internal</h4>
-<p>将所有 extension 方法视为一个三方库，在前文的改造之后，外部业务必然出现大量对 <code>me</code> 属性的调用，这会使得我们难以区分对相应属性的修改来自于内部还是外部，所以我更倾向于将 <code>me</code> 看成是库的私有属性进行处理，同时另行暴露外部接口。</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="kd">public</span> <span class="kd">struct</span> <span class="nc">DTBKitWrapper</span><span class="p">&lt;</span><span class="n">Base</span><span class="p">&gt;</span> <span class="p">{</span>
-<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>    <span class="kd">let</span> <span class="nv">me</span><span class="p">:</span> <span class="n">Base</span>
-<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>    <span class="kd">public</span> <span class="kd">var</span> <span class="nv">done</span><span class="p">:</span> <span class="n">Base</span> <span class="p">{</span>
-<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>        <span class="k">return</span> <span class="n">me</span>
-<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>    <span class="p">}</span>
-<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>    <span class="kd">public</span> <span class="kd">init</span><span class="p">(</span><span class="kc">_</span> <span class="n">base</span><span class="p">:</span> <span class="n">Base</span><span class="p">)</span> <span class="p">{</span>
-<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>        <span class="kc">self</span><span class="p">.</span><span class="n">me</span> <span class="p">=</span> <span class="n">base</span>
-<a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a>    <span class="p">}</span>
-<a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a><span class="p">}</span>
-<a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a>
-<a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-<a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a>    <span class="kd">let</span> <span class="nv">label</span> <span class="p">=</span> <span class="bp">UILabel</span><span class="p">().</span><span class="n">dtb</span><span class="p">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">).</span><span class="n">value</span>
-<a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a><span class="p">}</span>
+<p><del>将所有 extension 方法视为一个三方库，在前文的改造之后，外部业务必然出现大量对 <code>me</code> 属性的调用，这会使得我们难以区分对相应属性的修改来自于内部还是外部，所以我更倾向于将 <code>me</code> 看成是库的私有属性进行处理，同时另行暴露外部接口。</del></p>
+<p>理想很丰满，但是 internal 以后自定义方法除非对 value 进行操作，否则无法修改 me 的属性；如果</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="kd">import</span> <span class="nc">DTBKit</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="kd">public</span> <span class="kd">typealias</span> <span class="n">XMKitWrapper</span> <span class="p">=</span> <span class="n">DTBKit</span><span class="p">.</span><span class="n">DTBKitWrapper</span>
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="kd">public</span> <span class="kd">extension</span> <span class="nc">XMKitWrapper</span> <span class="p">{</span>
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>    <span class="kd">var</span> <span class="nv">me</span><span class="p">:</span> <span class="n">Base</span> <span class="p">{</span> <span class="k">return</span> <span class="n">value</span> <span class="p">}</span>
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="p">}</span>
+</code></pre></div>
+<p>在 Debug 模式下能通过编译，放到私有 Cocoapods 库中后，Release 模式会出现符号引用错误：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>1.  Apple Swift version 5.10 (swiftlang-5.10.0.13 clang-1500.3.9.4)
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>2.  Compiling with the current language version
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>3.  While evaluating request ExecuteSILPipelineRequest(Run pipelines <span class="nb">{</span> PrepareOptimizationPasses, EarlyModulePasses, HighLevel,Function+EarlyLoopOpt, HighLevel,Module+StackPromote, MidLevel,Function, ClosureSpecialize, LowLevel,Function, LateLoopOpt, SIL Debug Info Generator <span class="nb">}</span> on SIL for XMSport)
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>4.  While running pass #33574 SILModuleTransform &quot;PerformanceSILLinker&quot;.
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>5.  While deserializing SIL function &quot;<span class="s">$</span><span class="nb">s</span><span class="m">6</span><span class="nb">DTBKit</span><span class="m">0</span><span class="nb">A</span><span class="m">7</span><span class="nb">WrapperV</span><span class="m">5</span><span class="nb">XMKitAD</span><span class="m">12</span><span class="nb">AlertCreaterCRbzlE</span><span class="m">5</span><span class="nb">titleyACyAFGSSSgAFRszrlF&quot;</span>
+<a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a><span class="m">6</span><span class="nb">.  </span><span class="o">***</span><span class="nb"> DESERIALIZATION FAILURE </span><span class="o">***</span>
+<a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a><span class="o">***</span><span class="nb"> If any module named here was modified in the SDK, please delete the </span><span class="o">***</span>
+<a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a><span class="o">***</span><span class="nb"> new swiftmodule files from the SDK and keep only swiftinterfaces.   </span><span class="o">***</span>
+<a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a><span class="nb">module &#39;XMKit&#39;, builder version &#39;</span><span class="m">5</span><span class="nb">.</span><span class="m">10</span><span class="o">(</span><span class="m">5</span><span class="nb">.</span><span class="m">10</span><span class="o">)/</span><span class="nb">Apple Swift version </span><span class="m">5</span><span class="nb">.</span><span class="m">10</span><span class="nb"> </span><span class="o">(</span><span class="nb">swiftlang</span><span class="o">-</span><span class="m">5</span><span class="nb">.</span><span class="m">10</span><span class="nb">.</span><span class="m">0</span><span class="nb">.</span><span class="m">13</span><span class="nb"> clang</span><span class="o">-</span><span class="m">1500</span><span class="nb">.</span><span class="m">3</span><span class="nb">.</span><span class="m">9</span><span class="nb">.</span><span class="m">4</span><span class="o">)</span><span class="nb">&#39;, built from source, non</span><span class="o">-</span><span class="nb">resilient, loaded from &#39;</span><span class="o">/</span><span class="nb">Users</span><span class="o">/</span><span class="nb">xuyiding</span><span class="o">/</span><span class="nb">Library</span><span class="o">/</span><span class="nb">Developer</span><span class="o">/</span><span class="nb">Xcode</span><span class="o">/</span><span class="nb">DerivedData</span><span class="o">/</span><span class="nb">XMSport</span><span class="o">-</span><span class="nb">fecvclpfuqscmegygspvgkdnntiq</span><span class="o">/</span><span class="nb">Build</span><span class="o">/</span><span class="nb">Products</span><span class="o">/</span><span class="nb">Release</span><span class="o">-</span><span class="nb">iphonesimulator</span><span class="o">/</span><span class="nb">XMKit</span><span class="o">/</span><span class="nb">XMKit.framework</span><span class="o">/</span><span class="nb">Modules</span><span class="o">/</span><span class="nb">XMKit.swiftmodule</span><span class="o">/</span><span class="nb">x</span><span class="m">86</span><span class="nb">_</span><span class="m">64</span><span class="o">-</span><span class="nb">apple</span><span class="o">-</span><span class="nb">ios</span><span class="o">-</span><span class="nb">simulator.swiftmodule&#39;</span>
+<a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a><span class="nb">result is ambiguous </span><span class="o">(</span><span class="nb">_</span><span class="o">)</span>
+<a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a><span class="nb">Cross</span><span class="o">-</span><span class="nb">reference to module &#39;DTBKit&#39;</span>
+<a id="__codelineno-28-12" name="__codelineno-28-12" href="#__codelineno-28-12"></a><span class="nb">... DTBKitWrapper</span>
+<a id="__codelineno-28-13" name="__codelineno-28-13" href="#__codelineno-28-13"></a><span class="nb">... me</span>
+<a id="__codelineno-28-14" name="__codelineno-28-14" href="#__codelineno-28-14"></a><span class="nb">... with type τ_</span><span class="m">0</span><span class="nb">_</span><span class="m">0</span>
+<a id="__codelineno-28-15" name="__codelineno-28-15" href="#__codelineno-28-15"></a>
+<a id="__codelineno-28-16" name="__codelineno-28-16" href="#__codelineno-28-16"></a><span class="nb">Command SwiftCompile failed with a nonzero exit code</span>
 </code></pre></div>
 <h4 id="me-let-vs-var">me: let vs. var</h4>
 <p>只能另外创建一种 Wrapper ：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="kd">public</span> <span class="kd">struct</span> <span class="nc">DTBKitMutableWrapper</span><span class="p">&lt;</span><span class="n">Base</span><span class="p">&gt;</span> <span class="p">{</span>
-<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>    <span class="kd">internal</span> <span class="kd">var</span> <span class="nv">me</span><span class="p">:</span> <span class="n">Base</span>
-<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>    <span class="kd">public</span> <span class="kd">init</span><span class="p">(</span><span class="kc">_</span> <span class="n">base</span><span class="p">:</span> <span class="n">Base</span><span class="p">)</span> <span class="p">{</span>
-<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>        <span class="kc">self</span><span class="p">.</span><span class="n">me</span> <span class="p">=</span> <span class="n">base</span>
-<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>    <span class="p">}</span>
-<a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="kd">public</span> <span class="kd">struct</span> <span class="nc">DTBKitMutableWrapper</span><span class="p">&lt;</span><span class="n">Base</span><span class="p">&gt;</span> <span class="p">{</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>    <span class="kd">public</span> <span class="kd">var</span> <span class="nv">me</span><span class="p">:</span> <span class="n">Base</span>
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>    <span class="kd">public</span> <span class="kd">init</span><span class="p">(</span><span class="kc">_</span> <span class="n">base</span><span class="p">:</span> <span class="n">Base</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>        <span class="kc">self</span><span class="p">.</span><span class="n">me</span> <span class="p">=</span> <span class="n">base</span>
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>    <span class="p">}</span>
+<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="p">}</span>
 </code></pre></div>
 <h4 id="me-weak">me: weak</h4>
 <p>考虑以下代码：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="kd">extension</span> <span class="nc">DTBKitMutableWrapper</span> <span class="k">where</span> <span class="n">Base</span><span class="p">:</span> <span class="bp">UIView</span> <span class="p">{</span>
-<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>    <span class="p">@</span><span class="n">discardableResult</span>
-<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeFromSuperview</span><span class="p">()</span> <span class="p">-&gt;</span> <span class="kc">Self</span> <span class="p">{</span>
-<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>        <span class="n">me</span><span class="p">.</span><span class="n">removeFromSuperview</span><span class="p">()</span>
-<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>        <span class="k">return</span> <span class="kc">self</span>
-<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>    <span class="p">}</span>
-<a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="kd">extension</span> <span class="nc">DTBKitMutableWrapper</span> <span class="k">where</span> <span class="n">Base</span><span class="p">:</span> <span class="bp">UIView</span> <span class="p">{</span>
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>    <span class="p">@</span><span class="n">discardableResult</span>
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeFromSuperview</span><span class="p">()</span> <span class="p">-&gt;</span> <span class="kc">Self</span> <span class="p">{</span>
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>        <span class="n">me</span><span class="p">.</span><span class="n">removeFromSuperview</span><span class="p">()</span>
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>        <span class="k">return</span> <span class="kc">self</span>
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>    <span class="p">}</span>
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="p">}</span>
 </code></pre></div>
 <p>一般业务实践中基本上和置空操作在一起：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="kd">class</span> <span class="nc">Test</span> <span class="p">{</span>
-<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>    <span class="kd">let</span> <span class="nv">buttons</span><span class="p">:</span> <span class="p">[</span><span class="bp">UIView</span><span class="p">]</span> <span class="p">=</span> <span class="p">[</span><span class="n">button01</span><span class="p">,</span> <span class="n">button02</span><span class="p">,</span> <span class="n">button03</span><span class="p">]</span>
-<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>
-<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>    <span class="kd">func</span> <span class="nf">reset</span><span class="p">()</span> <span class="p">{</span>
-<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>        <span class="n">buttons</span><span class="p">.</span><span class="bp">map</span><span class="p">{</span> <span class="nv">$0</span><span class="p">.</span><span class="n">removeFromSuperView</span><span class="p">()</span> <span class="p">}</span>
-<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>        <span class="n">buttons</span><span class="p">.</span><span class="bp">removeAll</span><span class="p">()</span>
-<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>        <span class="c1">// do sth.</span>
-<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>    <span class="p">}</span>
-<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="kd">class</span> <span class="nc">Test</span> <span class="p">{</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>    <span class="kd">let</span> <span class="nv">buttons</span><span class="p">:</span> <span class="p">[</span><span class="bp">UIView</span><span class="p">]</span> <span class="p">=</span> <span class="p">[</span><span class="n">button01</span><span class="p">,</span> <span class="n">button02</span><span class="p">,</span> <span class="n">button03</span><span class="p">]</span>
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>    <span class="kd">func</span> <span class="nf">reset</span><span class="p">()</span> <span class="p">{</span>
+<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>        <span class="n">buttons</span><span class="p">.</span><span class="bp">map</span><span class="p">{</span> <span class="nv">$0</span><span class="p">.</span><span class="n">removeFromSuperView</span><span class="p">()</span> <span class="p">}</span>
+<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>        <span class="n">buttons</span><span class="p">.</span><span class="bp">removeAll</span><span class="p">()</span>
+<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>        <span class="c1">// do sth.</span>
+<a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>    <span class="p">}</span>
+<a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a><span class="p">}</span>
 </code></pre></div>
 <p>一番改造后的 Wrapper 可能类似于：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="kd">extension</span> <span class="nc">DTBKitMutableOptionalWrapper</span> <span class="k">where</span> <span class="n">Base</span><span class="p">:</span> <span class="bp">UIView</span> <span class="p">{</span>
-<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>    <span class="p">@</span><span class="n">discardableResult</span>
-<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeFromSuperview</span><span class="p">()</span> <span class="p">-&gt;</span> <span class="kc">Self</span> <span class="p">{</span>
-<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>        <span class="n">me</span><span class="p">?.</span><span class="n">removeFromSuperview</span><span class="p">()</span>
-<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>        <span class="n">me</span> <span class="p">=</span> <span class="kc">nil</span>
-<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>        <span class="k">return</span> <span class="kc">self</span>
-<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>    <span class="p">}</span>
-<a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="kd">extension</span> <span class="nc">DTBKitMutableOptionalWrapper</span> <span class="k">where</span> <span class="n">Base</span><span class="p">:</span> <span class="bp">UIView</span> <span class="p">{</span>
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>    <span class="p">@</span><span class="n">discardableResult</span>
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeFromSuperview</span><span class="p">()</span> <span class="p">-&gt;</span> <span class="kc">Self</span> <span class="p">{</span>
+<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>        <span class="n">me</span><span class="p">?.</span><span class="n">removeFromSuperview</span><span class="p">()</span>
+<a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>        <span class="n">me</span> <span class="p">=</span> <span class="kc">nil</span>
+<a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>        <span class="k">return</span> <span class="kc">self</span>
+<a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>    <span class="p">}</span>
+<a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a><span class="p">}</span>
 </code></pre></div>
 <p>那么如果不考虑 <code>optional</code> 和置空，<code>removeFromSuperview</code> 等类似的函数会不会造成引用计数和内存方面的问题？<code>me</code> 属性本身是否需要 <code>weak</code> 修饰呢？参见"知识储备"链接 01。</p>
 <h4 id="me-optional">me: optional</h4>
 <p>在处理 <code>me</code> 成员变量本身业务时当然有可能出现各种错误：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="kd">extension</span> <span class="nc">DTBKitMutableWrapper</span> <span class="k">where</span> <span class="n">Base</span> <span class="p">==</span> <span class="nb">String</span> <span class="p">{</span>
-<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>    <span class="kd">func</span> <span class="nf">sub</span><span class="p">()</span> <span class="p">{</span>
-<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>      <span class="k">if</span> <span class="kd">let</span> <span class="nv">c</span> <span class="p">=</span> <span class="n">me</span><span class="p">.</span><span class="bp">first</span><span class="p">(</span><span class="k">where</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span> <span class="p">==</span> <span class="s">&quot;a&quot;</span> <span class="p">})</span> <span class="p">{</span>
-<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>        <span class="n">me</span> <span class="p">=</span> <span class="nb">String</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-<a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>        <span class="c1">// A. me = nil</span>
-<a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>        <span class="c1">// B. me = &quot;&quot;</span>
-<a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a>        <span class="c1">// C. me = me</span>
-<a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a>      <span class="p">}</span>
-<a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a>    <span class="p">}</span>
-<a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="kd">extension</span> <span class="nc">DTBKitMutableWrapper</span> <span class="k">where</span> <span class="n">Base</span> <span class="p">==</span> <span class="nb">String</span> <span class="p">{</span>
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>    <span class="kd">func</span> <span class="nf">sub</span><span class="p">()</span> <span class="p">{</span>
+<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>      <span class="k">if</span> <span class="kd">let</span> <span class="nv">c</span> <span class="p">=</span> <span class="n">me</span><span class="p">.</span><span class="bp">first</span><span class="p">(</span><span class="k">where</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span> <span class="p">==</span> <span class="s">&quot;a&quot;</span> <span class="p">})</span> <span class="p">{</span>
+<a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>        <span class="n">me</span> <span class="p">=</span> <span class="nb">String</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>        <span class="c1">// A. me = nil</span>
+<a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a>        <span class="c1">// B. me = &quot;&quot;</span>
+<a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a>        <span class="c1">// C. me = me</span>
+<a id="__codelineno-33-9" name="__codelineno-33-9" href="#__codelineno-33-9"></a>      <span class="p">}</span>
+<a id="__codelineno-33-10" name="__codelineno-33-10" href="#__codelineno-33-10"></a>    <span class="p">}</span>
+<a id="__codelineno-33-11" name="__codelineno-33-11" href="#__codelineno-33-11"></a><span class="p">}</span>
 </code></pre></div>
 <p>从业务角度来说 ABC 三种处理方案都说得通，但除了方案 C 都需要 <code>var me</code>；而再进一步思考，就是如何将 <code>throw</code> ， <code>optional</code> 以及异步处理也纳入链式语法设计中的问题了，先按下不表。</p>
 <h2 id="helper">Helper</h2>

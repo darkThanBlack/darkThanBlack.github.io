@@ -901,7 +901,7 @@
 <h4 id="intro">Intro</h4>
 <p>制作 <code>Chainable</code> 需要遍历 API，将我没用过，不理解的，且认为有一定价值的 API 列出作为目录。</p>
 <h4 id="uitableview">UITableView</h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>        <span class="c1">// 数据预加载，实现也不难，问题在于正常情况下性能瓶颈不在这里</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>    <span class="c1">// 数据预加载，实现也不难，问题在于正常情况下性能瓶颈不在这里</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="p">@</span><span class="n">available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">10.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="kr">weak</span> <span class="n">open</span> <span class="kd">var</span> <span class="nv">prefetchDataSource</span><span class="p">:</span> <span class="bp">UITableViewDataSourcePrefetching</span><span class="p">?</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
@@ -916,17 +916,17 @@
 <a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="kr">weak</span> <span class="n">open</span> <span class="kd">var</span> <span class="nv">dropDelegate</span><span class="p">:</span> <span class="bp">UITableViewDropDelegate</span><span class="p">?</span>
 <a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
 <a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="c1">// </span><span class="cs">TODO:</span><span class="c1"> wwdc 2022</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>        <span class="p">@</span><span class="n">available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">16.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="p">@</span><span class="n">available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">16.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
 <a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="n">open</span> <span class="kd">var</span> <span class="nv">selfSizingInvalidation</span><span class="p">:</span> <span class="bp">UITableView</span><span class="p">.</span><span class="n">SelfSizingInvalidation</span>
 <a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
 <a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="c1">// 3D Touch 菜单</span>
 <a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    <span class="p">@</span><span class="n">available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">14.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
 <a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    <span class="n">open</span> <span class="kd">var</span> <span class="nv">contextMenuInteraction</span><span class="p">:</span> <span class="bp">UIContextMenuInteraction</span><span class="p">?</span> <span class="p">{</span> <span class="kr">get</span> <span class="p">}</span>
 <a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
-<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>        <span class="c1">// 不常用</span>
-<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>        <span class="n">rect</span><span class="p">(</span><span class="k">for</span><span class="p">:)</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    <span class="c1">// 不常用</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    <span class="n">rect</span><span class="p">(</span><span class="k">for</span><span class="p">:)</span>
 <a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>
-<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>        <span class="p">@</span><span class="n">available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">15.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="p">@</span><span class="n">available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">15.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
 <a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    <span class="n">open</span> <span class="kd">func</span> <span class="nf">reconfigureRows</span><span class="p">(</span><span class="n">at</span> <span class="n">indexPaths</span><span class="p">:</span> <span class="p">[</span><span class="n">IndexPath</span><span class="p">])</span>
 <a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>
 <a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>    <span class="n">open</span> <span class="kd">var</span> <span class="nv">sectionIndexMinimumDisplayRowCount</span><span class="p">:</span> <span class="nb">Int</span> <span class="c1">// show special section index list on right when row count reaches this value. default is 0</span>
@@ -937,7 +937,7 @@
 <a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>    <span class="p">@</span><span class="n">available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">9.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
 <a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>    <span class="n">open</span> <span class="kd">var</span> <span class="nv">cellLayoutMarginsFollowReadableWidth</span><span class="p">:</span> <span class="nb">Bool</span> <span class="c1">// if cell layout margins are derived from the width of the readableContentGuide. default is NO.</span>
 <a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>
-<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>        <span class="c1">// </span><span class="cs">TODO:</span><span class="c1"> Focus</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>    <span class="c1">// </span><span class="cs">TODO:</span><span class="c1"> Focus</span>
 <a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>    <span class="p">@</span><span class="n">available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">9.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
 <a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>    <span class="n">open</span> <span class="kd">var</span> <span class="nv">remembersLastFocusedIndexPath</span><span class="p">:</span> <span class="nb">Bool</span>
 <a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>
@@ -952,6 +952,7 @@
 <a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>
 <a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>    <span class="bp">UISpringLoadedInteractionSupporting</span>
 </code></pre></div>
+<p>https://docs.swift.org/swift-book/documentation/the-swift-programming-language/attributes</p>
 
 
 
