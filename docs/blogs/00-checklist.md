@@ -200,8 +200,10 @@ $ git clone --depth 1 --branch master git@github.com:darkThanBlack/MOONWorkflow.
 
 * [英文官网下载](https://typora.io/)
 
-* 破解：
+* ~~破解~~
 
+  > 会不时弹出已激活弹窗，还是用 TNT 版本最靠谱
+  
   ```shell
   # 找到文件: /Applications/Typora.app/Contents/Resources/TypeMark/page-dist/static/js/LicenseIndex.180dd4c7.6d698c41.chunk.js
   # 检查字段: hasActivated="true"

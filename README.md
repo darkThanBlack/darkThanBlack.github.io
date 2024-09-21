@@ -101,5 +101,3 @@ $ mkdocs gh-deploy
 ![Github](https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/logo_64.png)
 <img src="https://raw.githubusercontent.com/darkThanBlack/darkThanBlack.github.io/pictures/docs/assets/pictures/logo_64.png" alt="Github" style="zoom:20%;" />
 
-
-
